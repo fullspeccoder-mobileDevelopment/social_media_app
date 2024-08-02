@@ -39,6 +39,3 @@ We welcome contributions from the community to help improve CrossPost! To contri
 
 ### License
 This project is licensed under the MIT License. See the `LICENSE` file for more information.
-
-### Contact
-For any questions or suggestions, feel free to reach out to us at [your-email@example.com].
