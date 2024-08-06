@@ -132,7 +132,12 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Icon(Icons.menu),
+            IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Navigator.pushNamed(context, "/log-in");
+              },
+            ),
             const Text("Name"),
             IconButton(
               icon: const Icon(Icons.account_circle_outlined),
