@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/components/logistics_hyperlink.dart';
 import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/styles/input_styles.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -10,6 +11,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   bool eyeToggled = true;
 
   Widget? determineEyeIcon() {
@@ -39,25 +42,14 @@ class _SignUpState extends State<SignUp> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const TextField(
-            decoration: InputDecoration(
-              hintText: "Username",
-              border: OutlineInputBorder(
-                borderSide: BorderSide(width: 5, color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-            ),
+          TextField(
+            controller: _emailController,
+            decoration: generateUsernameDecoration(),
           ),
           TextField(
+            controller: _passwordController,
             obscureText: eyeToggled,
-            decoration: InputDecoration(
-              suffixIcon: determineEyeIcon(),
-              hintText: "Password",
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(width: 5, color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-            ),
+            decoration: generatePasswordDecoration(determineEyeIcon()),
           ),
           Row(
             children: [

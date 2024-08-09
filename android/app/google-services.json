@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1095066264952",
+    "project_id": "cross-media-app",
+    "storage_bucket": "cross-media-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095066264952:android:bf533c9cd73632932b948d",
+        "android_client_info": {
+          "package_name": "com.crossmediafirebase.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMt3O297qNFV2zk6cdJkRpH7GwDEDSEGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

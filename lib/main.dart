@@ -4,9 +4,12 @@ import 'package:untitled_app/pages/link_first_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
-// import 'package:untitled_app/pages/splash_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
