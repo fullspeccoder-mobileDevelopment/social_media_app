@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  BottomNavigationBar _bottomNavBar1() {
+  BottomNavigationBar _bottomNavBar() {
     return BottomNavigationBar(
       currentIndex: currentPage,
       onTap: changePage,
@@ -135,14 +135,14 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                Navigator.pushNamed(context, "/log-in");
+                Navigator.popAndPushNamed(context, "/log-in");
               },
             ),
             const Text("Name"),
             IconButton(
               icon: const Icon(Icons.account_circle_outlined),
               onPressed: () {
-                Navigator.pushNamed(context, "/sign-up");
+                Navigator.popAndPushNamed(context, "/sign-up");
               },
             )
           ],
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _mainContent(),
       floatingActionButton: _callToActionButton(),
-      bottomNavigationBar: _bottomNavBar1(),
+      bottomNavigationBar: _bottomNavBar(),
     );
   }
 }

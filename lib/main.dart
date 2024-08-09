@@ -3,6 +3,7 @@ import 'package:untitled_app/pages/home_page.dart';
 import 'package:untitled_app/pages/link_first_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
 import 'package:untitled_app/pages/sign_up.dart';
+import 'package:untitled_app/pages/splash_page.dart';
 // import 'package:untitled_app/pages/splash_page.dart';
 
 void main() {
@@ -22,10 +23,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) => const LinkPage(),
+        '/': (context) => const SplashScreen(),
         '/home': (context) => const HomePage(),
         '/sign-up': (context) => const SignUp(),
-        '/log-in': (context) => LogIn(),
+        '/log-in': (context) => const LogIn(),
+        '/link-first-page': (context) => const LinkPage(),
       },
     );
   }
