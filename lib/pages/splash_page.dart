@@ -43,6 +43,7 @@ class SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      //& Todo: Fix ParentDataWidget Error - Expanded I think tries to do what the Column already does.
       body: Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
