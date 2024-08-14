@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/models/user.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/styles/button_styles.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -85,6 +87,83 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
+  Widget _drawer(LocalUser currentUser) {
+    return Drawer(
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              width: 300,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const CircleAvatar(
+                        radius: 35,
+                        child: Image(
+                            image: NetworkImage(
+                                "https://www.w3schools.com/w3images/avatar2.png")),
+                      ),
+                      Text(currentUser.email),
+                    ],
+                  ),
+                  useGreyDivider(),
+                  Container(
+                    child: const Column(
+                      children: [
+                        TextButton(
+                          child: const Text("Page # 1"),
+                          onPressed: null,
+                        ),
+                        TextButton(
+                          child: const Text("Page # 2"),
+                          onPressed: null,
+                        ),
+                        TextButton(
+                          child: const Text("Page # 3"),
+                          onPressed: null,
+                        ),
+                        TextButton(
+                          child: const Text("Page # 4"),
+                          onPressed: null,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _endDrawer() {
+    return Drawer(
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: 300,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: const Text("Drawer will be here"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   FloatingActionButton _callToActionButton() {
     return FloatingActionButton(
       elevation: 0,
@@ -132,43 +211,20 @@ class _HomePageState extends ConsumerState<HomePage> {
     final currentUser = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Builder(builder: (context) {
-              return IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              );
-            }),
-            Text(currentUser.email),
-            IconButton(
-              icon: const Icon(Icons.account_circle_outlined),
+        title: Text(currentUser.email),
+        actions: [
+          Builder(builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.circle_outlined),
               onPressed: () {
-                if (currentUser.email != 'error') {
-                  return;
-                }
-                Navigator.popAndPushNamed(context, "/sign-up");
+                Scaffold.of(context).openEndDrawer();
               },
-            )
-          ],
-        ),
-      ),
-      endDrawer: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: 300,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Text("Drawer will be here"),
-            ),
-          ),
+            );
+          })
         ],
       ),
+      drawer: _drawer(currentUser),
+      endDrawer: _endDrawer(),
       body: _mainContent(),
       floatingActionButton: _callToActionButton(),
       bottomNavigationBar: _bottomNavBar(),
