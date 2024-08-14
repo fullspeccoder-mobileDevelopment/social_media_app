@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   int currentPage = 0;
 
   void changePage(int value) {
@@ -127,6 +129,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -138,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.popAndPushNamed(context, "/log-in");
               },
             ),
-            const Text("Name"),
+            Text(currentUser.email),
             IconButton(
               icon: const Icon(Icons.account_circle_outlined),
               onPressed: () {

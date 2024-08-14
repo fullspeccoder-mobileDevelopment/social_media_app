@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/logistics_hyperlink.dart';
+import 'package:untitled_app/pages/confirmation_page.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _SignUpState extends ConsumerState<SignUp> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool eyeToggled = true;
 
   Widget? determineEyeIcon() {
@@ -114,7 +117,27 @@ class _SignUpState extends State<SignUp> {
           ),
           useGreyDivider(),
           TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              try {
+                await ref.read(userProvider.notifier).signUp(
+                      _emailController.text,
+                      _passwordController.text,
+                    );
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ConfirmationPage(
+                              titleMessage: "Congratulations!",
+                              detailMessage:
+                                  "You have officially signed up for CrossMedia!",
+                            )));
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(e.toString()),
+                ));
+              }
+            },
             style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

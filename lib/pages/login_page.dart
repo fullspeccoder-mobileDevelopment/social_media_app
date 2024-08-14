@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled_app/components/logistics_hyperlink.dart';
 import 'package:untitled_app/styles/button_styles.dart';
@@ -10,6 +11,9 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool eyeToggled = true;
 
   Widget? determineEyeIcon() {
@@ -63,8 +67,9 @@ class _LogInState extends State<LogIn> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
                     hintText: "Username",
                     border: OutlineInputBorder(
                       borderSide: BorderSide(width: 5, color: Colors.grey),
@@ -73,6 +78,7 @@ class _LogInState extends State<LogIn> {
                   ),
                 ),
                 TextField(
+                  controller: _passwordController,
                   obscureText: eyeToggled,
                   decoration: InputDecoration(
                     suffixIcon: determineEyeIcon(),
@@ -136,7 +142,11 @@ class _LogInState extends State<LogIn> {
                 ),
                 useGreyDivider(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await _auth.signInWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text);
+                  },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

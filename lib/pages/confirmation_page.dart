@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled_app/pages/home_page.dart';
 
 class ConfirmationPage extends StatelessWidget {
   const ConfirmationPage({
@@ -50,6 +51,8 @@ class ConfirmationPage extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const HomePage()));
               },
               child: const Text(
                 "Continue",
