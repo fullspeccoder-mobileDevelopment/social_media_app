@@ -135,21 +135,39 @@ class _HomePageState extends ConsumerState<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Navigator.popAndPushNamed(context, "/log-in");
-              },
-            ),
+            Builder(builder: (context) {
+              return IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }),
             Text(currentUser.email),
             IconButton(
               icon: const Icon(Icons.account_circle_outlined),
               onPressed: () {
+                if (currentUser.email != 'error') {
+                  return;
+                }
                 Navigator.popAndPushNamed(context, "/sign-up");
               },
             )
           ],
         ),
+      ),
+      endDrawer: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: 300,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Text("Drawer will be here"),
+            ),
+          ),
+        ],
       ),
       body: _mainContent(),
       floatingActionButton: _callToActionButton(),

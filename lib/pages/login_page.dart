@@ -1,16 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/logistics_hyperlink.dart';
+import 'package:untitled_app/pages/confirmation_page.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
-class LogIn extends StatefulWidget {
+class LogIn extends ConsumerStatefulWidget {
   const LogIn({super.key});
 
   @override
-  State<LogIn> createState() => _LogInState();
+  ConsumerState<LogIn> createState() => _LogInState();
 }
 
-class _LogInState extends State<LogIn> {
+class _LogInState extends ConsumerState<LogIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -143,6 +146,24 @@ class _LogInState extends State<LogIn> {
                 useGreyDivider(),
                 TextButton(
                   onPressed: () async {
+                    try {
+                      await ref.read(userProvider.notifier).logIn(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ConfirmationPage(
+                                    titleMessage: "Congratulations!",
+                                    detailMessage: "",
+                                  )));
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(e.toString()),
+                      ));
+                    }
                     await _auth.signInWithEmailAndPassword(
                         email: _emailController.text,
                         password: _passwordController.text);

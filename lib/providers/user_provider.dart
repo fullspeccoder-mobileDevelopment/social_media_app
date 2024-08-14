@@ -10,7 +10,11 @@ class UserNotifier extends StateNotifier<LocalUser> {
   UserNotifier() : super(const LocalUser(email: "error"));
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void logIn() {}
+  Future<void> logIn(String email, String password) async {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+    state = LocalUser(email: email);
+  }
 
   Future<void> signUp(String email, String password) async {
     await _auth.createUserWithEmailAndPassword(
