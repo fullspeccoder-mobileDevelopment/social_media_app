@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/models/user.dart';
+import 'package:untitled_app/components/drawer.dart';
+import 'package:untitled_app/components/end_drawer.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
@@ -67,16 +68,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ),
                   TextButton(
                     onPressed: () {},
-                    style: TextButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    style: PrimaryButtonStyle(radius: 5.0, padding: 10.0),
+                    child: const Text(
+                      "Upload your first shot",
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      backgroundColor: Colors.blue.shade900,
-                      foregroundColor: Colors.white,
-                      fixedSize: const Size(375, 50),
-                      padding: const EdgeInsets.all(10),
                     ),
-                    child: const Text("Upload your first shot"),
                   ),
                 ],
               ),
@@ -84,83 +82,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           ],
         ),
       ],
-    );
-  }
-
-  Widget _drawer(LocalUser currentUser) {
-    return Drawer(
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 12, right: 12),
-              width: 300,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const CircleAvatar(
-                        radius: 35,
-                        child: Image(
-                            image: NetworkImage(
-                                "https://www.w3schools.com/w3images/avatar2.png")),
-                      ),
-                      Text(currentUser.email),
-                    ],
-                  ),
-                  useGreyDivider(),
-                  Container(
-                    child: const Column(
-                      children: [
-                        TextButton(
-                          child: const Text("Page # 1"),
-                          onPressed: null,
-                        ),
-                        TextButton(
-                          child: const Text("Page # 2"),
-                          onPressed: null,
-                        ),
-                        TextButton(
-                          child: const Text("Page # 3"),
-                          onPressed: null,
-                        ),
-                        TextButton(
-                          child: const Text("Page # 4"),
-                          onPressed: null,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _endDrawer() {
-    return Drawer(
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: 300,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: const Text("Drawer will be here"),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -223,8 +144,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           })
         ],
       ),
-      drawer: _drawer(currentUser),
-      endDrawer: _endDrawer(),
+      drawer: AppDrawer(currentUser: currentUser),
+      endDrawer: const EndDrawer(),
       body: _mainContent(),
       floatingActionButton: _callToActionButton(),
       bottomNavigationBar: _bottomNavBar(),

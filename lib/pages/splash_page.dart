@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/pages/home_page.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => SplashScreenState();
+  ConsumerState<SplashScreen> createState() => SplashScreenState();
 }
 
-class SplashScreenState extends State<SplashScreen>
+class SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
-  final user = {"loggedIn": true};
-
-  bool? get getUserStatus => user["loggedIn"];
-
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
-    if (getUserStatus!) {
+    final currentUser = ref.read(userProvider);
+    if (currentUser.email != 'error') {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => const HomePage()));

@@ -1,10 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/components/line_or.dart';
 import 'package:untitled_app/components/logistics_hyperlink.dart';
-import 'package:untitled_app/pages/confirmation_page.dart';
+import 'package:untitled_app/components/sign_in_button.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
+import 'package:untitled_app/utils/snack_utils.dart';
 
 class LogIn extends ConsumerStatefulWidget {
   const LogIn({super.key});
@@ -16,7 +18,6 @@ class LogIn extends ConsumerStatefulWidget {
 class _LogInState extends ConsumerState<LogIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   bool eyeToggled = true;
 
   Widget? determineEyeIcon() {
@@ -92,56 +93,16 @@ class _LogInState extends ConsumerState<LogIn> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: useGreyDivider(),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        'or',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    Expanded(
-                      child: useGreyDivider(),
-                    ),
-                  ],
+                const LineOr(),
+                SignInButton(
+                  image: "assets/images/google.png",
+                  text: "Continue with Google",
+                  triggerOnPressed: () {},
                 ),
-                TextButton(
-                  onPressed: () {},
-                  style: useGreyRoundedBorder(),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage("assets/images/google.png"),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        "Continue with Google",
-                        textDirection: TextDirection.ltr,
-                      ),
-                    ],
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: useGreyRoundedBorder(),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage("assets/images/phone.png"),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        "Continue with Phone Number",
-                        textDirection: TextDirection.ltr,
-                      ),
-                    ],
-                  ),
+                SignInButton(
+                  image: "assets/images/phone.png",
+                  text: "Continue with Phone",
+                  triggerOnPressed: () {},
                 ),
                 useGreyDivider(),
                 TextButton(
@@ -151,32 +112,19 @@ class _LogInState extends ConsumerState<LogIn> {
                             _emailController.text,
                             _passwordController.text,
                           );
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const ConfirmationPage(
-                                    titleMessage: "Congratulations!",
-                                    detailMessage: "",
-                                  )));
+                      popAndPushSignUpMessageConfirmation(context);
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(e.toString()),
-                      ));
+                      showSnackBarErrorMessage(context, e);
                     }
-                    await _auth.signInWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text);
                   },
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                  style: PrimaryButtonStyle(),
+                  child: const Text(
+                    "Continue",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
-                    backgroundColor: Colors.blue.shade900,
-                    minimumSize: const Size(600, 50),
                   ),
-                  child: const Text("Continue",
-                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
