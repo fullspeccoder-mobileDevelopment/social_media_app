@@ -21,7 +21,7 @@ class _SignUpState extends ConsumerState<SignUp> {
   final TextEditingController _passwordController = TextEditingController();
   bool eyeToggled = true;
 
-  Widget? determineEyeIcon() {
+  Widget determineEyeIcon() {
     if (eyeToggled) {
       return IconButton(
         onPressed: toggleEyeIcon,
@@ -50,12 +50,12 @@ class _SignUpState extends ConsumerState<SignUp> {
         children: [
           TextField(
             controller: _emailController,
-            decoration: generateUsernameDecoration(),
+            decoration: const UsernameDecoration(),
           ),
           TextField(
             controller: _passwordController,
             obscureText: eyeToggled,
-            decoration: generatePasswordDecoration(determineEyeIcon()),
+            decoration: PasswordDecoration(suffixIcon: determineEyeIcon()),
           ),
           const LineOr(),
           SignInButton(

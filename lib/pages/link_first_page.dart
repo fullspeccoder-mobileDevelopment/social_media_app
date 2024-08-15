@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/models/social_media.dart';
+import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/styles/input_styles.dart';
 
 class LinkPage extends StatefulWidget {
   const LinkPage({super.key});
@@ -42,14 +44,7 @@ class _LinkPageState extends State<LinkPage> {
                     const SizedBox(height: 25),
                     TextField(
                       controller: searchController,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        hintText: "Search",
-                        contentPadding: EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                        ),
-                      ),
+                      decoration: const SearchDecoration(),
                     ),
                   ],
                 ),
@@ -66,11 +61,9 @@ class _LinkPageState extends State<LinkPage> {
                 ),
               ),
               TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.blue[800],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(35),
-                  ),
+                style: PrimaryButtonStyle(
+                  radius: 35,
+                  size: const Size(200, 25),
                 ),
                 onPressed: () {},
                 child: const Padding(
@@ -116,7 +109,6 @@ class SocialMediaCard extends StatelessWidget {
               width: 50,
               height: 50,
             ),
-            //& Possible problem here too for the ParenDataWidget Error
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),

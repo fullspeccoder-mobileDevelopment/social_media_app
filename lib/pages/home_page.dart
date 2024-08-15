@@ -48,7 +48,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               height: 400,
               margin: const EdgeInsets.only(top: 100),
               alignment: Alignment.center,
-              decoration: const BoxDecoration(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/pages/home_page.dart';
+import 'package:untitled_app/styles/button_styles.dart';
 
 class ConfirmationPage extends StatelessWidget {
   const ConfirmationPage({
@@ -42,13 +43,7 @@ class ConfirmationPage extends StatelessWidget {
               ),
             ),
             TextButton(
-              style: TextButton.styleFrom(
-                minimumSize: const Size(390, 50),
-                backgroundColor: const Color.fromRGBO(10, 102, 194, 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
+              style: PrimaryButtonStyle(),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(context,
@@ -58,7 +53,7 @@ class ConfirmationPage extends StatelessWidget {
                 "Continue",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 20,
                 ),
               ),
             )

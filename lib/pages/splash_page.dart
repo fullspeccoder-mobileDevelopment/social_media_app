@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/pages/home_page.dart';
-import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/models/user.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -13,21 +13,14 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
+  LocalUser? currentUser;
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    final currentUser = ref.read(userProvider);
-    if (currentUser.email != 'error') {
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const HomePage()));
-      });
-    } else {
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).popAndPushNamed("/sign-up");
-      });
-    }
+    Future.delayed(const Duration(seconds: 2), () {
+      pushReplacementToHomePage(context);
+    });
   }
 
   @override
@@ -55,7 +48,7 @@ class SplashScreenState extends ConsumerState<SplashScreen>
                   margin: const EdgeInsets.only(
                     top: 25,
                   ),
-                  child: const Text("Name",
+                  child: const Text("Welcome!",
                       style: TextStyle(
                         fontSize: 36.0,
                         fontWeight: FontWeight.w500,
@@ -88,3 +81,10 @@ class SplashScreenState extends ConsumerState<SplashScreen>
     );
   }
 }
+
+// Keeping here if changes are needed
+// } else {
+//   Future.delayed(const Duration(seconds: 2), () {
+//     Navigator.of(context).popAndPushNamed("/sign-up");
+//   });
+// }

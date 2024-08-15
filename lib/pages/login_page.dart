@@ -5,6 +5,7 @@ import 'package:untitled_app/components/logistics_hyperlink.dart';
 import 'package:untitled_app/components/sign_in_button.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/styles/input_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
@@ -20,7 +21,7 @@ class _LogInState extends ConsumerState<LogIn> {
   final TextEditingController _passwordController = TextEditingController();
   bool eyeToggled = true;
 
-  Widget? determineEyeIcon() {
+  Widget determineEyeIcon() {
     if (eyeToggled) {
       return IconButton(
         onPressed: toggleEyeIcon,
@@ -73,25 +74,13 @@ class _LogInState extends ConsumerState<LogIn> {
               children: [
                 TextField(
                   controller: _emailController,
-                  decoration: const InputDecoration(
-                    hintText: "Username",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 5, color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
+                  decoration: const UsernameDecoration(),
                 ),
                 TextField(
                   controller: _passwordController,
                   obscureText: eyeToggled,
-                  decoration: InputDecoration(
-                    suffixIcon: determineEyeIcon(),
-                    hintText: "Password",
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(width: 5, color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                  ),
+                  decoration:
+                      PasswordDecoration(suffixIcon: determineEyeIcon()),
                 ),
                 const LineOr(),
                 SignInButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/pages/confirmation_page.dart';
+import 'package:untitled_app/pages/home_page.dart';
 
 void popAndPushSignUpMessageConfirmation(BuildContext context) {
   Navigator.pop(context);
@@ -12,4 +13,9 @@ void popAndPushSignUpMessageConfirmation(BuildContext context) {
       ),
     ),
   );
+}
+
+void pushReplacementToHomePage(BuildContext context) {
+  Navigator.of(context)
+      .pushReplacement(MaterialPageRoute(builder: (_) => const HomePage()));
 }
