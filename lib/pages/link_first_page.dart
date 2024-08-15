@@ -54,6 +54,7 @@ class _LinkPageState extends State<LinkPage> {
                   ],
                 ),
               ),
+              //& Todo: This might be the problem for the ParentDataWidget that needs to be fixed
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -115,6 +116,7 @@ class SocialMediaCard extends StatelessWidget {
               width: 50,
               height: 50,
             ),
+            //& Possible problem here too for the ParenDataWidget Error
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
