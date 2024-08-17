@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/models/user.dart';
-import 'package:untitled_app/utils/nav_utils.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -13,13 +11,12 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
-  LocalUser? currentUser;
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 2), () {
-      pushReplacementToHomePage(context);
+      Navigator.of(context).popAndPushNamed('/sign-up');
     });
   }
 
