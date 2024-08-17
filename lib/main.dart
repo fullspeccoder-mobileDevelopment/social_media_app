@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/pages/create_post.dart';
 import 'package:untitled_app/pages/home_page.dart';
 import 'package:untitled_app/pages/link_first_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
@@ -27,11 +28,12 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) => const CreatePostPage(),
         '/home': (context) => const HomePage(),
         '/sign-up': (context) => const SignUp(),
         '/log-in': (context) => const LogIn(),
         '/link-first-page': (context) => const LinkPage(),
+        '/create-post': (context) => const CreatePostPage(),
       },
     );
   }

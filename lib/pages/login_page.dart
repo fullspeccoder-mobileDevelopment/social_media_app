@@ -90,7 +90,7 @@ class _LogInState extends ConsumerState<LogIn> {
                 ),
                 SignInButton(
                   image: "assets/images/phone.png",
-                  text: "Continue with Phone",
+                  text: "Continue with Phone ",
                   triggerOnPressed: () {},
                 ),
                 useGreyDivider(),
