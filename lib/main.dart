@@ -28,7 +28,7 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (context) => const CreatePostPage(),
+        '/': (context) => const HomePage(),
         '/home': (context) => const HomePage(),
         '/sign-up': (context) => const SignUp(),
         '/log-in': (context) => const LogIn(),

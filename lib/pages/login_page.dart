@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/components/line_or.dart';
-import 'package:untitled_app/components/logistics_hyperlink.dart';
-import 'package:untitled_app/components/sign_in_button.dart';
+import 'package:untitled_app/components/misc/line_or.dart';
+import 'package:untitled_app/components/forms/logistics_hyperlink.dart';
+import 'package:untitled_app/components/forms/sign_in_button.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
