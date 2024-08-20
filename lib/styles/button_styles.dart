@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 ///  Has to be used in a TextButton style attribute
+//& TODO: Convert into class
 ButtonStyle useGreyRoundedBorder() {
   return TextButton.styleFrom(
     side: const BorderSide(color: Colors.grey, width: 1),
@@ -11,14 +13,7 @@ ButtonStyle useGreyRoundedBorder() {
   );
 }
 
-/// Creates a divider
-Divider useGreyDivider() {
-  return const Divider(
-    color: Colors.grey,
-    thickness: 1,
-  );
-}
-
+//& TODO: Will probably change into the default button style and may not need this style anymore
 class PrimaryButtonStyle extends ButtonStyle {
   PrimaryButtonStyle({double? radius, double? padding, Size? size})
       : super(

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/components/misc/grey_divider.dart';
 
 class LineOr extends StatelessWidget {
   const LineOr({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
         Expanded(
-          child: useGreyDivider(),
+          child: GreyDivider(),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             'or',
@@ -19,7 +19,7 @@ class LineOr extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: useGreyDivider(),
+          child: GreyDivider(),
         ),
       ],
     );

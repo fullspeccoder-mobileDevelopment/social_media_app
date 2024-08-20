@@ -13,6 +13,7 @@ class LinkPage extends StatefulWidget {
 class _LinkPageState extends State<LinkPage> {
   TextEditingController searchController = TextEditingController();
 
+  //& TODO: Separate some of this code up into separate files
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,6 @@ class _LinkPageState extends State<LinkPage> {
                   ],
                 ),
               ),
-              //& Todo: This might be the problem for the ParentDataWidget that needs to be fixed
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,6 +85,7 @@ class _LinkPageState extends State<LinkPage> {
   }
 }
 
+//& TODO: Move to separate file in (lib/components)
 class SocialMediaCard extends StatelessWidget {
   const SocialMediaCard(
       {super.key, required this.imagePath, required this.socialMedia});

@@ -23,6 +23,7 @@ class MyApp extends ConsumerWidget {
     // final currentUser = ref.watch(userProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: true,
+      //& TODO: Create a separate file for all of the basic ThemeData properties.
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade400),
         useMaterial3: true,
@@ -30,8 +31,8 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/home': (context) => const HomePage(),
-        '/sign-up': (context) => const SignUp(),
-        '/log-in': (context) => const LogIn(),
+        '/sign-up': (context) => const SignUpPage(),
+        '/log-in': (context) => const LogInPage(),
         '/link-first-page': (context) => const LinkPage(),
         '/create-post': (context) => const CreatePostPage(),
       },

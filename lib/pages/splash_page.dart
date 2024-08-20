@@ -78,10 +78,3 @@ class SplashScreenState extends ConsumerState<SplashScreen>
     );
   }
 }
-
-// Keeping here if changes are needed
-// } else {
-//   Future.delayed(const Duration(seconds: 2), () {
-//     Navigator.of(context).popAndPushNamed("/sign-up");
-//   });
-// }

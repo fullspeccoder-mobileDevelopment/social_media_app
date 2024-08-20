@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:untitled_app/components/misc/grey_divider.dart';
 import 'package:untitled_app/models/user.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key, required this.currentUser});
@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
                       Text(currentUser.email),
                     ],
                   ),
-                  useGreyDivider(),
+                  const GreyDivider(),
                   Column(
                     children: [
                       TextButton(

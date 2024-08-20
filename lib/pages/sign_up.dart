@@ -1,130 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/components/misc/line_or.dart';
-import 'package:untitled_app/components/forms/logistics_hyperlink.dart';
-import 'package:untitled_app/components/forms/sign_in_button.dart';
-import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/styles/input_styles.dart';
-import 'package:untitled_app/utils/nav_utils.dart';
-import 'package:untitled_app/utils/snack_utils.dart';
+import 'package:untitled_app/components/forms/bottom_content.dart';
+import 'package:untitled_app/components/forms/sign_up_form.dart';
 
-class SignUp extends ConsumerStatefulWidget {
-  const SignUp({super.key});
-
-  @override
-  ConsumerState<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends ConsumerState<SignUp> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool eyeToggled = true;
-
-  Widget determineEyeIcon() {
-    if (eyeToggled) {
-      return IconButton(
-        onPressed: toggleEyeIcon,
-        icon: const Icon(Icons.remove_red_eye_outlined),
-      );
-    } else {
-      return IconButton(
-        onPressed: toggleEyeIcon,
-        icon: const Icon(Icons.remove_red_eye),
-      );
-    }
-  }
-
-  void toggleEyeIcon() {
-    setState(() {
-      eyeToggled = !eyeToggled;
-    });
-  }
-
-  Widget createContent() {
-    return Container(
-      height: 600,
-      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextField(
-            controller: _emailController,
-            decoration: const UsernameDecoration(),
-          ),
-          TextField(
-            controller: _passwordController,
-            obscureText: eyeToggled,
-            decoration: PasswordDecoration(suffixIcon: determineEyeIcon()),
-          ),
-          const LineOr(),
-          SignInButton(
-            image: "assets/images/google.png",
-            text: "Continue with Google",
-            triggerOnPressed: () {},
-          ),
-          SignInButton(
-            image: "assets/images/phone.png",
-            text: "Continue with Phone ",
-            triggerOnPressed: () {},
-          ),
-          useGreyDivider(),
-          TextButton(
-            onPressed: () async {
-              try {
-                await ref.read(userProvider.notifier).signUp(
-                      _emailController.text,
-                      _passwordController.text,
-                    );
-                popAndPushSignUpMessageConfirmation(context);
-              } catch (e) {
-                showSnackBarErrorMessage(context, e);
-              }
-            },
-            style: PrimaryButtonStyle(),
-            child: const Text(
-              "Continue",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget createBottomContent() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 50.0,
-          right: 50.0,
-          top: 30.0,
-          bottom: 30.0,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            generatePoliciesHyperText(context),
-            generateLinkText(
-              context,
-              primaryText: "Already have an account? ",
-              secondaryText: "Log in",
-              navigationMethod: () {
-                Navigator.of(context).popAndPushNamed('/log-in');
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //& TODO: Fix Title widgets here. Needs to NOT be an AppBar
       appBar: AppBar(
         toolbarHeight: 100,
         title: Container(
@@ -145,10 +29,10 @@ class _SignUpState extends ConsumerState<SignUp> {
           ),
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
-          createContent(),
-          createBottomContent(),
+          SignUpForm(),
+          FormBottomContent(),
         ],
       ),
     );
