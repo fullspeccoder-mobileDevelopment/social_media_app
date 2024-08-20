@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/forms/sign_in_button.dart';
-import 'package:untitled_app/components/misc/grey_divider.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
@@ -73,7 +72,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             text: "Continue with Phone ",
             triggerOnPressed: () {},
           ),
-          const GreyDivider(),
+          const Divider(),
           TextButton(
             onPressed: () async {
               try {

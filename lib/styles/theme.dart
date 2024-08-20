@@ -23,6 +23,10 @@ final ThemeData lightTheme = ThemeData(
       borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
   ),
+  dividerTheme: const DividerThemeData(
+    color: Colors.grey,
+    thickness: 1,
+  ),
   scaffoldBackgroundColor: Colors.white,
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
@@ -32,5 +36,11 @@ final ThemeData lightTheme = ThemeData(
       minimumSize: WidgetStateProperty.all(const Size(600, 50)),
       padding: WidgetStateProperty.all(EdgeInsets.zero),
     ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    shape: const CircleBorder(),
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.blue.shade400,
+    elevation: 0,
   ),
 );

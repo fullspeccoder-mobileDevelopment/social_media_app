@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/components/misc/grey_divider.dart';
 
 // Creates a GreyDivider with the text 'or' in the middle and another GreyDivider on the end.
 class LineOr extends StatelessWidget {
@@ -10,7 +9,7 @@ class LineOr extends StatelessWidget {
     return const Row(
       children: [
         Expanded(
-          child: GreyDivider(),
+          child: Divider(),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -20,7 +19,7 @@ class LineOr extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: GreyDivider(),
+          child: Divider(),
         ),
       ],
     );

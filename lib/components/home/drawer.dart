@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/components/misc/grey_divider.dart';
 import 'package:untitled_app/models/user.dart';
 
 /// The app drawer that contains all of the settings information
@@ -39,7 +38,7 @@ class AppDrawer extends StatelessWidget {
                       Text(currentUser.email),
                     ],
                   ),
-                  const GreyDivider(),
+                  const Divider(),
                   Column(
                     children: [
                       TextButton(
