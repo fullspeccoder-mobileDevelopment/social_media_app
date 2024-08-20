@@ -113,10 +113,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           AssetImage("assets/images/man-uploading-data.png")),
                 ),
                 TextButton(
-                  style: PrimaryButtonStyle(
-                    size: const Size(200, 50),
-                    radius: 6,
-                  ),
+                  style: PrimaryButtonStyle(),
                   onPressed: null,
                   child: const Text(
                     "Upload from device",

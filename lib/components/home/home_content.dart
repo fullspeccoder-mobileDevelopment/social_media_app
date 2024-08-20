@@ -40,7 +40,7 @@ class HomeContent extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {},
-                    style: PrimaryButtonStyle(radius: 5.0, padding: 10.0),
+                    style: PrimaryButtonStyle(),
                     child: const Text(
                       "Upload your first shot",
                       style: TextStyle(

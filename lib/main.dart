@@ -7,6 +7,7 @@ import 'package:untitled_app/pages/login_page.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled_app/styles/theme.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,17 +24,13 @@ class MyApp extends ConsumerWidget {
     // final currentUser = ref.watch(userProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      //& TODO: Create a separate file for all of the basic ThemeData properties.
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue.shade400),
-        useMaterial3: true,
-      ),
+      theme: lightTheme,
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const SplashScreen(),
         '/home': (context) => const HomePage(),
         '/sign-up': (context) => const SignUpPage(),
         '/log-in': (context) => const LogInPage(),
-        '/link-first-page': (context) => const LinkPage(),
+        '/link-first': (context) => const LinkPage(),
         '/create-post': (context) => const CreatePostPage(),
       },
     );

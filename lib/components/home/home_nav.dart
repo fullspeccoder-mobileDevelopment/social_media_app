@@ -39,11 +39,6 @@ class _BottomHomeNavbarState extends State<BottomHomeNavbar> {
     return BottomNavigationBar(
       currentIndex: currentPage,
       onTap: changePage,
-      iconSize: 35,
-      showUnselectedLabels: false,
-      fixedColor: Colors.white,
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.blue.shade100,
       items: [
         BottomNavigationBarItem(
           icon: determineIconState(Icons.list_rounded, 0),

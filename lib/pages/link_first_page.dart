@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled_app/components/accounts/card.dart';
 import 'package:untitled_app/models/social_media.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
@@ -61,10 +62,7 @@ class _LinkPageState extends State<LinkPage> {
                 ),
               ),
               TextButton(
-                style: PrimaryButtonStyle(
-                  radius: 35,
-                  size: const Size(200, 25),
-                ),
+                style: PrimaryButtonStyle(),
                 onPressed: () {},
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -81,67 +79,6 @@ class _LinkPageState extends State<LinkPage> {
         ),
       ),
       // bottomNavigationBar:
-    );
-  }
-}
-
-//& TODO: Move to separate file in (lib/components)
-class SocialMediaCard extends StatelessWidget {
-  const SocialMediaCard(
-      {super.key, required this.imagePath, required this.socialMedia});
-  final String imagePath;
-  final String socialMedia;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: const Color.fromRGBO(223, 242, 255, 1),
-      shadowColor: Colors.transparent,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 16, 10, 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              imagePath,
-              width: 50,
-              height: 50,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      socialMedia,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      "Link your $socialMedia account",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            IconButton(
-              iconSize: 25,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.add_box_rounded,
-                color: Color.fromRGBO(48, 155, 215, 1),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

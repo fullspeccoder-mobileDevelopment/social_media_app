@@ -54,9 +54,11 @@ class AppDrawer extends StatelessWidget {
                           Navigator.popAndPushNamed(context, '/log-in');
                         },
                       ),
-                      const TextButton(
-                        onPressed: null,
-                        child: Text("Page # 3"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/link-first');
+                        },
+                        child: const Text("Link First Page"),
                       ),
                       const TextButton(
                         onPressed: null,
