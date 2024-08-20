@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Bottom navigation bar for the home screen
+///
+/// Will allow the user to move between a few pages within the application.
 class BottomHomeNavbar extends StatefulWidget {
   const BottomHomeNavbar({super.key});
 

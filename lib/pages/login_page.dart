@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/components/forms/bottom_content.dart';
+import 'package:untitled_app/components/forms/form_title.dart';
 import 'package:untitled_app/components/forms/log_in_form.dart';
 
 class LogInPage extends StatelessWidget {
@@ -8,31 +9,20 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //& TODO: Fix Title widgets here. Needs to NOT be an AppBar
-      appBar: AppBar(
-        toolbarHeight: 100,
-        title: Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Log in to"),
-              SizedBox(height: 15),
-              Text(
-                "Enter into your account",
-                style: TextStyle(
-                  color: Color.fromRGBO(130, 130, 130, 1),
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: const Column(
+      body: Column(
         children: [
-          LogInForm(),
-          FormBottomContent(),
+          const FormTitle(
+            primaryText: "Log in to",
+            subText: "Enter into your account",
+          ),
+          const LogInForm(),
+          FormBottomContent(
+            bottomText: "Didn't have an account? ",
+            bottomLink: "Sign up",
+            navigationMethod: () {
+              Navigator.of(context).popAndPushNamed("/sign-up");
+            },
+          ),
         ],
       ),
     );

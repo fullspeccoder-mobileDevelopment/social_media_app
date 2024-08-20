@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
+/// Holds the main content of the home page
+///
+/// Contains an image for the mobile bro image, text, and a text reading snapshot.
+/// Will eventually contain a list of the posts made by the user
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 

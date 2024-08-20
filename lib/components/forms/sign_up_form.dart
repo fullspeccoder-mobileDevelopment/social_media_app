@@ -9,6 +9,10 @@ import 'package:untitled_app/styles/input_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
+/// The sign up form
+///
+/// Uses the eyeToggled variable to determine whether the eye icon is active or inactive
+/// This will be the control center for signing up through Google, phone, email, contains links to the terms & conditions along with the privacy policy
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
 

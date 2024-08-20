@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This button will add a post
 class HomeButton extends StatelessWidget {
   const HomeButton({super.key});
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
+/// This is the buttons that are triggered when you want to sign up for google or phone
 class SignInButton extends StatelessWidget {
   const SignInButton({
     super.key,

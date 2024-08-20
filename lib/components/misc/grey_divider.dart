@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Creates a grey divider across the screen
 class GreyDivider extends StatelessWidget {
   const GreyDivider({super.key});
 

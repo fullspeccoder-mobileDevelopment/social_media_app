@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:untitled_app/components/forms/link_text.dart';
 import 'package:untitled_app/components/forms/policies.dart';
 
+/// Bottom content for the forms (sign up & log in pages)
+///
+/// This is used to create the bottom content for the sign in and log in pages, making it easier to maintain and read down a page
 class FormBottomContent extends StatelessWidget {
-  const FormBottomContent({super.key});
+  const FormBottomContent({
+    super.key,
+    required this.bottomText,
+    required this.bottomLink,
+    required this.navigationMethod,
+  });
+
+  final String bottomText;
+  final String bottomLink;
+  final Function()? navigationMethod;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +32,9 @@ class FormBottomContent extends StatelessWidget {
           children: [
             const PoliciesText(),
             LinkText(
-              primaryText: "Already have an account? ",
-              secondaryText: "Log in",
-              navigationMethod: () {
-                Navigator.of(context).popAndPushNamed('/log-in');
-              },
+              primaryText: bottomText,
+              secondaryText: bottomLink,
+              navigationMethod: navigationMethod,
             ),
           ],
         ),

@@ -1,6 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+/// Text that forms a sentence with a link to a different page
+///
+/// This is used to create a sentence with a link that will take you to a new page in the app using the primary text
+/// as the beginning of the sentence and the secondary text as the actual link
+///
+/// The navigation method will take you to a new page in the application by touching the link
 class LinkText extends StatelessWidget {
   const LinkText({
     super.key,

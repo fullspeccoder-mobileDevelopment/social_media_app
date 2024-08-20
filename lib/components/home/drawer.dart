@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:untitled_app/components/misc/grey_divider.dart';
 import 'package:untitled_app/models/user.dart';
 
+/// The app drawer that contains all of the settings information
+///
+/// This will eventually allow the user to check their profile and change settings
+/// This will also allow the user to schedule posts, review their post history and be able to contact help & support if necessary
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key, required this.currentUser});
 

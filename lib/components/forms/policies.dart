@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+// Contains links to the terms & conditions page along with the privacy policy page
 class PoliciesText extends StatelessWidget {
   const PoliciesText({super.key});
 
