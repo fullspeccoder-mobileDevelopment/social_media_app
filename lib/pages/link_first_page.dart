@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/components/accounts/card.dart';
+import 'package:untitled_app/components/accounts/title.dart';
 import 'package:untitled_app/models/social_media.dart';
 import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/styles/input_styles.dart';
 
 class LinkPage extends StatefulWidget {
   const LinkPage({super.key});
@@ -14,7 +14,6 @@ class LinkPage extends StatefulWidget {
 class _LinkPageState extends State<LinkPage> {
   TextEditingController searchController = TextEditingController();
 
-  //& TODO: Separate some of this code up into separate files
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,32 +24,7 @@ class _LinkPageState extends State<LinkPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Column(
-                  children: [
-                    const Text(
-                      "Link your first social account",
-                      style: TextStyle(fontSize: 27),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      "To post your content across different social media platform effortlessly, we need to connect to your social media channels.",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 25),
-                    TextField(
-                      controller: searchController,
-                      decoration: const SearchDecoration(),
-                    ),
-                  ],
-                ),
-              ),
+              TitleLinkAccount(searchController: searchController),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -27,7 +27,29 @@ final ThemeData lightTheme = ThemeData(
     color: Colors.grey,
     thickness: 1,
   ),
+  inputDecorationTheme: const InputDecorationTheme(
+    border: OutlineInputBorder(
+      borderSide: BorderSide(width: 5, color: Colors.grey),
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
+  ),
   scaffoldBackgroundColor: Colors.white,
+  searchBarTheme: const SearchBarThemeData(
+    backgroundColor: WidgetStatePropertyAll(Colors.white),
+    shadowColor: WidgetStatePropertyAll(Colors.transparent),
+    padding: WidgetStatePropertyAll(
+      EdgeInsets.fromLTRB(8, 8, 8, 8),
+    ),
+    side: WidgetStatePropertyAll(BorderSide(color: Colors.grey)),
+    shape: WidgetStatePropertyAll(
+      RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5))),
+    ),
+  ),
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: Colors.blue[400],
+    contentTextStyle: const TextStyle(color: Colors.white),
+  ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       shape: WidgetStateProperty.all(

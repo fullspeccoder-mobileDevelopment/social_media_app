@@ -18,7 +18,7 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: triggerOnPressed,
-      style: useGreyRoundedBorder(),
+      style: const GreyRoundedBorder(),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
