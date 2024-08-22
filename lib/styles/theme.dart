@@ -27,10 +27,14 @@ final ThemeData lightTheme = ThemeData(
     color: Colors.grey,
     thickness: 1,
   ),
+  dropdownMenuTheme: DropdownMenuThemeData(
+    inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6))),
+  ),
   inputDecorationTheme: const InputDecorationTheme(
     border: OutlineInputBorder(
       borderSide: BorderSide(width: 5, color: Colors.grey),
-      borderRadius: BorderRadius.all(Radius.circular(10)),
+      borderRadius: BorderRadius.all(Radius.circular(6)),
     ),
   ),
   scaffoldBackgroundColor: Colors.white,
@@ -53,7 +57,7 @@ final ThemeData lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
       shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       ),
       minimumSize: WidgetStateProperty.all(const Size(600, 50)),
       padding: WidgetStateProperty.all(EdgeInsets.zero),

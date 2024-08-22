@@ -7,6 +7,8 @@ import 'package:untitled_app/pages/login_page.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:untitled_app/providers/post_provider.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/theme.dart';
 import 'firebase_options.dart';
 
@@ -16,12 +18,28 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // final currentUser = ref.watch(userProvider);
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    // ref.read(postsProvider.notifier).retrievePosts("somePostId", "someUserId");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // May need it to flush out the provider state
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: lightTheme,

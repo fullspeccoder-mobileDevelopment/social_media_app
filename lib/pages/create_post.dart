@@ -1,16 +1,32 @@
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
+import 'package:untitled_app/models/post.dart';
+import 'package:untitled_app/providers/post_provider.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
-class CreatePostPage extends StatefulWidget {
+class CreatePostPage extends ConsumerStatefulWidget {
   const CreatePostPage({super.key});
 
   @override
-  State<CreatePostPage> createState() => _CreatePostPageState();
+  ConsumerState<CreatePostPage> createState() => _CreatePostPageState();
 }
 
-class _CreatePostPageState extends State<CreatePostPage> {
+class _CreatePostPageState extends ConsumerState<CreatePostPage> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController platformController = TextEditingController();
+  TextEditingController tagController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  DateTime selectedTime = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    final user = ref.read(userProvider);
+    final posts = ref.watch(postsProvider);
+    print(posts);
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(36.0),
@@ -21,21 +37,16 @@ class _CreatePostPageState extends State<CreatePostPage> {
           const Text(
             "Post your shot",
             textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 22),
           ),
           //$ Title
           Container(
             margin: const EdgeInsets.only(top: 15, bottom: 15),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Title"),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                    ),
-                  ),
-                ),
+                const Text("Title"),
+                TextField(controller: titleController),
               ],
             ),
           ),
@@ -46,60 +57,122 @@ class _CreatePostPageState extends State<CreatePostPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Select Platform:"),
-                DropdownButtonFormField(
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                  items: const [
-                    DropdownMenuItem(
+                DropdownMenu(
+                  controller: platformController,
+                  menuStyle: const MenuStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                          Color.fromRGBO(223, 242, 255, 1))),
+                  width: 358,
+                  dropdownMenuEntries: const [
+                    DropdownMenuEntry(
+                      style: ButtonStyle(
+                        padding: WidgetStatePropertyAll(EdgeInsets.all(8)),
+                      ),
                       value: "Facebook",
-                      child: Image(
-                        image: AssetImage("assets/images/facebook.png"),
+                      label: "Facebook",
+                      trailingIcon: Image(
+                        image: AssetImage('assets/images/facebook.png'),
+                      ),
+                    ),
+                    DropdownMenuEntry(
+                      style: ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.all(8))),
+                      value: "Instagram",
+                      label: "Instagram",
+                      trailingIcon: Image(
+                        image: AssetImage('assets/images/instagram.png'),
+                      ),
+                    ),
+                    DropdownMenuEntry(
+                      style: ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.all(8))),
+                      value: "Twitter(X)",
+                      label: "Twitter(X)",
+                      trailingIcon: Image(
+                        image: AssetImage('assets/images/x.png'),
+                      ),
+                    ),
+                    DropdownMenuEntry(
+                      style: ButtonStyle(
+                          padding: WidgetStatePropertyAll(EdgeInsets.all(8))),
+                      value: "LinkedIn",
+                      label: "LinkedIn",
+                      trailingIcon: Image(
+                        image: AssetImage('assets/images/linkedin.png'),
                       ),
                     ),
                   ],
-                  onChanged: null,
-                )
+                ),
               ],
             ),
           ),
           //$ Date
           Container(
             margin: const EdgeInsets.only(top: 15, bottom: 15),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Schedule Post (Optional)"),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                    ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 20.0),
+                  child: Text(
+                    "Schedule Post (Optional)",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DateTimeFormField(
+                      decoration: InputDecoration(
+                          constraints:
+                              BoxConstraints.tight(const Size(170, 50))),
+                      mode: DateTimeFieldPickerMode.date,
+                      initialPickerDateTime: DateTime.now(),
+                      onChanged: (DateTime? value) {
+                        selectedDate = value ?? DateTime.now();
+                      },
+                      validator: (value) =>
+                          value!.second > DateTime.now().second
+                              ? null
+                              : "Date is in the past",
+                    ),
+                    DateTimeFormField(
+                      decoration: InputDecoration(
+                          suffixIcon: const Icon(Icons.access_time),
+                          constraints:
+                              BoxConstraints.tight(const Size(170, 50))),
+                      mode: DateTimeFieldPickerMode.time,
+                      initialPickerDateTime: DateTime.now(),
+                      onChanged: (DateTime? value) {
+                        selectedTime = value ?? DateTime.now();
+                      },
+                      validator: (value) =>
+                          value!.second > DateTime.now().second
+                              ? null
+                              : "Date is in the past",
+                    ),
+                  ],
+                )
               ],
             ),
           ),
           //$ Tags
           Container(
             margin: const EdgeInsets.only(top: 15, bottom: 15),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Add Tags (Optional)"),
+                const Text("Add Tags (Optional)"),
                 TextField(
                   maxLines: 2,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(6)),
-                    ),
-                  ),
+                  controller: tagController,
                 ),
               ],
             ),
           ),
           //$ Image
           Container(
-            margin: const EdgeInsets.only(top: 15, bottom: 15),
+            margin: const EdgeInsets.only(top: 15, bottom: 30),
             height: 200,
             width: 600,
             decoration: BoxDecoration(border: Border.all()),
@@ -124,14 +197,39 @@ class _CreatePostPageState extends State<CreatePostPage> {
             ),
           ),
           //$ TextButton
-          TextButton(
-            style: PrimaryButtonStyle(),
-            onPressed: null,
-            child:
-                const Text("Continue", style: TextStyle(color: Colors.white)),
-          ),
+          PrimaryButton(callback: () {
+            final selectedDateTime = selectedDate.copyWith(
+                hour: selectedTime.hour, minute: selectedTime.minute);
+            final post = Post(
+              postId: 'someId',
+              content: '',
+              imageUrl: '',
+              userId: user.id,
+              tags: [tagController.text],
+              postDate: selectedDateTime,
+            );
+            ref.read(postsProvider.notifier).addPost(post);
+          }),
         ],
       ),
     ));
   }
 }
+
+
+
+
+
+
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: selectedDate,
+  //       firstDate: DateTime(2015, 8),
+  //       lastDate: DateTime(2101));
+  //   if (picked != null && picked != selectedDate) {
+  //     setState(() {
+  //       selectedDate = picked;
+  //     });
+  //   }
+  // }

@@ -7,20 +7,23 @@ final userProvider = StateNotifierProvider<UserNotifier, LocalUser>((ref) {
 });
 
 class UserNotifier extends StateNotifier<LocalUser> {
-  UserNotifier() : super(const LocalUser(email: "error"));
+  UserNotifier() : super(const LocalUser(email: "N/A", id: "N/A"));
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> logIn(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
 
-    state = LocalUser(email: email);
+    state =
+        LocalUser(email: email, id: userCredential.user?.uid ?? "someUserId");
   }
 
   Future<void> signUp(String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(
+    final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    state = LocalUser(email: email);
+    state =
+        LocalUser(email: email, id: userCredential.user?.uid ?? "someUserId");
   }
 
   void signOut() {}

@@ -4,53 +4,59 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class Post {
-  final String id;
+  final String postId;
   final String content;
   final String imageUrl;
-  final String author;
+  final String userId;
   final List<String> tags;
-  // final Timestamp postDate;
+  final DateTime postDate;
+
   Post({
-    required this.id,
+    required this.postId,
     required this.content,
     required this.imageUrl,
-    required this.author,
+    required this.userId,
     required this.tags,
+    required this.postDate,
   });
 
   Post copyWith({
-    String? id,
+    String? postId,
     String? content,
     String? imageUrl,
-    String? author,
+    String? userId,
     List<String>? tags,
+    DateTime? postDate,
   }) {
     return Post(
-      id: id ?? this.id,
+      postId: postId ?? this.postId,
       content: content ?? this.content,
       imageUrl: imageUrl ?? this.imageUrl,
-      author: author ?? this.author,
+      userId: userId ?? this.userId,
       tags: tags ?? this.tags,
+      postDate: postDate ?? this.postDate,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'postId': postId,
       'content': content,
       'imageUrl': imageUrl,
-      'author': author,
+      'userId': userId,
       'tags': tags,
+      'postDate': postDate.millisecondsSinceEpoch,
     };
   }
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
-      id: map['id'] as String,
+      postId: map['postId'] as String,
       content: map['content'] as String,
       imageUrl: map['imageUrl'] as String,
-      author: map['author'] as String,
+      userId: map['userId'] as String,
       tags: List<String>.from(map['tags'] as List<String>),
+      postDate: DateTime.fromMillisecondsSinceEpoch(map['postDate'] as int),
     );
   }
 
@@ -61,26 +67,28 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, content: $content, imageUrl: $imageUrl, author: $author, tags: $tags)';
+    return 'Post(postId: $postId, content: $content, imageUrl: $imageUrl, userId: $userId, tags: $tags, postDate: $postDate)';
   }
 
   @override
   bool operator ==(covariant Post other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.postId == postId &&
         other.content == content &&
         other.imageUrl == imageUrl &&
-        other.author == author &&
-        listEquals(other.tags, tags);
+        other.userId == userId &&
+        listEquals(other.tags, tags) &&
+        other.postDate == postDate;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return postId.hashCode ^
         content.hashCode ^
         imageUrl.hashCode ^
-        author.hashCode ^
-        tags.hashCode;
+        userId.hashCode ^
+        tags.hashCode ^
+        postDate.hashCode;
   }
 }

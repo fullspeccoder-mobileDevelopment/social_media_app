@@ -59,9 +59,11 @@ class AppDrawer extends StatelessWidget {
                         },
                         child: const Text("Link First Page"),
                       ),
-                      const TextButton(
-                        onPressed: null,
-                        child: Text("Page # 4"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.popAndPushNamed(context, '/create-post');
+                        },
+                        child: Text("Creat Page"),
                       ),
                     ],
                   )
