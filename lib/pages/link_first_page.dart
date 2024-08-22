@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/components/accounts/card.dart';
-import 'package:untitled_app/components/accounts/title.dart';
+import 'package:untitled_app/components/account/card.dart';
+import 'package:untitled_app/components/account/title.dart';
 import 'package:untitled_app/models/social_media.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 

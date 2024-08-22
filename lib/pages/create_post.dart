@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/models/post.dart';
@@ -25,7 +25,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
-    final posts = ref.watch(postsProvider);
+    final posts = ref.watch(postsProvider).posts;
     print(posts);
     return Scaffold(
         body: Padding(
@@ -186,7 +186,10 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                           AssetImage("assets/images/man-uploading-data.png")),
                 ),
                 TextButton(
-                  style: PrimaryButtonStyle(),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue.shade700,
+                    fixedSize: const Size(100, 50),
+                  ),
                   onPressed: null,
                   child: const Text(
                     "Upload from device",
@@ -201,14 +204,14 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
             final selectedDateTime = selectedDate.copyWith(
                 hour: selectedTime.hour, minute: selectedTime.minute);
             final post = Post(
-              postId: 'someId',
-              content: '',
-              imageUrl: '',
+              content: 'some content here',
+              imageUrl: 'some image url here',
               userId: user.id,
               tags: [tagController.text],
-              postDate: selectedDateTime,
+              postDate: Timestamp.fromDate(selectedDateTime),
             );
-            ref.read(postsProvider.notifier).addPost(post);
+            ref.read(postsProvider.notifier).createPost(post);
+            Navigator.of(context).popAndPushNamed('/home');
           }),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/components/forms/link_text.dart';
-import 'package:untitled_app/components/forms/policies.dart';
+import 'package:untitled_app/components/form/link_text.dart';
+import 'package:untitled_app/components/form/policies.dart';
 
 /// Bottom content for the forms (sign up & log in pages)
 ///

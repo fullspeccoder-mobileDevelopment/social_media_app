@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/components/forms/bottom_content.dart';
-import 'package:untitled_app/components/forms/form_title.dart';
-import 'package:untitled_app/components/forms/log_in_form.dart';
+import 'package:untitled_app/components/form/bottom_content.dart';
+import 'package:untitled_app/components/form/form_title.dart';
+import 'package:untitled_app/components/form/log_in_form.dart';
 
 class LogInPage extends StatelessWidget {
   const LogInPage({super.key});

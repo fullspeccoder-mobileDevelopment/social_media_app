@@ -7,7 +7,9 @@ class HomeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed('/create-post');
+      },
       tooltip: 'Add Item',
       child: const Icon(Icons.add_rounded, size: 50),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/models/user.dart';
+import 'package:untitled_app/models/firebase_user.dart';
 
 /// The app drawer that contains all of the settings information
 ///
@@ -8,7 +8,7 @@ import 'package:untitled_app/models/user.dart';
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key, required this.currentUser});
 
-  final LocalUser currentUser;
+  final FirebaseUser currentUser;
 
   @override
   Widget build(BuildContext context) {

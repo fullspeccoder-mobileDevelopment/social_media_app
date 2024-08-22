@@ -20,7 +20,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final currentUser = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentUser.email),
+        title: Text(currentUser.user.email),
         actions: [
           Builder(builder: (context) {
             return IconButton(
@@ -32,7 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           })
         ],
       ),
-      drawer: AppDrawer(currentUser: currentUser),
+      drawer: AppDrawer(currentUser: currentUser.user),
       endDrawer: const EndDrawer(),
       body: const HomeContent(),
       floatingActionButton: const HomeButton(),
