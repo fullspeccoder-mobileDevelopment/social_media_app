@@ -36,13 +36,20 @@ class UserNotifier extends StateNotifier<LocalUser> {
 
   Future<void> logIn(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-    final QuerySnapshot querySnap = await _store.collection("users").get();
-    final user = querySnap.docs[0];
-
+    QuerySnapshot response =
+        await _store.collection("users").where('email', isEqualTo: email).get();
+    if (response.docs.isEmpty) {
+      print("No firestore user associated to authenticated email $email");
+      return;
+    }
+    if (response.docs.length != 1) {
+      print("More than one firestore user associate with email: $email");
+      return;
+    }
     state = LocalUser(
-        id: user.id,
-        user: FirebaseUser.fromMap(user.data() as Map<String, dynamic>));
+        id: response.docs[0].id,
+        user: FirebaseUser.fromMap(
+            response.docs[0].data() as Map<String, dynamic>));
   }
 
   Future<void> signUp(String email, String password) async {

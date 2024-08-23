@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/sign_in_button.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
-import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart';
@@ -12,14 +11,16 @@ import 'package:untitled_app/utils/snack_utils.dart';
 ///
 /// Uses the eyeToggled variable to determine whether the eye icon is active or inactive
 /// This will be the control center for signing up through Google, phone, email, contains links to the terms & conditions along with the privacy policy
-class SignUpForm extends ConsumerStatefulWidget {
-  const SignUpForm({super.key});
+class FirebaseForm extends ConsumerStatefulWidget {
+  const FirebaseForm({super.key, required this.formAction});
+
+  final Future<void> Function(String email, String password) formAction;
 
   @override
-  ConsumerState<SignUpForm> createState() => _SignUpFormState();
+  ConsumerState<FirebaseForm> createState() => _FirebaseFormState();
 }
 
-class _SignUpFormState extends ConsumerState<SignUpForm> {
+class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool eyeToggled = true;
@@ -46,10 +47,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
   void _formSignUpAction() async {
     try {
-      await ref.read(userProvider.notifier).signUp(
-            _emailController.text,
-            _passwordController.text,
-          );
+      await widget.formAction(_emailController.text, _passwordController.text);
+      // await ref.read(userProvider.notifier).signUp(
+      //       _emailController.text,
+      //       _passwordController.text,
+      //     );
       popAndPushSignUpMessageConfirmation(context);
     } catch (e) {
       showSnackBarErrorMessage(context, e);

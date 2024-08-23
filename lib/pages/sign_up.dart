@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/components/form/form_title.dart';
-import 'package:untitled_app/components/form/sign_up_form.dart';
+import 'package:untitled_app/components/form/firebase_form.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends ConsumerWidget {
   const SignUpPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final signUp = ref.read(userProvider.notifier).signUp;
     return Scaffold(
       body: Column(
         children: [
@@ -15,7 +18,9 @@ class SignUpPage extends StatelessWidget {
             primaryText: "Sign up for",
             subText: "Create your account",
           ),
-          const SignUpForm(),
+          FirebaseForm(
+            formAction: signUp,
+          ),
           FormBottomContent(
             bottomText: "Already have an account? ",
             bottomLink: "Log in",
