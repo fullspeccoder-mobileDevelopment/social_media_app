@@ -23,6 +23,9 @@ final ThemeData lightTheme = ThemeData(
       borderRadius: BorderRadius.all(Radius.circular(5)),
     ),
   ),
+  drawerTheme: const DrawerThemeData(
+    backgroundColor: Color.fromRGBO(162, 202, 247, 1),
+  ),
   dividerTheme: const DividerThemeData(
     color: Colors.grey,
     thickness: 1,

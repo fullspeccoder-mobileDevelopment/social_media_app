@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/components/form/firebase_form.dart';
 import 'package:untitled_app/components/form/form_title.dart';
-import 'package:untitled_app/components/form/log_in_form.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 
 class LogInPage extends ConsumerWidget {

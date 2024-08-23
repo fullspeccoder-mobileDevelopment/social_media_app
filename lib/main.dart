@@ -44,12 +44,16 @@ class _MyAppState extends ConsumerState<MyApp> {
       debugShowCheckedModeBanner: true,
       theme: lightTheme,
       routes: {
-        '/': (context) => const SplashScreen(),
-        '/home': (context) => const HomePage(),
-        '/sign-up': (context) => const SignUpPage(),
-        '/log-in': (context) => const LogInPage(),
-        '/link-first': (context) => const LinkPage(),
-        '/create-post': (context) => const CreatePostPage(),
+        '/': (_) => const SplashScreen(),
+        '/home': (_) => const HomePage(),
+        '/sign-up': (_) => const SignUpPage(),
+        '/log-in': (_) => const LogInPage(),
+        '/link-first': (_) => const LinkPage(),
+        '/create-post': (_) => const CreatePostPage(),
+        '/calendar': (_) => const HomePage(),
+        '/post-history': (_) => const HomePage(),
+        '/profile': (_) => const HomePage(),
+        '/support': (_) => const HomePage(),
       },
     );
   }

@@ -6,7 +6,6 @@ import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/models/post.dart';
 import 'package:untitled_app/providers/post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 
 class CreatePostPage extends ConsumerStatefulWidget {
   const CreatePostPage({super.key});
