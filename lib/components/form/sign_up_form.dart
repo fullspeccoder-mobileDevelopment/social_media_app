@@ -44,6 +44,18 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     });
   }
 
+  void _formSignUpAction() async {
+    try {
+      await ref.read(userProvider.notifier).signUp(
+            _emailController.text,
+            _passwordController.text,
+          );
+      popAndPushSignUpMessageConfirmation(context);
+    } catch (e) {
+      showSnackBarErrorMessage(context, e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,17 +86,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           ),
           const Divider(),
           TextButton(
-            onPressed: () async {
-              try {
-                await ref.read(userProvider.notifier).signUp(
-                      _emailController.text,
-                      _passwordController.text,
-                    );
-                popAndPushSignUpMessageConfirmation(context);
-              } catch (e) {
-                showSnackBarErrorMessage(context, e);
-              }
-            },
+            onPressed: _formSignUpAction,
             style: PrimaryButtonStyle(),
             child: const Text(
               "Continue",

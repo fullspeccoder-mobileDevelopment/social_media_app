@@ -17,10 +17,12 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final currentUser = ref.watch(userProvider);
+    final currentUser = ref.watch(userProvider).user;
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentUser.user.email),
+        title: Text(currentUser.username.isNotEmpty
+            ? currentUser.username
+            : currentUser.email),
         actions: [
           Builder(builder: (context) {
             return IconButton(
@@ -32,7 +34,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           })
         ],
       ),
-      drawer: AppDrawer(currentUser: currentUser.user),
+      drawer: AppDrawer(currentUser: currentUser),
       endDrawer: const EndDrawer(),
       body: const HomeContent(),
       floatingActionButton: const HomeButton(),

@@ -44,6 +44,18 @@ class _LogInFormState extends ConsumerState<LogInForm> {
     });
   }
 
+  void _logInAction() async {
+    try {
+      await ref.read(userProvider.notifier).logIn(
+            _emailController.text,
+            _passwordController.text,
+          );
+      popAndPushSignUpMessageConfirmation(context);
+    } catch (e) {
+      showSnackBarErrorMessage(context, e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,17 +86,7 @@ class _LogInFormState extends ConsumerState<LogInForm> {
           ),
           const Divider(),
           TextButton(
-            onPressed: () async {
-              try {
-                await ref.read(userProvider.notifier).logIn(
-                      _emailController.text,
-                      _passwordController.text,
-                    );
-                popAndPushSignUpMessageConfirmation(context);
-              } catch (e) {
-                showSnackBarErrorMessage(context, e);
-              }
-            },
+            onPressed: _logInAction,
             style: PrimaryButtonStyle(),
             child: const Text(
               "Continue",

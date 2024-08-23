@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:untitled_app/models/firebase_user.dart';
-import 'package:untitled_app/models/post.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, LocalUser>((ref) {
   return UserNotifier();
@@ -23,11 +22,11 @@ class UserNotifier extends StateNotifier<LocalUser> {
   UserNotifier()
       : super(
           LocalUser(
-            id: "N/A",
+            id: "",
             user: const FirebaseUser(
-              email: "N/A",
-              username: "N/A",
-              profilePicUrl: "N/A",
+              email: "",
+              username: "",
+              profilePicUrl: "",
               posts: [],
             ),
           ),
@@ -36,27 +35,26 @@ class UserNotifier extends StateNotifier<LocalUser> {
   final FirebaseFirestore _store = FirebaseFirestore.instance;
 
   Future<void> logIn(String email, String password) async {
-    final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+    final QuerySnapshot querySnap = await _store.collection("users").get();
+    final user = querySnap.docs[0];
 
     state = LocalUser(
-      id: userCredential.user!.uid,
-      user: const FirebaseUser(
-        email: "N/A",
-        username: "N/A",
-        profilePicUrl: "N/A",
-        posts: [],
-      ),
-    );
+        id: user.id,
+        user: FirebaseUser.fromMap(user.data() as Map<String, dynamic>));
   }
 
   Future<void> signUp(String email, String password) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+
+    final AggregateQuerySnapshot snapshot =
+        await _store.collection('users').count().get();
     final docReference = await _store.collection('users').add(
           FirebaseUser(
             email: email,
-            username: "No Name",
+            username: "User${snapshot.count}",
             profilePicUrl: "",
             posts: [],
           ).toMap(),
@@ -73,12 +71,12 @@ class UserNotifier extends StateNotifier<LocalUser> {
     await _auth.signOut();
 
     state = LocalUser(
-      id: 'N/A',
-      user: const FirebaseUser(
-        email: "N/A",
-        username: "N/A",
-        profilePicUrl: "N/A",
-        posts: [],
+      id: '',
+      user: FirebaseUser(
+        email: "",
+        username: "",
+        profilePicUrl: "",
+        posts: state.user.posts,
       ),
     );
   }
