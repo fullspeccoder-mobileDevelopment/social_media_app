@@ -41,6 +41,9 @@ dependencies:
   flutter_riverpod: ^2.5.1
   cloud_firestore: ^5.2.1
   date_field: ^5.2.1
+  dotted_border: ^2.1.0
+  textfield_tags: ^3.0.1
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

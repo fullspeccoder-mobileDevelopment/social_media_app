@@ -14,7 +14,7 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.blue[100],
     selectedIconTheme: const IconThemeData(size: 35, color: Colors.white),
     unselectedIconTheme: const IconThemeData(size: 35),
-    selectedItemColor: Colors.white,
+    selectedItemColor: Colors.blue[900],
   ),
   cardTheme: const CardTheme(
     color: Color.fromRGBO(223, 242, 255, 1),
