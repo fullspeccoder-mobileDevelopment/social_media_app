@@ -1,41 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final dateProvider = StateNotifierProvider<DateStateNotifier, Date>((ref) {
+final dateProvider = StateNotifierProvider<DateStateNotifier, DateTime>((ref) {
   return DateStateNotifier();
 });
 
-class Date {
-  final DateTime selectedDate;
-  final DateTime selectedTime;
-
-  Date({
-    required this.selectedDate,
-    required this.selectedTime,
-  });
-
-  Date copyWith({
-    DateTime? selectedDate,
-    DateTime? selectedTime,
-  }) {
-    return Date(
-      selectedDate: selectedDate ?? this.selectedDate,
-      selectedTime: selectedTime ?? this.selectedTime,
-    );
-  }
-}
-
-class DateStateNotifier extends StateNotifier<Date> {
-  DateStateNotifier()
-      : super(Date(
-          selectedDate: DateTime.now(),
-          selectedTime: DateTime.now(),
-        ));
+class DateStateNotifier extends StateNotifier<DateTime> {
+  DateStateNotifier() : super(DateTime.now());
 
   void modifyTime(DateTime? value) {
-    state = state.copyWith(selectedTime: value);
+    state = state.copyWith(
+      hour: value!.hour,
+      minute: value.minute,
+    );
+    // state = state.copyWith(selectedTime: value);
   }
 
   void modifyDate(DateTime? value) {
-    state = state.copyWith(selectedDate: value);
+    state = state.copyWith(
+      year: value!.year,
+      month: value.month,
+      day: value.day,
+    );
+    // state = state.copyWith(selectedDate: value);
   }
 }

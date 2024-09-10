@@ -12,4 +12,8 @@ class ImageStateNotifier extends StateNotifier<File?> {
   void getImageFile(String path) {
     state = File(path);
   }
+
+  void resetImage() {
+    state = null;
+  }
 }
