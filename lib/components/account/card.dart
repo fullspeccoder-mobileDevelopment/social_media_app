@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class SocialMediaCard extends StatelessWidget {
   const SocialMediaCard(
-      {super.key, required this.imagePath, required this.socialMedia});
+      {super.key,
+      required this.imagePath,
+      required this.socialMedia,
+      required this.authCallback});
   final String imagePath;
   final String socialMedia;
+  final Future<void> Function()? authCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,12 @@ class SocialMediaCard extends StatelessWidget {
             ),
             IconButton(
               iconSize: 25,
-              onPressed: () {},
+              onPressed: () {
+                if (socialMedia == 'Twitter(X)') {
+                  authCallback!();
+                }
+                Navigator.popAndPushNamed(context, '/home');
+              },
               icon: const Icon(
                 Icons.add_box_rounded,
                 color: Color.fromRGBO(48, 155, 215, 1),

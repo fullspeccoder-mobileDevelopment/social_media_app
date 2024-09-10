@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/home/post_card.dart';
 import 'package:untitled_app/providers/post_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 
 /// Holds the main content of the home page
 ///

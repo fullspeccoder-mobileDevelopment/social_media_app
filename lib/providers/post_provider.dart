@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/models/firebase_user.dart';
 
 import 'package:untitled_app/models/post.dart';
 
@@ -82,14 +83,19 @@ class PostsNotifier extends StateNotifier<PostList> {
   final FirebaseFirestore _store = FirebaseFirestore.instance;
 
   Future<void> createPost(Post post) async {
+    // Firebase Addition
     final docReference = await _store.collection('posts').add(post.toMap());
 
     final docSnapshot = await docReference.get();
+
+    // State setting
     state = PostList(id: docSnapshot.id, posts: [
       ...state.posts,
       LocalPost.fromMap(
           postId: docSnapshot.id, docSnapshot.data() as Map<String, dynamic>),
     ]);
+
+    //
   }
 
   Future<void> deletePost(String postId) async {

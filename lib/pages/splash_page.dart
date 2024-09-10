@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -13,11 +14,16 @@ class SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
+    final currentUser = ref.read(userProvider);
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).popAndPushNamed('/sign-up');
-    });
+    if (currentUser.id == '') {
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.popAndPushNamed(context, '/sign-up');
+      });
+    } else {
+      Navigator.popAndPushNamed(context, '/home');
+    }
   }
 
   @override

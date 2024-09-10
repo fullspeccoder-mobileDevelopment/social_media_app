@@ -10,8 +10,9 @@ import 'package:untitled_app/components/create/text_input_container_extended.dar
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/models/post.dart';
 import 'package:untitled_app/providers/date_provider.dart';
-import 'package:untitled_app/providers/image_provider.dart';
+// import 'package:untitled_app/providers/image_provider.dart';
 import 'package:untitled_app/providers/post_provider.dart';
+import 'package:untitled_app/providers/twitter_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 
 class CreatePostPage extends ConsumerStatefulWidget {
@@ -32,8 +33,9 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
+    final twitterNotifier = ref.read(twitterProvider.notifier);
     // final posts = ref.watch(postsProvider).posts;
-    final image = ref.watch(imageProvider);
+    // final image = ref.watch(imageProvider);
     final date = ref.watch(dateProvider);
     return Scaffold(
         body: Padding(
@@ -79,6 +81,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           const ImagePickerContainer(),
           //$ TextButton
           PrimaryButton(
+            // TODO: Need to implement platform checking here
             callback: () {
               final selectedDateTime = selectedDate.copyWith(
                   hour: date.selectedTime.hour,
@@ -90,7 +93,8 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                 tags: stringTagController.getTags ?? [],
                 postDate: Timestamp.fromDate(selectedDateTime),
               );
-              ref.read(postsProvider.notifier).createPost(post);
+              // ref.read(postsProvider.notifier).createPost(post);
+              twitterNotifier.createPostOnTwitter(post);
               Navigator.of(context).popAndPushNamed('/home');
             },
           ),

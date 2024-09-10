@@ -67,7 +67,7 @@ class AppDrawer extends ConsumerWidget {
                   const DrawerTab(
                     title: "Add new account",
                     icon: Icons.add,
-                    appPath: '/log-in',
+                    appPath: '/link',
                   ),
                 ],
               ),

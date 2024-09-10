@@ -48,7 +48,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         '/home': (_) => const HomePage(),
         '/sign-up': (_) => const SignUpPage(),
         '/log-in': (_) => const LogInPage(),
-        '/link-first': (_) => const LinkPage(),
+        '/link': (_) => const LinkPage(),
         '/create-post': (_) => const CreatePostPage(),
         '/calendar': (_) => const HomePage(),
         '/post-history': (_) => const HomePage(),

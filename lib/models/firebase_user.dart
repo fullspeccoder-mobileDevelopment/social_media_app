@@ -1,19 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
-import 'package:untitled_app/models/post.dart';
-
 class FirebaseUser {
   final String email;
   final String username;
   final String profilePicUrl;
   final List<String> posts;
+  final Map<String, dynamic> accessTokens;
 
   const FirebaseUser({
     required this.email,
     required this.username,
     required this.profilePicUrl,
     required this.posts,
+    required this.accessTokens,
   });
 
   FirebaseUser copyWith({
@@ -21,12 +18,14 @@ class FirebaseUser {
     String? username,
     String? profilePicUrl,
     List<String>? posts,
+    Map<String, dynamic>? accessTokens,
   }) {
     return FirebaseUser(
       email: email ?? this.email,
       username: username ?? this.username,
       profilePicUrl: profilePicUrl ?? this.profilePicUrl,
       posts: posts ?? this.posts,
+      accessTokens: accessTokens ?? this.accessTokens,
     );
   }
 
@@ -35,7 +34,8 @@ class FirebaseUser {
       'email': email,
       'username': username,
       'profilePicUrl': profilePicUrl,
-      'posts': posts.map((x) => x).toList(),
+      'posts': posts,
+      'accessTokens': accessTokens,
     };
   }
 
@@ -44,17 +44,8 @@ class FirebaseUser {
       email: map['email'] ?? '',
       username: map['username'] ?? '',
       profilePicUrl: map['profilePicUrl'] ?? '',
-      posts: List<String>.from(map['posts']?.map((x) => Post.fromMap(x))),
+      posts: List<String>.from(map['posts']),
+      accessTokens: Map<String, dynamic>.from(map['accessTokens']),
     );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory FirebaseUser.fromJson(String source) =>
-      FirebaseUser.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'FirebaseUser(email: $email, username: $username, profilePicUrl: $profilePicUrl, posts: $posts)';
   }
 }

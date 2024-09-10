@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_oauth2_pkce/twitter_oauth2_pkce.dart';
+// ignore: implementation_imports
+import 'package:twitter_oauth2_pkce/src/scope.dart' as s;
 
 import 'package:untitled_app/models/firebase_user.dart';
 
@@ -16,6 +19,16 @@ class LocalUser {
     required this.id,
     required this.user,
   });
+
+  LocalUser copyWith({
+    String? id,
+    FirebaseUser? user,
+  }) {
+    return LocalUser(
+      id: id ?? this.id,
+      user: user ?? this.user,
+    );
+  }
 }
 
 class UserNotifier extends StateNotifier<LocalUser> {
@@ -28,11 +41,18 @@ class UserNotifier extends StateNotifier<LocalUser> {
               username: "",
               profilePicUrl: "",
               posts: [],
+              accessTokens: {},
             ),
           ),
         );
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _store = FirebaseFirestore.instance;
+  final oauth2 = TwitterOAuth2Client(
+    clientId: 'bnZ6U1ZBZmo5SkRkVmpIZGN5Rmg6MTpjaQ',
+    clientSecret: 'xysW2BDg0wXtDWbTd_HTb6HSiAEGYoui1vP07H1VAVjnJtJbKP',
+    redirectUri: 'com.crossmedia.oauth://callback/',
+    customUriScheme: 'com.crossmedia.oauth',
+  );
 
   Future<void> logIn(String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -52,6 +72,33 @@ class UserNotifier extends StateNotifier<LocalUser> {
             response.docs[0].data() as Map<String, dynamic>));
   }
 
+  Future<void> logInWithTwitter() async {
+    final DocumentReference docRef = _store.collection("users").doc(state.id);
+
+    final response = await oauth2.executeAuthCodeFlowWithPKCE(
+      scopes: [
+        s.Scope.usersRead,
+        s.Scope.tweetRead,
+        s.Scope.tweetWrite,
+      ],
+    );
+
+    _store.runTransaction((transaction) async {
+      transaction.update(docRef, {
+        'accessTokens': {"twitter": response.accessToken}
+      });
+    });
+
+    state = state.copyWith(
+      user: state.user.copyWith(
+        accessTokens: {
+          ...state.user.accessTokens,
+          'twitter': response.accessToken
+        },
+      ),
+    );
+  }
+
   Future<void> signUp(String email, String password) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
@@ -64,6 +111,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
             username: "User${snapshot.count}",
             profilePicUrl: "",
             posts: [],
+            accessTokens: {},
           ).toMap(),
         );
 
@@ -84,6 +132,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
         username: "",
         profilePicUrl: "",
         posts: state.user.posts,
+        accessTokens: {},
       ),
     );
   }

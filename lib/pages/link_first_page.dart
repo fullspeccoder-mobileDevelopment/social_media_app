@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/account/card.dart';
 import 'package:untitled_app/components/account/title.dart';
 import 'package:untitled_app/models/social_media.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 
-class LinkPage extends StatefulWidget {
+class LinkPage extends ConsumerStatefulWidget {
   const LinkPage({super.key});
 
   @override
-  State<LinkPage> createState() => _LinkPageState();
+  ConsumerState<LinkPage> createState() => _LinkPageState();
 }
 
-class _LinkPageState extends State<LinkPage> {
+class _LinkPageState extends ConsumerState<LinkPage> {
   TextEditingController searchController = TextEditingController();
+
+  Future<void> Function()? provideAuthFunction(String social) {
+    final notifier = ref.read(userProvider.notifier);
+    switch (social) {
+      case "twitter":
+        return notifier.logInWithTwitter;
+      default:
+        print("Social not applicable");
+        return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +43,10 @@ class _LinkPageState extends State<LinkPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: socialMedias
                       .map((social) => SocialMediaCard(
-                          imagePath: social.filePath,
-                          socialMedia: social.socialName))
+                            imagePath: social.filePath,
+                            socialMedia: social.socialName,
+                            authCallback: provideAuthFunction('twitter'),
+                          ))
                       .toList(),
                 ),
               ),
