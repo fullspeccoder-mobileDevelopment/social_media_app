@@ -22,8 +22,6 @@ class FormBottomContent extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 50.0,
-          right: 50.0,
           top: 30.0,
           bottom: 30.0,
         ),

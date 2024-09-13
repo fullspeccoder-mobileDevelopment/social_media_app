@@ -45,7 +45,7 @@ class HomeContent extends ConsumerWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).popAndPushNamed('/create-post');
+                        Navigator.of(context).pushNamed('/create-post');
                       },
                       style: PrimaryButtonStyle(),
                       child: const Text(

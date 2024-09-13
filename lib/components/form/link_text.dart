@@ -32,6 +32,7 @@ class LinkText extends StatelessWidget {
             color: Colors.black,
           ),
         ),
+        const TextSpan(text: " "),
         TextSpan(
           text: secondaryText,
           style: const TextStyle(

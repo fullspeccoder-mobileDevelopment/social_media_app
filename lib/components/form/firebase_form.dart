@@ -62,7 +62,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   Widget build(BuildContext context) {
     return Container(
       height: 600,
-      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+      padding: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -84,7 +84,9 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
           SignInButton(
             image: "assets/images/phone.png",
             text: "Continue with Phone ",
-            triggerOnPressed: () {},
+            triggerOnPressed: () {
+              Navigator.pushNamed(context, '/phone-sign-up');
+            },
           ),
           const Divider(),
           TextButton(

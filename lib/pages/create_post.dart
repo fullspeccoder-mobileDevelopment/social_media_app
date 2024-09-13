@@ -32,9 +32,22 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     final postMaker = PostMaker(ref: ref);
     return Scaffold(
         body: Padding(
-      padding: const EdgeInsets.all(36.0),
+      padding: const EdgeInsets.fromLTRB(36.0, 0, 36, 36),
       child: ListView(
         children: [
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 24,
+                ),
+              )
+            ],
+          ),
           const Text(
             "Post your shot",
             textAlign: TextAlign.center,

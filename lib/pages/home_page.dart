@@ -20,22 +20,27 @@ class _HomePageState extends ConsumerState<HomePage> {
     final currentUser = ref.watch(userProvider).user;
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentUser.username.isNotEmpty
-            ? currentUser.username
-            : currentUser.email),
-        actions: [
-          Builder(builder: (context) {
-            return IconButton(
-              icon: const Icon(Icons.circle_outlined),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
-            );
-          })
-        ],
-      ),
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: const Icon(Icons.menu),
+                );
+              }),
+              Text(currentUser.username.isNotEmpty
+                  ? currentUser.username
+                  : currentUser.email),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.panorama_fish_eye_outlined))
+            ],
+          )),
       drawer: AppDrawer(currentUser: currentUser),
-      endDrawer: const EndDrawer(),
       body: const HomeContent(),
       floatingActionButton: const HomeButton(),
       bottomNavigationBar: const BottomHomeNavbar(),

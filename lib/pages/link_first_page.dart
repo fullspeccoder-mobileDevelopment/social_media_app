@@ -30,10 +30,10 @@ class _LinkPageState extends ConsumerState<LinkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(26.0),
+        padding: const EdgeInsets.fromLTRB(26.0, 0, 26, 26),
         child: Container(
-          margin: const EdgeInsets.only(top: 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -52,7 +52,12 @@ class _LinkPageState extends ConsumerState<LinkPage> {
               ),
               TextButton(
                 style: PrimaryButtonStyle(),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/request-social',
+                  );
+                },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(

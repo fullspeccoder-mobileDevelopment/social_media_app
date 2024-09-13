@@ -99,7 +99,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUpWithEmail(String email, String password) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 

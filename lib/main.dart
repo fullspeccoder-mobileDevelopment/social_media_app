@@ -4,6 +4,8 @@ import 'package:untitled_app/pages/create_post.dart';
 import 'package:untitled_app/pages/home_page.dart';
 import 'package:untitled_app/pages/link_first_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
+import 'package:untitled_app/pages/phone_signup.dart';
+import 'package:untitled_app/pages/request_social.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,6 +49,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         '/': (_) => const SplashScreen(),
         '/home': (_) => const HomePage(),
         '/sign-up': (_) => const SignUpPage(),
+        '/phone-sign-up': (_) => const PhoneSignUp(),
         '/log-in': (_) => const LogInPage(),
         '/link': (_) => const LinkPage(),
         '/create-post': (_) => const CreatePostPage(),
@@ -54,6 +57,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         '/post-history': (_) => const HomePage(),
         '/profile': (_) => const HomePage(),
         '/support': (_) => const HomePage(),
+        '/request-social': (_) => const RequestSocial(),
       },
     );
   }

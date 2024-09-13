@@ -10,25 +10,28 @@ class SignUpPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUp = ref.read(userProvider.notifier).signUp;
+    final signUpWithEmail = ref.read(userProvider.notifier).signUpWithEmail;
     return Scaffold(
-      body: Column(
-        children: [
-          const FormTitle(
-            primaryText: "Sign up for",
-            subText: "Create your account",
-          ),
-          FirebaseForm(
-            formAction: signUp,
-          ),
-          FormBottomContent(
-            bottomText: "Already have an account? ",
-            bottomLink: "Log in",
-            navigationMethod: () {
-              Navigator.of(context).popAndPushNamed('/log-in');
-            },
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20),
+        child: Column(
+          children: [
+            const FormTitle(
+              primaryText: "Sign up for",
+              subText: "Create your account",
+            ),
+            FirebaseForm(
+              formAction: signUpWithEmail,
+            ),
+            FormBottomContent(
+              bottomText: "Already have an account? ",
+              bottomLink: "Log in",
+              navigationMethod: () {
+                Navigator.of(context).popAndPushNamed('/log-in');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
