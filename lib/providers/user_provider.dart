@@ -116,15 +116,19 @@ class UserNotifier extends StateNotifier<LocalUser> {
     String phoneNumber, {
     required void Function(String verificationId, int? resendToken) codeSent,
   }) async {
+    print('$areaCode$phoneNumber');
     // Verify Phone Number
     await _auth.verifyPhoneNumber(
-      phoneNumber: createPhoneString(areaCode, phoneNumber),
+      phoneNumber: '$areaCode$phoneNumber',
       verificationCompleted: (credential) {
         print('Verification Completed');
       },
       verificationFailed: (error) {
         print('Verification Failed');
         print(error.code);
+        print(error.message);
+        print(error.stackTrace);
+        print(error.phoneNumber);
         return;
       },
       codeSent: codeSent,
@@ -141,15 +145,14 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
-  // TODO Have to figure out if phone number exists to handle edge case
   Future<void> signUpWithPhoneNumber(
     String verificationID,
     String verficationCode,
   ) async {
-    final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationID, smsCode: verficationCode);
-
+    // TODO Find out what is causing the issue where phone numbers won't recieve a text for the OTP passcode
     try {
+      final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationID, smsCode: verficationCode);
       await _auth.signInWithCredential(credential);
     } catch (e) {
       print(e);
@@ -205,6 +208,9 @@ class UserNotifier extends StateNotifier<LocalUser> {
         id: docSnapshot.id,
         user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>));
   }
+
+  // TODO Implement Google Log In
+  // Future<void> logInWithGoogle() async {}
 
   Future<void> signOut() async {
     await _auth.signOut();
