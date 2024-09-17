@@ -148,6 +148,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
   ) async {
     final PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationID, smsCode: verficationCode);
+
     try {
       await _auth.signInWithCredential(credential);
     } catch (e) {
@@ -157,6 +158,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
     // Retrieve Count of Users
     final AggregateQuerySnapshot snapshot =
         await _store.collection('users').count().get();
+
     // Get Doc Reference from Store & Add User to Store
     final docReference = await _store.collection('users').add(
           FirebaseUser.zero(
@@ -176,6 +178,33 @@ class UserNotifier extends StateNotifier<LocalUser> {
 
   // TODO Implement log in with phone number logic
   // Future<void> logInWithPhoneNumber() {}
+
+  Future<void> signUpWithGoogle() async {
+    late UserCredential credential;
+    try {
+      credential = await _auth.signInWithProvider(GoogleAuthProvider());
+      print(credential.user!.email ?? 'No associated email');
+    } catch (e) {
+      print(e);
+    }
+
+    // Retrieve Count of Users
+    final AggregateQuerySnapshot snapshot =
+        await _store.collection('users').count().get();
+
+    final DocumentReference docReference =
+        await _store.collection("users").add(FirebaseUser.zero(
+              email: credential.user!.email,
+              username: "User${snapshot.count}",
+              profilePicUrl: credential.user!.photoURL,
+            ).toMap());
+
+    final DocumentSnapshot docSnapshot = await docReference.get();
+
+    state = LocalUser(
+        id: docSnapshot.id,
+        user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>));
+  }
 
   Future<void> signOut() async {
     await _auth.signOut();

@@ -9,8 +9,6 @@ import 'package:untitled_app/pages/request_social.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'package:untitled_app/providers/post_provider.dart';
-// import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/theme.dart';
 import 'firebase_options.dart';
 

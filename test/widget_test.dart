@@ -28,3 +28,12 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 }
+
+/*
+* Versioning Info
+* 1.2.3
+* 
+* 1 - Major revision (new UI, lots of new features, conceptual change, etc)
+* 2 - Minor revision (change to a search box, 1 feature added, collection of bug fixes)
+* 3 - Bug fix release
+ */

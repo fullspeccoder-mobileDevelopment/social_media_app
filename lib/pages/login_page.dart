@@ -20,6 +20,7 @@ class LogInPage extends ConsumerWidget {
           ),
           FirebaseForm(
             formAction: logIn,
+            googleAction: () async {},
           ),
           FormBottomContent(
             bottomText: "Didn't have an account? ",

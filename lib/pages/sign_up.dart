@@ -10,7 +10,7 @@ class SignUpPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpWithEmail = ref.read(userProvider.notifier).signUpWithEmail;
+    final userNotifier = ref.read(userProvider.notifier);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20),
@@ -21,7 +21,8 @@ class SignUpPage extends ConsumerWidget {
               subText: "Create your account",
             ),
             FirebaseForm(
-              formAction: signUpWithEmail,
+              formAction: userNotifier.signUpWithEmail,
+              googleAction: userNotifier.signUpWithGoogle,
             ),
             FormBottomContent(
               bottomText: "Already have an account? ",

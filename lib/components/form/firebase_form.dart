@@ -12,9 +12,11 @@ import 'package:untitled_app/utils/snack_utils.dart';
 /// Uses the eyeToggled variable to determine whether the eye icon is active or inactive
 /// This will be the control center for signing up through Google, phone, email, contains links to the terms & conditions along with the privacy policy
 class FirebaseForm extends ConsumerStatefulWidget {
-  const FirebaseForm({super.key, required this.formAction});
+  const FirebaseForm(
+      {super.key, required this.formAction, required this.googleAction});
 
   final Future<void> Function(String email, String password) formAction;
+  final Future<void> Function() googleAction;
 
   @override
   ConsumerState<FirebaseForm> createState() => _FirebaseFormState();
@@ -79,7 +81,10 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
           SignInButton(
             image: "assets/images/google.png",
             text: "Continue with Google",
-            triggerOnPressed: () {},
+            triggerOnPressed: () {
+              widget.googleAction();
+              Navigator.popAndPushNamed(context, '/home');
+            },
           ),
           SignInButton(
             image: "assets/images/phone.png",
