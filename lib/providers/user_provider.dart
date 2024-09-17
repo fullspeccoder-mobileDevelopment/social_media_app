@@ -6,6 +6,7 @@ import 'package:twitter_oauth2_pkce/twitter_oauth2_pkce.dart';
 import 'package:twitter_oauth2_pkce/src/scope.dart' as s;
 
 import 'package:untitled_app/models/firebase_user.dart';
+import 'package:untitled_app/utils/phone_manipulation.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, LocalUser>((ref) {
   return UserNotifier();
@@ -34,16 +35,7 @@ class LocalUser {
 class UserNotifier extends StateNotifier<LocalUser> {
   UserNotifier()
       : super(
-          LocalUser(
-            id: "",
-            user: const FirebaseUser(
-              email: "",
-              username: "",
-              profilePicUrl: "",
-              posts: [],
-              accessTokens: {},
-            ),
-          ),
+          LocalUser(id: "", user: FirebaseUser.zero()),
         );
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _store = FirebaseFirestore.instance;
@@ -106,12 +98,9 @@ class UserNotifier extends StateNotifier<LocalUser> {
     final AggregateQuerySnapshot snapshot =
         await _store.collection('users').count().get();
     final docReference = await _store.collection('users').add(
-          FirebaseUser(
+          FirebaseUser.zero(
             email: email,
             username: "User${snapshot.count}",
-            profilePicUrl: "",
-            posts: [],
-            accessTokens: {},
           ).toMap(),
         );
 
@@ -122,18 +111,78 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
+  Future<void> verifyWithPhoneNumber(
+    String areaCode,
+    String phoneNumber, {
+    required void Function(String verificationId, int? resendToken) codeSent,
+  }) async {
+    // Verify Phone Number
+    await _auth.verifyPhoneNumber(
+      phoneNumber: createPhoneString(areaCode, phoneNumber),
+      verificationCompleted: (credential) {
+        print('Verification Completed');
+      },
+      verificationFailed: (error) {
+        print('Verification Failed');
+        print(error.code);
+        return;
+      },
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: (verificationId) {
+        print('Code Auto Retrieval Running...');
+      },
+    );
+
+    // Set State of LocalUser
+    state = LocalUser(
+      id: '',
+      user: FirebaseUser.zero(
+          phoneNumber: createPhoneString(areaCode, phoneNumber)),
+    );
+  }
+
+  // TODO Have to figure out if phone number exists to handle edge case
+  Future<void> signUpWithPhoneNumber(
+    String verificationID,
+    String verficationCode,
+  ) async {
+    final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: verficationCode);
+    try {
+      await _auth.signInWithCredential(credential);
+    } catch (e) {
+      print(e);
+    }
+
+    // Retrieve Count of Users
+    final AggregateQuerySnapshot snapshot =
+        await _store.collection('users').count().get();
+    // Get Doc Reference from Store & Add User to Store
+    final docReference = await _store.collection('users').add(
+          FirebaseUser.zero(
+            username: "User${snapshot.count}",
+            phoneNumber: state.user.phoneNumber,
+          ).toMap(),
+        );
+
+    final docSnapshot = await docReference.get();
+
+    // Set State of LocalUser
+    state = LocalUser(
+      id: docReference.id,
+      user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>),
+    );
+  }
+
+  // TODO Implement log in with phone number logic
+  // Future<void> logInWithPhoneNumber() {}
+
   Future<void> signOut() async {
     await _auth.signOut();
 
     state = LocalUser(
       id: '',
-      user: FirebaseUser(
-        email: "",
-        username: "",
-        profilePicUrl: "",
-        posts: state.user.posts,
-        accessTokens: {},
-      ),
+      user: FirebaseUser.zero(),
     );
   }
 }

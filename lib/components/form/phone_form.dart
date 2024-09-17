@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/pages/otp_page.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/utils/snack_utils.dart';
 
-class PhoneForm extends StatefulWidget {
+class PhoneForm extends ConsumerStatefulWidget {
   const PhoneForm({super.key});
 
   @override
-  State<PhoneForm> createState() => _PhoneFormState();
+  ConsumerState<PhoneForm> createState() => _PhoneFormState();
 }
 
-class _PhoneFormState extends State<PhoneForm> {
+class _PhoneFormState extends ConsumerState<PhoneForm> {
   final TextEditingController areaCodeController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final userNotifier = ref.read(userProvider.notifier);
     return Column(
       children: [
         Row(
@@ -55,7 +60,29 @@ class _PhoneFormState extends State<PhoneForm> {
         const SizedBox(height: 15),
         TextButton(
           style: PrimaryButtonStyle(),
-          onPressed: null,
+          onPressed: () {
+            userNotifier.verifyWithPhoneNumber(
+              areaCodeController.text,
+              mobileController.text,
+              codeSent: (verificationId, resendToken) async {
+                print('Code Sent');
+                // Update the UI - wait for the user to enter the SMS code
+                // String smsCode = '839213';
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => OTPPage(
+                              verificationId: verificationId,
+                              isSigningUp: true,
+                            )));
+
+                showSnackBarSuccessMessage(context,
+                    'Successfully Signed Up! Switching to Home Page...');
+                await Future.delayed(const Duration(seconds: 1));
+                Navigator.popAndPushNamed(context, '/home');
+              },
+            );
+          },
           child: const Text(
             "Send Code",
             style: TextStyle(
