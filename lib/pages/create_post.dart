@@ -7,6 +7,7 @@ import 'package:untitled_app/components/create/image_picker_container.dart';
 import 'package:untitled_app/components/create/platform_dropdown.dart';
 import 'package:untitled_app/components/create/text_input_container.dart';
 import 'package:untitled_app/components/create/text_input_container_extended.dart';
+import 'package:untitled_app/components/create/textfield_container.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/date_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
@@ -22,7 +23,7 @@ class CreatePostPage extends ConsumerStatefulWidget {
 class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController platformController = TextEditingController();
-  StringTagController stringTagController = StringTagController();
+  StringTagController textfieldTagsController = StringTagController();
   TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -63,17 +64,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           //$ Tags
           TextInputContainerExtended(
             text: "Add tags (Optional)",
-            child: TextFieldTags<String>(
-              textfieldTagsController: stringTagController,
-              textSeparators: const [' '],
-              inputFieldBuilder: (_, inputFieldValues) {
-                return TextField(
-                  maxLines: 2,
-                  controller: inputFieldValues.textEditingController,
-                  focusNode: inputFieldValues.focusNode,
-                );
-              },
-            ),
+            child: TextFieldTagsContainer(controller: textfieldTagsController),
           ),
           //$ Description
           TextInputContainerExtended(
@@ -92,7 +83,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                 'content': descriptionController.text,
                 'imageUrl': 'some image url here',
                 'userId': user.id,
-                'tags': stringTagController.getTags ?? [],
+                'tags': textfieldTagsController.getTags ?? [],
                 'postDate': Timestamp.fromDate(date),
               }, platformController.text);
               Navigator.of(context).pop();

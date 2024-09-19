@@ -47,6 +47,7 @@ dependencies:
   twitter_api_v2: ^4.9.4
   twitter_oauth2_pkce: ^1.0.2
   flutter_otp_text_field: ^1.2.0
+  material_tag_editor: ^0.1.2
 
 dev_dependencies:
   flutter_test:
