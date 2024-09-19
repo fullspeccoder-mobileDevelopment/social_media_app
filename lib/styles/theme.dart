@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+
+FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
 
 final ThemeData lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(

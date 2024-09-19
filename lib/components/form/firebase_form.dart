@@ -1,10 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/sign_in_button.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
-import 'package:untitled_app/utils/nav_utils.dart';
+import 'package:untitled_app/utils/nav_utils.dart' as r;
 import 'package:untitled_app/utils/snack_utils.dart';
 
 /// The sign up form
@@ -54,9 +56,12 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
       //       _emailController.text,
       //       _passwordController.text,
       //     );
-      popAndPushSignUpMessageConfirmation(context);
+      if (context.mounted) {
+        Navigator.pop(context);
+        Navigator.push(context, r.Route.successfulSignUp);
+      }
     } catch (e) {
-      showSnackBarErrorMessage(context, e);
+      if (context.mounted) showSnackBarErrorMessage(context, e);
     }
   }
 

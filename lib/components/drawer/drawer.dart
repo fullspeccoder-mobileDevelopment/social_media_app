@@ -27,76 +27,70 @@ class AppDrawer extends ConsumerWidget {
               child: const Text("My Menu", style: TextStyle(fontSize: 32)),
             ),
             const SizedBox(height: 35),
-            Container(
-              child: const Column(
-                children: [
-                  DrawerTab(
-                    title: "Calendar",
-                    subTitle: "Schedule your posts",
-                    icon: Icons.calendar_month_outlined,
-                    appPath: '/calendar',
-                  ),
-                  DrawerTab(
-                    icon: Icons.access_time_outlined,
-                    title: "Post history",
-                    subTitle: "Review post history",
-                    appPath: '/post-history',
-                  ),
-                ],
-              ),
+            const Column(
+              children: [
+                DrawerTab(
+                  title: "Calendar",
+                  subTitle: "Schedule your posts",
+                  icon: Icons.calendar_month_outlined,
+                  appPath: '/calendar',
+                ),
+                DrawerTab(
+                  icon: Icons.access_time_outlined,
+                  title: "Post history",
+                  subTitle: "Review post history",
+                  appPath: '/post-history',
+                ),
+              ],
             ),
             const SizedBox(height: 35),
-            Container(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      right: 175.0,
-                    ),
-                    child: Text(
-                      "Accounts",
-                      style: TextStyle(fontSize: 24),
-                    ),
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    right: 175.0,
                   ),
-                  DrawerTab(
-                    title: user.username,
-                    subTitle: "Profile",
-                    icon: Icons.account_circle,
-                    appPath: '/profile',
+                  child: Text(
+                    "Accounts",
+                    style: TextStyle(fontSize: 24),
                   ),
-                  const DrawerTab(
-                    title: "Add new account",
-                    icon: Icons.add,
-                    appPath: '/link',
-                  ),
-                ],
-              ),
+                ),
+                DrawerTab(
+                  title: user.username,
+                  subTitle: "Profile",
+                  icon: Icons.account_circle,
+                  appPath: '/profile',
+                ),
+                const DrawerTab(
+                  title: "Add new account",
+                  icon: Icons.add,
+                  appPath: '/link',
+                ),
+              ],
             ),
             const SizedBox(height: 25),
-            Container(
-              child: const Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: 225.0,
-                    ),
-                    child: Text(
-                      "More",
-                      style: TextStyle(fontSize: 24),
-                    ),
+            const Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 225.0,
                   ),
-                  DrawerTab(
-                    title: "Help & Support",
-                    icon: Icons.help,
-                    appPath: '/support',
+                  child: Text(
+                    "More",
+                    style: TextStyle(fontSize: 24),
                   ),
-                  DrawerTab(
-                    title: "Logout",
-                    icon: Icons.logout,
-                    appPath: '/log-out',
-                  ),
-                ],
-              ),
+                ),
+                DrawerTab(
+                  title: "Help & Support",
+                  icon: Icons.help,
+                  appPath: '/support',
+                ),
+                DrawerTab(
+                  title: "Logout",
+                  icon: Icons.logout,
+                  appPath: '/log-out',
+                ),
+              ],
             )
           ],
         ),

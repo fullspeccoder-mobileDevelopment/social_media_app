@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/utils/nav_utils.dart';
+import 'package:untitled_app/utils/nav_utils.dart' as r;
 
 class EmailForm extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
@@ -36,7 +36,8 @@ class EmailForm extends ConsumerWidget {
           onPressed: () {
             userNotifier.signUpWithEmail(
                 emailController.text, passwordController.text);
-            popAndPushSignUpMessageConfirmation(context);
+            Navigator.pop(context);
+            Navigator.push(context, r.Route.successfulSignUp);
           },
           child: const Text(
             "Next",

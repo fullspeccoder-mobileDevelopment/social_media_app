@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/pages/confirmation_page.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/utils/send_social_request.dart';
+import 'package:untitled_app/utils/nav_utils.dart' as r;
 
 class RequestSocial extends StatefulWidget {
   const RequestSocial({super.key});
@@ -18,21 +18,9 @@ class _RequestSocialState extends State<RequestSocial> {
     final socialRequest = SocialRequest();
     try {
       socialRequest.sendRequest(nameController.text, linkController.text);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => const ConfirmationPage(
-                  detailMessage:
-                      'Your request for adding a new social media\nplatform is successfully sent and will be\nreviewed shortly.',
-                  titleMessage: 'Congratulations!')));
+      Navigator.push(context, r.Route.successfulSocialRequest);
     } catch (e) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => const ConfirmationPage(
-                  detailMessage:
-                      'Your request could not be completed at this time.',
-                  titleMessage: 'Error!')));
+      Navigator.push(context, r.Route.failedRequest);
     }
   }
 

@@ -86,10 +86,13 @@ class _PhoneFormState extends ConsumerState<PhoneForm> {
                               isSigningUp: true,
                             )));
 
-                showSnackBarSuccessMessage(context,
-                    'Successfully Signed Up! Switching to Home Page...');
-                await Future.delayed(const Duration(seconds: 1));
-                Navigator.popAndPushNamed(context, '/home');
+                if (context.mounted) {
+                  showSnackBarSuccessMessage(context,
+                      'Successfully Signed Up! Switching to Home Page...');
+                  await Future.delayed(const Duration(seconds: 1));
+                  // ignore: use_build_context_synchronously
+                  Navigator.popAndPushNamed(context, '/home');
+                }
               },
             );
           },
