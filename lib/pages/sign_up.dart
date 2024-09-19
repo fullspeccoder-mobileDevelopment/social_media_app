@@ -23,6 +23,7 @@ class SignUpPage extends ConsumerWidget {
             FirebaseForm(
               formAction: userNotifier.signUpWithEmail,
               googleAction: userNotifier.signUpWithGoogle,
+              isSigningUp: true,
             ),
             FormBottomContent(
               bottomText: "Already have an account? ",

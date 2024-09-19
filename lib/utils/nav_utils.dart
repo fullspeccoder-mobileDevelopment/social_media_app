@@ -4,6 +4,7 @@ import 'package:untitled_app/pages/create_post.dart';
 import 'package:untitled_app/pages/home_page.dart';
 import 'package:untitled_app/pages/link_first_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
+import 'package:untitled_app/pages/phone_login.dart';
 import 'package:untitled_app/pages/phone_signup.dart';
 import 'package:untitled_app/pages/request_social.dart';
 import 'package:untitled_app/pages/sign_up.dart';
@@ -14,6 +15,7 @@ enum Route {
   home(route: "/home"),
   signUp(route: "/sign-up"),
   phoneSignUp(route: "/phone-sign-up"),
+  phoneLogIn(route: "/phone-login"),
   logIn(route: "/log-in"),
   link(route: "/link"),
   createPost(route: "/create-post"),
@@ -30,6 +32,7 @@ enum Route {
   static WidgetBuilder get homeRoute => (_) => const HomePage();
   static WidgetBuilder get signUpRoute => (_) => const SignUpPage();
   static WidgetBuilder get phoneSignUpRoute => (_) => const PhoneSignUp();
+  static WidgetBuilder get phoneLogInRoute => (_) => const PhoneLogInPage();
   static WidgetBuilder get logInRoute => (_) => const LogInPage();
   static WidgetBuilder get linkRoute => (_) => const LinkPage();
   static WidgetBuilder get createPostRoute => (_) => const CreatePostPage();
@@ -60,6 +63,7 @@ enum Route {
   static String get homeString => home.route;
   static String get signUpString => signUp.route;
   static String get phoneSignUpString => phoneSignUp.route;
+  static String get phoneLogInString => phoneLogIn.route;
   static String get logInString => logIn.route;
   static String get linkString => link.route;
   static String get createPostString => createPost.route;

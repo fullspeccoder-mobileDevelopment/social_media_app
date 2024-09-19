@@ -15,10 +15,14 @@ import 'package:untitled_app/utils/snack_utils.dart';
 /// This will be the control center for signing up through Google, phone, email, contains links to the terms & conditions along with the privacy policy
 class FirebaseForm extends ConsumerStatefulWidget {
   const FirebaseForm(
-      {super.key, required this.formAction, required this.googleAction});
+      {super.key,
+      required this.formAction,
+      required this.googleAction,
+      required this.isSigningUp});
 
   final Future<void> Function(String email, String password) formAction;
   final Future<void> Function() googleAction;
+  final bool isSigningUp;
 
   @override
   ConsumerState<FirebaseForm> createState() => _FirebaseFormState();
@@ -52,10 +56,6 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   void _formSignUpAction() async {
     try {
       await widget.formAction(_emailController.text, _passwordController.text);
-      // await ref.read(userProvider.notifier).signUp(
-      //       _emailController.text,
-      //       _passwordController.text,
-      //     );
       if (context.mounted) {
         Navigator.pop(context);
         Navigator.push(context, r.Route.successfulSignUp);
@@ -95,7 +95,11 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
             image: "assets/images/phone.png",
             text: "Continue with Phone ",
             triggerOnPressed: () {
-              Navigator.pushNamed(context, '/phone-sign-up');
+              if (widget.isSigningUp) {
+                Navigator.pushNamed(context, '/phone-sign-up');
+                return;
+              }
+              Navigator.pushNamed(context, '/phone-login');
             },
           ),
           const Divider(),

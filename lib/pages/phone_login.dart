@@ -5,14 +5,14 @@ import 'package:untitled_app/components/form/phone_firebase_form.dart';
 import 'package:untitled_app/pages/otp_page.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
-class PhoneSignUp extends StatefulWidget {
-  const PhoneSignUp({super.key});
+class PhoneLogInPage extends StatefulWidget {
+  const PhoneLogInPage({super.key});
 
   @override
-  State<PhoneSignUp> createState() => _PhoneSignUpState();
+  State<PhoneLogInPage> createState() => _PhoneLogInPageState();
 }
 
-class _PhoneSignUpState extends State<PhoneSignUp>
+class _PhoneLogInPageState extends State<PhoneLogInPage>
     with SingleTickerProviderStateMixin {
   static const List<Tab> myTabs = <Tab>[
     Tab(
@@ -30,9 +30,9 @@ class _PhoneSignUpState extends State<PhoneSignUp>
   ];
   late TabController _tabController;
   late Widget currentForm =
-      PhoneFirebaseForm(codeSentAction: codeSentSignUpAction);
+      PhoneFirebaseForm(codeSentAction: codeSentLoginAction);
 
-  void codeSentSignUpAction(verificationId, resendToken) async {
+  void codeSentLoginAction(String verificationId, int? resendToken) async {
     // Update the UI - wait for the user to enter the SMS code
     // String smsCode = '839213';
     await Navigator.push(
@@ -40,12 +40,12 @@ class _PhoneSignUpState extends State<PhoneSignUp>
         MaterialPageRoute(
             builder: (_) => OTPPage(
                   verificationId: verificationId,
-                  isSigningUp: true,
+                  isSigningUp: false,
                 )));
 
     if (context.mounted) {
       showSnackBarSuccessMessage(
-          context, 'Successfully Signed Up! Switching to Home Page...');
+          context, 'Successfully Logged In! Switching to Home Page...');
       await Future.delayed(const Duration(seconds: 1));
       // ignore: use_build_context_synchronously
       Navigator.popAndPushNamed(context, '/home');
@@ -81,12 +81,12 @@ class _PhoneSignUpState extends State<PhoneSignUp>
                 Column(
                   children: [
                     const Text(
-                      "Sign up for",
+                      "Log in",
                       style: TextStyle(fontSize: 32),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "Create your account",
+                      "Enter into your account",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
@@ -102,7 +102,7 @@ class _PhoneSignUpState extends State<PhoneSignUp>
                         currentForm = EmailForm();
                       } else {
                         currentForm = PhoneFirebaseForm(
-                            codeSentAction: codeSentSignUpAction);
+                            codeSentAction: codeSentLoginAction);
                       }
                     });
                   },
@@ -120,9 +120,9 @@ class _PhoneSignUpState extends State<PhoneSignUp>
             ),
             FormBottomContent(
                 bottomText: 'Already have an account?',
-                bottomLink: 'Log in',
+                bottomLink: 'Sign up',
                 navigationMethod: () {
-                  Navigator.popAndPushNamed(context, '/phone-login');
+                  Navigator.popAndPushNamed(context, '/phone-sign-up');
                 }),
           ],
         ),

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/pages/otp_page.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/utils/snack_utils.dart';
 
-class PhoneForm extends ConsumerStatefulWidget {
-  const PhoneForm({super.key});
+class PhoneFirebaseForm extends ConsumerStatefulWidget {
+  const PhoneFirebaseForm({super.key, required this.codeSentAction});
+
+  final void Function(String verificationId, int? resendToken) codeSentAction;
 
   @override
-  ConsumerState<PhoneForm> createState() => _PhoneFormState();
+  ConsumerState<PhoneFirebaseForm> createState() => _PhoneFirebaseFormState();
 }
 
-class _PhoneFormState extends ConsumerState<PhoneForm> {
+class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
   final TextEditingController areaCodeController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   String? currentFlag;
@@ -70,30 +70,11 @@ class _PhoneFormState extends ConsumerState<PhoneForm> {
         const SizedBox(height: 15),
         TextButton(
           style: PrimaryButtonStyle(),
-          onPressed: () {
-            userNotifier.verifyWithPhoneNumber(
+          onPressed: () async {
+            await userNotifier.verifyWithPhoneNumber(
               areaCodeController.text,
               mobileController.text,
-              codeSent: (verificationId, resendToken) async {
-                print('Code Sent');
-                // Update the UI - wait for the user to enter the SMS code
-                // String smsCode = '839213';
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => OTPPage(
-                              verificationId: verificationId,
-                              isSigningUp: true,
-                            )));
-
-                if (context.mounted) {
-                  showSnackBarSuccessMessage(context,
-                      'Successfully Signed Up! Switching to Home Page...');
-                  await Future.delayed(const Duration(seconds: 1));
-                  // ignore: use_build_context_synchronously
-                  Navigator.popAndPushNamed(context, '/home');
-                }
-              },
+              codeSent: widget.codeSentAction,
             );
           },
           child: const Text(

@@ -4,12 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 
 class OTPPage extends ConsumerStatefulWidget {
-  final String verificationId;
-
-  final bool isSigningUp;
-
   const OTPPage(
       {super.key, required this.verificationId, required this.isSigningUp});
+  final String verificationId;
+  final bool isSigningUp;
 
   @override
   ConsumerState<OTPPage> createState() => _OTPPageState();
@@ -43,8 +41,11 @@ class _OTPPageState extends ConsumerState<OTPPage> {
                   if (widget.isSigningUp) {
                     ref.read(userProvider.notifier).signUpWithPhoneNumber(
                         widget.verificationId, verificationCode);
+                    Navigator.pop(context);
+                    return;
                   }
-                  Navigator.pop(context);
+                  ref.read(userProvider.notifier).logInWithPhoneNumber(
+                      widget.verificationId, verificationCode);
                 },
               )
             ],

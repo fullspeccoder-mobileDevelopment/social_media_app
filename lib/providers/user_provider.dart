@@ -147,12 +147,12 @@ class UserNotifier extends StateNotifier<LocalUser> {
 
   Future<void> signUpWithPhoneNumber(
     String verificationID,
-    String verficationCode,
+    String verificationCode,
   ) async {
     // TODO Find out what is causing the issue where phone numbers won't recieve a text for the OTP passcode
     try {
       final PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationID, smsCode: verficationCode);
+          verificationId: verificationID, smsCode: verificationCode);
       await _auth.signInWithCredential(credential);
     } catch (e) {
       print(e);
@@ -179,8 +179,32 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
-  // TODO Implement log in with phone number logic
-  // Future<void> logInWithPhoneNumber() {}
+  Future<void> logInWithPhoneNumber(
+    String verificationID,
+    String verificationCode,
+  ) async {
+    try {
+      final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationID, smsCode: verificationCode);
+      await _auth.signInWithCredential(credential);
+    } catch (e) {
+      print(e);
+      return;
+    }
+
+    final Query query = _store.collection('users').where('phoneNumber',
+        isEqualTo: createPhoneStringFromAuth(_auth.currentUser!.phoneNumber!));
+
+    final QuerySnapshot querySnapshot = await query.get();
+
+    final DocumentSnapshot docSnapshot = querySnapshot.docs[0];
+
+    // Set State of LocalUser
+    state = LocalUser(
+      id: docSnapshot.id,
+      user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>),
+    );
+  }
 
   Future<void> signUpWithGoogle() async {
     late UserCredential credential;

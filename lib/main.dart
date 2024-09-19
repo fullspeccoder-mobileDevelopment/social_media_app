@@ -41,6 +41,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         r.Route.homeString: r.Route.homeRoute,
         r.Route.signUpString: r.Route.signUpRoute,
         r.Route.phoneSignUpString: r.Route.phoneSignUpRoute,
+        r.Route.phoneLogInString: r.Route.phoneLogInRoute,
         r.Route.logInString: r.Route.logInRoute,
         r.Route.linkString: r.Route.linkRoute,
         r.Route.createPostString: r.Route.createPostRoute,
