@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled_app/components/sheets/congratulations_sheet.dart';
 
 class SocialMediaCard extends StatelessWidget {
   const SocialMediaCard(
@@ -46,9 +47,12 @@ class SocialMediaCard extends StatelessWidget {
             ),
             IconButton(
               iconSize: 25,
-              onPressed: () {
+              onPressed: () async {
                 if (socialMedia == 'Twitter(X)') {
-                  authCallback!();
+                  await authCallback!();
+                  await showDialog(
+                      context: context,
+                      builder: (_) => const CongratulationsSheet());
                 }
                 Navigator.popAndPushNamed(context, '/home');
               },

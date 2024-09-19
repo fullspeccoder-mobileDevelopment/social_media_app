@@ -34,9 +34,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               Text(currentUser.username.isNotEmpty
                   ? currentUser.username
                   : currentUser.email),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.panorama_fish_eye_outlined))
+              const IconButton(
+                  onPressed: null, icon: Icon(Icons.panorama_fish_eye_outlined))
             ],
           )),
       drawer: AppDrawer(currentUser: currentUser),
