@@ -6,6 +6,7 @@ import 'package:twitter_oauth2_pkce/twitter_oauth2_pkce.dart';
 import 'package:twitter_oauth2_pkce/src/scope.dart' as s;
 
 import 'package:untitled_app/models/firebase_user.dart';
+import 'package:untitled_app/providers/post_provider.dart';
 import 'package:untitled_app/utils/phone_manipulation.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, LocalUser>((ref) {
@@ -37,8 +38,10 @@ class UserNotifier extends StateNotifier<LocalUser> {
       : super(
           LocalUser(id: "", user: FirebaseUser.zero()),
         );
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _store = FirebaseFirestore.instance;
+
   final oauth2 = TwitterOAuth2Client(
     clientId: 'bnZ6U1ZBZmo5SkRkVmpIZGN5Rmg6MTpjaQ',
     clientSecret: 'xysW2BDg0wXtDWbTd_HTb6HSiAEGYoui1vP07H1VAVjnJtJbKP',
@@ -242,6 +245,22 @@ class UserNotifier extends StateNotifier<LocalUser> {
     state = LocalUser(
       id: '',
       user: FirebaseUser.zero(),
+    );
+  }
+
+  Future<void> updateUserPosts(PostList postList) async {
+    // Create list of post ids
+    final List<String> postIds = postList.posts.map((el) => el.postId).toList();
+
+    // Firebase Update
+    final DocumentReference docReference =
+        _store.collection('users').doc(state.id);
+
+    await docReference.update({'posts': postIds});
+
+    // Updates the state
+    state = state.copyWith(
+      user: state.user.copyWith(posts: postIds),
     );
   }
 }

@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1095066264952',
     projectId: 'cross-media-app',
     storageBucket: 'cross-media-app.appspot.com',
+    androidClientId: '1095066264952-g6p1pjc1p7j5regrsrnp2htflbb9tp8e.apps.googleusercontent.com',
+    iosClientId: '1095066264952-uhl8n48ulah4sspr630cpt4vag789iio.apps.googleusercontent.com',
     iosBundleId: 'com.example.untitledApp',
   );
 
@@ -72,6 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1095066264952',
     projectId: 'cross-media-app',
     storageBucket: 'cross-media-app.appspot.com',
+    androidClientId: '1095066264952-g6p1pjc1p7j5regrsrnp2htflbb9tp8e.apps.googleusercontent.com',
+    iosClientId: '1095066264952-uhl8n48ulah4sspr630cpt4vag789iio.apps.googleusercontent.com',
     iosBundleId: 'com.example.untitledApp',
   );
 

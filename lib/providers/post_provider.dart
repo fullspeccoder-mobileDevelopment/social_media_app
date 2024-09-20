@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:untitled_app/models/firebase_user.dart';
 
 import 'package:untitled_app/models/post.dart';
+import 'package:untitled_app/utils/path_manipulation.dart';
 
 final postsProvider = StateNotifierProvider<PostsNotifier, PostList>((ref) {
   return PostsNotifier();
@@ -16,6 +19,13 @@ class PostList {
     required this.id,
     required this.posts,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'posts': posts.map((x) => x.toMap()).toList(),
+    };
+  }
 }
 
 class LocalPost {
@@ -81,12 +91,20 @@ class PostsNotifier extends StateNotifier<PostList> {
   PostsNotifier() : super(PostList(id: "N/A", posts: []));
 
   final FirebaseFirestore _store = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<void> createPost(Post post) async {
+  Future<void> createPost(Post post, File image) async {
     // Firebase Addition
-    final docReference = await _store.collection('posts').add(post.toMap());
+    final DocumentReference docReference =
+        await _store.collection('posts').add(post.toMap());
 
-    final docSnapshot = await docReference.get();
+    final DocumentSnapshot docSnapshot = await docReference.get();
+
+    // Image Uploading
+    _uploadImageToFireStorage(
+        SettableMetadata(
+            customMetadata: {'userId': post.userId, 'postId': docSnapshot.id}),
+        image);
 
     // State setting
     state = PostList(id: docSnapshot.id, posts: [
@@ -94,8 +112,6 @@ class PostsNotifier extends StateNotifier<PostList> {
       LocalPost.fromMap(
           postId: docSnapshot.id, docSnapshot.data() as Map<String, dynamic>),
     ]);
-
-    //
   }
 
   Future<void> deletePost(String postId) async {
@@ -113,5 +129,38 @@ class PostsNotifier extends StateNotifier<PostList> {
   Future<void> retrievePosts(String postId, String userId) async {
     // TODO: Some asynchronous wizardry to get the posts for the specified user
     throw UnimplementedError();
+  }
+
+  Future<void> _uploadImageToFireStorage(
+      SettableMetadata metaData, File image) async {
+    final Reference storageRef = _storage.ref();
+
+    final imageName = getFileNameFromAbsolutePath(image.path);
+
+    final uploadTask =
+        storageRef.child("postImages/$imageName").putFile(image, metaData);
+
+    uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          final progress =
+              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+          print("Upload is $progress% complete.");
+          break;
+        case TaskState.paused:
+          print("Upload is paused.");
+          break;
+        case TaskState.canceled:
+          print("Upload was canceled");
+          break;
+        case TaskState.error:
+          // Handle unsuccessful uploads
+          break;
+        case TaskState.success:
+          // Handle successful uploads on complete
+          // ...
+          break;
+      }
+    });
   }
 }

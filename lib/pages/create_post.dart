@@ -10,7 +10,9 @@ import 'package:untitled_app/components/create/text_input_container_extended.dar
 import 'package:untitled_app/components/create/textfield_container.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/date_provider.dart';
+import 'package:untitled_app/providers/image_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/path_manipulation.dart';
 import 'package:untitled_app/utils/post_maker.dart';
 
 class CreatePostPage extends ConsumerStatefulWidget {
@@ -30,6 +32,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   Widget build(BuildContext context) {
     final user = ref.read(userProvider);
     final date = ref.watch(dateProvider);
+    final String? imagePath = ref.watch(imageProvider)?.path;
     final postMaker = PostMaker(ref: ref);
     return Scaffold(
         body: Padding(
@@ -77,11 +80,12 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           //$ Image
           const ImagePickerContainer(),
           //$ TextButton
+          // TODO Validation is needed otherwise error
           PrimaryButton(
             callback: () {
               postMaker.makePost({
                 'content': descriptionController.text,
-                'imageUrl': 'some image url here',
+                'imageUrl': getFileNameFromAbsolutePath(imagePath!),
                 'userId': user.id,
                 'tags': textfieldTagsController.getTags ?? [],
                 'postDate': Timestamp.fromDate(date),

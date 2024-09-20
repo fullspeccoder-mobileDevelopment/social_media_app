@@ -10,4 +10,5 @@ Checking for npm/bin/npm-cli install at /Users/jacobwilson/.cache/firebase/tools
 Checking for npm/bin/npm-cli install at /Users/jacobwilson/.cache/firebase/tools/node_modules/npm/bin/npm-cli
 Checking for npm/bin/npm-cli install at /snapshot/firepit/node_modules/npm/bin/npm-cli
 Found npm/bin/npm-cli install.
-ShellJSInternalError: ENOENT: no such file or directory, chmod '/Users/jacobwilson/.cache/firebase/runtime/shell'
+ShellJSInternalError: ENOENT: no such file or directory, unlink '/Users/jacobwilson/.cache/firebase/runtime/npm'
+ShellJSInternalError: ENOENT: no such file or directory, chmod '/Users/jacobwilson/.cache/firebase/runtime/npmrc'

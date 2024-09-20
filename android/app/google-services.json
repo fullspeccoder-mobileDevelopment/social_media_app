@@ -12,7 +12,20 @@
           "package_name": "com.crossmediafirebase.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1095066264952-g6p1pjc1p7j5regrsrnp2htflbb9tp8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crossmediafirebase.app",
+            "certificate_hash": "2b571ea894c291e63662cf1c747494d1ef3405b7"
+          }
+        },
+        {
+          "client_id": "1095066264952-rleabu7ksh31ih52ruia9mrobch7bdkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDMt3O297qNFV2zk6cdJkRpH7GwDEDSEGc"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095066264952-rleabu7ksh31ih52ruia9mrobch7bdkt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1095066264952-uhl8n48ulah4sspr630cpt4vag789iio.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.untitledApp"
+              }
+            }
+          ]
         }
       }
     }

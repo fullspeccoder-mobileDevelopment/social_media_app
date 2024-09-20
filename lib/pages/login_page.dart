@@ -12,25 +12,28 @@ class LogInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final logIn = ref.read(userProvider.notifier).logIn;
     return Scaffold(
-      body: Column(
-        children: [
-          const FormTitle(
-            primaryText: "Log in to",
-            subText: "Enter into your account",
-          ),
-          FirebaseForm(
-            formAction: logIn,
-            googleAction: () async {},
-            isSigningUp: false,
-          ),
-          FormBottomContent(
-            bottomText: "Didn't have an account? ",
-            bottomLink: "Sign up",
-            navigationMethod: () {
-              Navigator.of(context).popAndPushNamed("/sign-up");
-            },
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Column(
+          children: [
+            const FormTitle(
+              primaryText: "Log in to",
+              subText: "Enter into your account",
+            ),
+            FirebaseForm(
+              formAction: logIn,
+              googleAction: () async {},
+              isSigningUp: false,
+            ),
+            FormBottomContent(
+              bottomText: "Didn't have an account? ",
+              bottomLink: "Sign up",
+              navigationMethod: () {
+                Navigator.of(context).popAndPushNamed("/sign-up");
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

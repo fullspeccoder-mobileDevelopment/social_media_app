@@ -13,20 +13,18 @@ class PostMaker {
     required this.ref,
   });
 
-  void makePost(Map<String, dynamic> mappedPost, String platform) {
+  Future<void> makePost(
+      Map<String, dynamic> mappedPost, String platform) async {
     final postsNotifier = ref.read(postsProvider.notifier);
     final image = ref.watch(imageProvider);
     final imageNotifier = ref.read(imageProvider.notifier);
 
     post = Post.fromMap(mappedPost);
 
-    postsNotifier.createPost(post);
+    await postsNotifier.createPost(post, image!);
 
-    _decidesWhereToPost();
-
-    if (image != null) {
-      imageNotifier.resetImage();
-    }
+    // _decidesWhereToPost();
+    imageNotifier.resetImage();
   }
 
   void _decidesWhereToPost() {
