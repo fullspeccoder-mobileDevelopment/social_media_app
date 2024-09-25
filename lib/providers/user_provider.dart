@@ -248,9 +248,9 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
-  Future<void> updateUserPosts(PostList postList) async {
+  Future<void> updateUserPosts(List<LocalPost> posts) async {
     // Create list of post ids
-    final List<String> postIds = postList.posts.map((el) => el.postId).toList();
+    final List<String> postIds = posts.map((el) => el.postId).toList();
 
     // Firebase Update
     final DocumentReference docReference =

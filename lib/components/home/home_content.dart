@@ -13,7 +13,7 @@ class HomeContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(postsProvider).posts;
+    final posts = ref.watch(postsProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -59,9 +59,9 @@ class HomeContent extends ConsumerWidget {
                 ),
               ),
             ] else ...[
-              PostCard(
-                post: posts[0],
-              )
+              ...posts.map((el) => PostCard(
+                    post: el,
+                  ))
             ]
           ],
         ),

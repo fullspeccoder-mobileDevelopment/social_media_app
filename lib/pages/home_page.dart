@@ -16,12 +16,16 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    final posts = ref.read(userProvider).user.posts;
+    ref.read(postsProvider.notifier).retrievePosts(posts);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(userProvider).user;
-    final posts = ref.watch(postsProvider).posts;
-    ref
-        .read(userProvider.notifier)
-        .updateUserPosts(PostList(id: '', posts: posts));
+
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,

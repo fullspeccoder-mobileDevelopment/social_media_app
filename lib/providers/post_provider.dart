@@ -7,26 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/models/post.dart';
 import 'package:untitled_app/utils/path_manipulation.dart';
 
-final postsProvider = StateNotifierProvider<PostsNotifier, PostList>((ref) {
+// * Post List ID is not need *
+
+final postsProvider =
+    StateNotifierProvider<PostsNotifier, List<LocalPost>>((ref) {
   return PostsNotifier();
 });
-
-class PostList {
-  final String id;
-  final List<LocalPost> posts;
-
-  PostList({
-    required this.id,
-    required this.posts,
-  });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'posts': posts.map((x) => x.toMap()).toList(),
-    };
-  }
-}
 
 class LocalPost {
   final String postId;
@@ -85,10 +71,15 @@ class LocalPost {
       postDate: map['postDate'],
     );
   }
+
+  @override
+  String toString() {
+    return 'LocalPost(postId: $postId, content: $content, imageUrl: $imageUrl, userId: $userId, tags: $tags, postDate: $postDate)';
+  }
 }
 
-class PostsNotifier extends StateNotifier<PostList> {
-  PostsNotifier() : super(PostList(id: "N/A", posts: []));
+class PostsNotifier extends StateNotifier<List<LocalPost>> {
+  PostsNotifier() : super([]);
 
   final FirebaseFirestore _store = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -107,28 +98,44 @@ class PostsNotifier extends StateNotifier<PostList> {
         image);
 
     // State setting
-    state = PostList(id: docSnapshot.id, posts: [
-      ...state.posts,
+    state = [
+      ...state,
       LocalPost.fromMap(
-          postId: docSnapshot.id, docSnapshot.data() as Map<String, dynamic>),
-    ]);
+          postId: docSnapshot.id, docSnapshot.data() as Map<String, dynamic>)
+    ];
   }
 
   Future<void> deletePost(String postId) async {
-    // state = state.where((post) => post.postId != postId).toList();
+    throw UnimplementedError();
   }
 
   Future<void> updatePost(Post post, String postId) async {
     throw UnimplementedError();
   }
 
-  Future<void> retrievePost(String postId) async {
-    throw UnimplementedError();
+  Post retrievePost(String postId) {
+    /// Creates a filtered list of the post id that is available
+    final filteredList =
+        state.where((element) => element.postId == postId).toList();
+    // Returns a Post object for the data from the post
+    return Post.fromMap(filteredList.first.toMap());
   }
 
-  Future<void> retrievePosts(String postId, String userId) async {
-    // TODO: Some asynchronous wizardry to get the posts for the specified user
-    throw UnimplementedError();
+  Future<void> retrievePosts(List<String> postIds) async {
+    // Querys Firestore
+    final QuerySnapshot postQuery = await _store
+        .collection('posts')
+        .where(FieldPath.documentId, whereIn: postIds)
+        .get();
+
+    // Creates a lists of posts from the data recieved from query snapshot
+    final posts = postQuery.docs
+        .map((el) =>
+            LocalPost.fromMap(el.data() as Map<String, dynamic>, postId: el.id))
+        .toList();
+
+    // Updates state to firestore posts
+    state = posts;
   }
 
   Future<void> _uploadImageToFireStorage(
