@@ -7,8 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/models/firebase_post.dart';
 import 'package:untitled_app/utils/path_manipulation.dart';
 
-// * Post List ID is not need *
-
 final postsProvider =
     StateNotifierProvider<PostsNotifier, List<LocalPost>>((ref) {
   return PostsNotifier();
@@ -84,6 +82,9 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
   final FirebaseFirestore _store = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
+  /// Creates a post on Firebase
+  ///
+  /// Use [post] to add to [Firebase]
   Future<void> createPost(FirebasePost post, File image) async {
     // Firebase Addition
     final DocumentReference docReference =
@@ -113,6 +114,9 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
     throw UnimplementedError();
   }
 
+  /// Retrieves a post from state
+  ///
+  /// [postId] is a specific post id to get from the state
   FirebasePost retrievePost(String postId) {
     /// Creates a filtered list of the post id that is available
     final filteredList =
@@ -121,6 +125,9 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
     return FirebasePost.fromMap(filteredList.first.toMap());
   }
 
+  /// Retrieves posts using a list
+  ///
+  /// [postIds] is taken from the list of post ids in the user document
   Future<void> retrievePosts(String userId) async {
     // Querys Firestore
     final QuerySnapshot postQuery = await _store
@@ -138,15 +145,23 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
     state = posts;
   }
 
+  /// Uploads an image to the Firestorage.
+  ///
+  /// [SettableMetadata] is used to specify specific parameters for things such as post id, user id, etc...
+  /// [File] is used for the actual image to be stored in the [FireStorage]
   Future<void> _uploadImageToFireStorage(
       SettableMetadata metaData, File image) async {
+    // Creates a reference to the FireStorage
     final Reference storageRef = _storage.ref();
 
+    // Gets the image name of the file
     final imageName = getFileNameFromAbsolutePath(image.path);
 
+    // Starts upload to FireStorage
     final uploadTask =
         storageRef.child("postImages/$imageName").putFile(image, metaData);
 
+    // Listens to snapshots in the background to track how the upload is doing
     uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
       switch (taskSnapshot.state) {
         case TaskState.running:

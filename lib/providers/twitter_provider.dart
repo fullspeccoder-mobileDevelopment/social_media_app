@@ -13,14 +13,17 @@ final twitterProvider =
 class TwitterNotifier extends StateNotifier<FirebaseUser> {
   TwitterNotifier({required firebaseUser}) : super(firebaseUser);
 
+  /// Creates a post
+  ///
+  /// [Post] is used to conform to the post in Firebase
   Future<void> createPostOnTwitter(FirebasePost post) async {
-    print(post);
-    print(state.accessTokens);
+    // Instantiates TwitterClient using the FirebaseUser
     final twitterClient = TwitterApi(
       bearerToken: state.accessTokens['twitter'],
     );
 
     try {
+      // Creates tweet with the post's content
       await twitterClient.tweets.createTweet(text: post.content);
     } catch (e) {
       print(e);

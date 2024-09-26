@@ -48,33 +48,41 @@ class UserNotifier extends StateNotifier<LocalUser> {
     customUriScheme: 'com.crossmedia.oauth',
   );
 
+  /// Logs user in through Firebase and updates state
   Future<void> logIn(String email, String password) async {
-    print(email);
-    print(password);
+    // Signs in user to Firebase
     await _auth.signInWithEmailAndPassword(email: email, password: password);
 
-    QuerySnapshot response =
+    // Gets a response from Firebase
+    QuerySnapshot querySnapshot =
         await _store.collection("users").where('email', isEqualTo: email).get();
 
-    if (response.docs.isEmpty) {
+    // Handles empty docs of query snapshot
+    if (querySnapshot.docs.isEmpty) {
       print("No firestore user associated to authenticated email $email");
       return;
     }
 
-    if (response.docs.length != 1) {
+    // Handles more than 1 user with email
+    if (querySnapshot.docs.length != 1) {
       print("More than one firestore user associate with email: $email");
       return;
     }
-    print(response.docs);
+
+    // Updates state
     state = LocalUser(
-        id: response.docs[0].id,
+        id: querySnapshot.docs[0].id,
         user: FirebaseUser.fromMap(
-            response.docs[0].data() as Map<String, dynamic>));
+            querySnapshot.docs[0].data() as Map<String, dynamic>));
   }
 
+  /// Logs user into Twitter
+  ///
+  /// Gets the [DocumentReference] from Firestore and uses it to update the user with the correct access token
   Future<void> logInWithTwitter() async {
     final DocumentReference docRef = _store.collection("users").doc(state.id);
 
+    // Executes the log in process
     final response = await oauth2.executeAuthCodeFlowWithPKCE(
       scopes: [
         s.Scope.usersRead,
@@ -83,12 +91,14 @@ class UserNotifier extends StateNotifier<LocalUser> {
       ],
     );
 
+    // Updates the current user with access token
     _store.runTransaction((transaction) async {
       transaction.update(docRef, {
         'accessTokens': {"twitter": response.accessToken}
       });
     });
 
+    // Updates current state with the access token
     state = state.copyWith(
       user: state.user.copyWith(
         accessTokens: {
@@ -99,12 +109,19 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
+  /// Signs up with Firebase & creates a Firestore document
+  ///
+  /// Signs up with Firebase using [email] and [password]
   Future<void> signUpWithEmail(String email, String password) async {
+    // Createss a new user in the Firestore
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
 
+    // Creates an snapshot of the current amount of users
     final AggregateQuerySnapshot snapshot =
         await _store.collection('users').count().get();
+
+    // Creates a DocumentReference with a default username
     final docReference = await _store.collection('users').add(
           FirebaseUser.zero(
             email: email,
@@ -112,19 +129,26 @@ class UserNotifier extends StateNotifier<LocalUser> {
           ).toMap(),
         );
 
+    // Creates a DocumentSnapshot of the Document
     final docSnapshot = await docReference.get();
+
+    // Updates state
     state = LocalUser(
       id: docReference.id,
       user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>),
     );
   }
 
+  /// Verifies with a phone number
+  ///
+  /// [areaCode] should be in the format - +00
+  /// [phoneNumber] should be in the format 5555555555
+  /// [codeSent] needs to be a function that provides a [verificationCode]
   Future<void> verifyWithPhoneNumber(
     String areaCode,
     String phoneNumber, {
     required void Function(String verificationId, int? resendToken) codeSent,
   }) async {
-    print('$areaCode$phoneNumber');
     // Verify Phone Number
     await _auth.verifyPhoneNumber(
       phoneNumber: '$areaCode$phoneNumber',
@@ -153,6 +177,9 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
+  /// Signs up with the phone number
+  ///
+  /// [verificationId] is retrived from the [verifyPhoneNumber] function
   Future<void> signUpWithPhoneNumber(
     String verificationID,
     String verificationCode,
@@ -187,24 +214,34 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
+  /// Logs in with the phone number
+  ///
+  /// [verificationId] is retrived from the [verifyPhoneNumber] function
   Future<void> logInWithPhoneNumber(
     String verificationID,
     String verificationCode,
   ) async {
     try {
+      // Retrieves credential from the PhoneAuthProvider
       final PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationID, smsCode: verificationCode);
+
+      // Signs user in through authentication
       await _auth.signInWithCredential(credential);
     } catch (e) {
       print(e);
       return;
     }
 
-    final Query query = _store.collection('users').where('phoneNumber',
-        isEqualTo: createPhoneStringFromAuth(_auth.currentUser!.phoneNumber!));
+    // Creates a QuerySnapshot
+    final QuerySnapshot querySnapshot = await _store
+        .collection('users')
+        .where('phoneNumber',
+            isEqualTo:
+                createPhoneStringFromAuth(_auth.currentUser!.phoneNumber!))
+        .get();
 
-    final QuerySnapshot querySnapshot = await query.get();
-
+    // Creates a DocumentSnapshot of the queried Document
     final DocumentSnapshot docSnapshot = querySnapshot.docs[0];
 
     // Set State of LocalUser
@@ -214,11 +251,14 @@ class UserNotifier extends StateNotifier<LocalUser> {
     );
   }
 
+  /// Signs up through Google
   Future<void> signUpWithGoogle() async {
+    // Creates a UserCredential which is instantiated later
     late UserCredential credential;
+
     try {
+      // Signs in with the GoogleAuthProvider
       credential = await _auth.signInWithProvider(GoogleAuthProvider());
-      print(credential.user!.email ?? 'No associated email');
     } catch (e) {
       print(e);
     }
@@ -227,6 +267,7 @@ class UserNotifier extends StateNotifier<LocalUser> {
     final AggregateQuerySnapshot snapshot =
         await _store.collection('users').count().get();
 
+    // Retrieves a DocumentReference & Adds to Firestore using default username
     final DocumentReference docReference =
         await _store.collection("users").add(FirebaseUser.zero(
               email: credential.user!.email,
@@ -234,8 +275,10 @@ class UserNotifier extends StateNotifier<LocalUser> {
               profilePicUrl: credential.user!.photoURL,
             ).toMap());
 
+    // Creates a DocumentSnapshot
     final DocumentSnapshot docSnapshot = await docReference.get();
 
+    // Updates current state
     state = LocalUser(
         id: docSnapshot.id,
         user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>));
@@ -244,9 +287,12 @@ class UserNotifier extends StateNotifier<LocalUser> {
   // TODO Implement Google Log In
   // Future<void> logInWithGoogle() async {}
 
+  // Signs out of Firebase
   Future<void> signOut() async {
+    // Signs out of Firebase
     await _auth.signOut();
 
+    // Updates current state
     state = LocalUser(
       id: '',
       user: FirebaseUser.zero(),

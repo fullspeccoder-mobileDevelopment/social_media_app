@@ -7,20 +7,20 @@ final dateProvider = StateNotifierProvider<DateStateNotifier, DateTime>((ref) {
 class DateStateNotifier extends StateNotifier<DateTime> {
   DateStateNotifier() : super(DateTime.now());
 
+  /// Modifies time in a [DateTime] object
   void modifyTime(DateTime? value) {
     state = state.copyWith(
       hour: value!.hour,
       minute: value.minute,
     );
-    // state = state.copyWith(selectedTime: value);
   }
 
+  /// Modifies date in a [DateTime] object
   void modifyDate(DateTime? value) {
     state = state.copyWith(
       year: value!.year,
       month: value.month,
       day: value.day,
     );
-    // state = state.copyWith(selectedDate: value);
   }
 }

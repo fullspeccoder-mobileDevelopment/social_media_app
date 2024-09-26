@@ -9,10 +9,12 @@ final imageProvider = StateNotifierProvider<ImageStateNotifier, File?>((ref) {
 class ImageStateNotifier extends StateNotifier<File?> {
   ImageStateNotifier() : super(null);
 
+  /// Sets image
   void getImageFile(String path) {
     state = File(path);
   }
 
+  /// Resets image
   void resetImage() {
     state = null;
   }
