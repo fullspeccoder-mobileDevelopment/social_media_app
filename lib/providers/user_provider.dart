@@ -6,7 +6,6 @@ import 'package:twitter_oauth2_pkce/twitter_oauth2_pkce.dart';
 import 'package:twitter_oauth2_pkce/src/scope.dart' as s;
 
 import 'package:untitled_app/models/firebase_user.dart';
-import 'package:untitled_app/providers/post_provider.dart';
 import 'package:untitled_app/utils/phone_manipulation.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, LocalUser>((ref) {
@@ -50,17 +49,23 @@ class UserNotifier extends StateNotifier<LocalUser> {
   );
 
   Future<void> logIn(String email, String password) async {
+    print(email);
+    print(password);
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+
     QuerySnapshot response =
         await _store.collection("users").where('email', isEqualTo: email).get();
+
     if (response.docs.isEmpty) {
       print("No firestore user associated to authenticated email $email");
       return;
     }
+
     if (response.docs.length != 1) {
       print("More than one firestore user associate with email: $email");
       return;
     }
+    print(response.docs);
     state = LocalUser(
         id: response.docs[0].id,
         user: FirebaseUser.fromMap(
@@ -245,22 +250,6 @@ class UserNotifier extends StateNotifier<LocalUser> {
     state = LocalUser(
       id: '',
       user: FirebaseUser.zero(),
-    );
-  }
-
-  Future<void> updateUserPosts(List<LocalPost> posts) async {
-    // Create list of post ids
-    final List<String> postIds = posts.map((el) => el.postId).toList();
-
-    // Firebase Update
-    final DocumentReference docReference =
-        _store.collection('users').doc(state.id);
-
-    await docReference.update({'posts': postIds});
-
-    // Updates the state
-    state = state.copyWith(
-      user: state.user.copyWith(posts: postIds),
     );
   }
 }

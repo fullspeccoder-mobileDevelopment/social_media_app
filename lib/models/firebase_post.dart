@@ -3,14 +3,14 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Post {
+class FirebasePost {
   final String content;
   final String imageUrl;
   final String userId;
   final List<String> tags;
   final Timestamp postDate;
 
-  Post({
+  FirebasePost({
     required this.content,
     required this.imageUrl,
     required this.userId,
@@ -18,14 +18,14 @@ class Post {
     required this.postDate,
   });
 
-  Post copyWith({
+  FirebasePost copyWith({
     String? content,
     String? imageUrl,
     String? userId,
     List<String>? tags,
     Timestamp? postDate,
   }) {
-    return Post(
+    return FirebasePost(
       content: content ?? this.content,
       imageUrl: imageUrl ?? this.imageUrl,
       userId: userId ?? this.userId,
@@ -44,8 +44,8 @@ class Post {
     };
   }
 
-  factory Post.fromMap(Map<String, dynamic> map) {
-    return Post(
+  factory FirebasePost.fromMap(Map<String, dynamic> map) {
+    return FirebasePost(
       content: map['content'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       userId: map['userId'] ?? '',
@@ -56,7 +56,8 @@ class Post {
 
   String toJson() => json.encode(toMap());
 
-  factory Post.fromJson(String source) => Post.fromMap(json.decode(source));
+  factory FirebasePost.fromJson(String source) =>
+      FirebasePost.fromMap(json.decode(source));
 
   @override
   String toString() {

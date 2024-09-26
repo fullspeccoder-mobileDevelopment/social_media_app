@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 class FirebaseUser {
   final String email;
   final String username;
   final String profilePicUrl;
   final String phoneNumber;
-  final List<String> posts;
   final Map<String, dynamic> accessTokens;
 
   const FirebaseUser({
@@ -13,7 +14,6 @@ class FirebaseUser {
     required this.username,
     required this.profilePicUrl,
     required this.phoneNumber,
-    required this.posts,
     required this.accessTokens,
   });
 
@@ -23,6 +23,7 @@ class FirebaseUser {
     String? profilePicUrl,
     String? phoneNumber,
     List<String>? posts,
+    List<String>? drafts,
     Map<String, dynamic>? accessTokens,
   }) {
     return FirebaseUser(
@@ -30,7 +31,6 @@ class FirebaseUser {
       username: username ?? this.username,
       profilePicUrl: profilePicUrl ?? this.profilePicUrl,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      posts: posts ?? this.posts,
       accessTokens: accessTokens ?? this.accessTokens,
     );
   }
@@ -41,13 +41,13 @@ class FirebaseUser {
     String? profilePicUrl,
     String? phoneNumber,
     List<String>? posts,
+    List<String>? drafts,
   }) {
     return FirebaseUser(
       email: email ?? 'defaultEmail',
       username: username ?? 'defaultUsername',
       profilePicUrl: profilePicUrl ?? 'defaultProfilePic',
       phoneNumber: phoneNumber ?? 'defaultPhoneNumber',
-      posts: posts ?? [],
       accessTokens: {},
     );
   }
@@ -58,7 +58,6 @@ class FirebaseUser {
       'username': username,
       'profilePicUrl': profilePicUrl,
       'phoneNumber': phoneNumber,
-      'posts': posts,
       'accessTokens': accessTokens,
     };
   }
@@ -69,7 +68,6 @@ class FirebaseUser {
       username: map['username'] ?? '',
       profilePicUrl: map['profilePicUrl'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
-      posts: List<String>.from(map['posts']),
       accessTokens: Map<String, dynamic>.from(map['accessTokens']),
     );
   }
@@ -78,4 +76,30 @@ class FirebaseUser {
 
   factory FirebaseUser.fromJson(String source) =>
       FirebaseUser.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'FirebaseUser(email: $email, username: $username, profilePicUrl: $profilePicUrl, phoneNumber: $phoneNumber, accessTokens: $accessTokens)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is FirebaseUser &&
+        other.email == email &&
+        other.username == username &&
+        other.profilePicUrl == profilePicUrl &&
+        other.phoneNumber == phoneNumber &&
+        mapEquals(other.accessTokens, accessTokens);
+  }
+
+  @override
+  int get hashCode {
+    return email.hashCode ^
+        username.hashCode ^
+        profilePicUrl.hashCode ^
+        phoneNumber.hashCode ^
+        accessTokens.hashCode;
+  }
 }

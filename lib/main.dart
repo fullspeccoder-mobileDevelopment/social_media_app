@@ -22,13 +22,11 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    // ref.read(postsProvider.notifier).retrievePosts("somePostId", "someUserId");
   }
 
   @override
   void dispose() {
     super.dispose();
-    // May need it to flush out the provider state
   }
 
   @override

@@ -22,7 +22,8 @@ class CreatePostPage extends ConsumerStatefulWidget {
   ConsumerState<CreatePostPage> createState() => _CreatePostPageState();
 }
 
-class _CreatePostPageState extends ConsumerState<CreatePostPage> {
+class _CreatePostPageState extends ConsumerState<CreatePostPage>
+    with RouteAware {
   TextEditingController titleController = TextEditingController();
   TextEditingController platformController = TextEditingController();
   StringTagController textfieldTagsController = StringTagController();
@@ -34,67 +35,77 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     final date = ref.watch(dateProvider);
     final String? imagePath = ref.watch(imageProvider)?.path;
     final postMaker = PostMaker(ref: ref);
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.fromLTRB(36.0, 0, 36, 36),
-      child: ListView(
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 24,
-                ),
-              )
-            ],
-          ),
-          const Text(
-            "Post your shot",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22),
-          ),
-          //$ Title
-          TextInputContainer(text: "Title", controller: titleController),
-          //$ Select Platform
-          PlatformDropdown(
-              text: "Select Platform:", platformController: platformController),
-          //$ Date
-          const DateContainer(),
-          //$ Tags
-          TextInputContainerExtended(
-            text: "Add tags (Optional)",
-            child: TextFieldTagsContainer(controller: textfieldTagsController),
-          ),
-          //$ Description
-          TextInputContainerExtended(
-            text: "Description (Optional)",
-            child: TextField(
-              maxLines: 4,
-              controller: descriptionController,
+    return PopScope(
+      onPopInvoked: (value) {
+        if (value) {
+          postMaker.makeDraft(
+              descriptionController.text, textfieldTagsController.getTags);
+        }
+      },
+      child: Scaffold(
+          body: Padding(
+        padding: const EdgeInsets.fromLTRB(36.0, 0, 36, 36),
+        child: ListView(
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 24,
+                  ),
+                )
+              ],
             ),
-          ),
-          //$ Image
-          const ImagePickerContainer(),
-          //$ TextButton
-          // TODO Validation is needed otherwise error
-          PrimaryButton(
-            callback: () {
-              postMaker.makePost({
-                'content': descriptionController.text,
-                'imageUrl': getFileNameFromAbsolutePath(imagePath!),
-                'userId': user.id,
-                'tags': textfieldTagsController.getTags ?? [],
-                'postDate': Timestamp.fromDate(date),
-              }, platformController.text);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    ));
+            const Text(
+              "Post your shot",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 22),
+            ),
+            //$ Title
+            TextInputContainer(text: "Title", controller: titleController),
+            //$ Select Platform
+            PlatformDropdown(
+                text: "Select Platform:",
+                platformController: platformController),
+            //$ Date
+            const DateContainer(),
+            //$ Tags
+            TextInputContainerExtended(
+              text: "Add tags (Optional)",
+              child:
+                  TextFieldTagsContainer(controller: textfieldTagsController),
+            ),
+            //$ Description
+            TextInputContainerExtended(
+              text: "Description (Optional)",
+              child: TextField(
+                maxLines: 4,
+                controller: descriptionController,
+              ),
+            ),
+            //$ Image
+            const ImagePickerContainer(),
+            //$ TextButton
+            // TODO Validation is needed otherwise error
+            PrimaryButton(
+              callback: () {
+                postMaker.makePost({
+                  'content': descriptionController.text,
+                  'imageUrl': getFileNameFromAbsolutePath(imagePath!),
+                  'userId': user.id,
+                  'tags': textfieldTagsController.getTags ?? [],
+                  'postDate': Timestamp.fromDate(date),
+                }, platformController.text);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      )),
+    );
   }
 }

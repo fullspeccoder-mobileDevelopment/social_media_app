@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/sign_in_button.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
+import 'package:untitled_app/providers/post_provider.dart';
+import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/styles/input_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart' as r;
@@ -56,6 +58,12 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   void _formSignUpAction() async {
     try {
       await widget.formAction(_emailController.text, _passwordController.text);
+
+      if (!widget.isSigningUp) {
+        final userId = ref.read(userProvider).id;
+        await ref.read(postsProvider.notifier).retrievePosts(userId);
+      }
+
       if (context.mounted) {
         Navigator.pop(context);
         Navigator.push(context, r.Route.successfulSignUp);

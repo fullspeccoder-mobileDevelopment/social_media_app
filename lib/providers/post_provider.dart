@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:untitled_app/models/post.dart';
+import 'package:untitled_app/models/firebase_post.dart';
 import 'package:untitled_app/utils/path_manipulation.dart';
 
 // * Post List ID is not need *
@@ -84,7 +84,7 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
   final FirebaseFirestore _store = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  Future<void> createPost(Post post, File image) async {
+  Future<void> createPost(FirebasePost post, File image) async {
     // Firebase Addition
     final DocumentReference docReference =
         await _store.collection('posts').add(post.toMap());
@@ -109,23 +109,23 @@ class PostsNotifier extends StateNotifier<List<LocalPost>> {
     throw UnimplementedError();
   }
 
-  Future<void> updatePost(Post post, String postId) async {
+  Future<void> updatePost(FirebasePost post, String postId) async {
     throw UnimplementedError();
   }
 
-  Post retrievePost(String postId) {
+  FirebasePost retrievePost(String postId) {
     /// Creates a filtered list of the post id that is available
     final filteredList =
         state.where((element) => element.postId == postId).toList();
     // Returns a Post object for the data from the post
-    return Post.fromMap(filteredList.first.toMap());
+    return FirebasePost.fromMap(filteredList.first.toMap());
   }
 
-  Future<void> retrievePosts(List<String> postIds) async {
+  Future<void> retrievePosts(String userId) async {
     // Querys Firestore
     final QuerySnapshot postQuery = await _store
         .collection('posts')
-        .where(FieldPath.documentId, whereIn: postIds)
+        .where('userId', isEqualTo: userId)
         .get();
 
     // Creates a lists of posts from the data recieved from query snapshot

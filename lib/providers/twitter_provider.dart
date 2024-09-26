@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_api_v2/twitter_api_v2.dart';
 import 'package:untitled_app/models/firebase_user.dart';
-import 'package:untitled_app/models/post.dart';
+import 'package:untitled_app/models/firebase_post.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 
 final twitterProvider =
@@ -13,7 +13,7 @@ final twitterProvider =
 class TwitterNotifier extends StateNotifier<FirebaseUser> {
   TwitterNotifier({required firebaseUser}) : super(firebaseUser);
 
-  Future<void> createPostOnTwitter(Post post) async {
+  Future<void> createPostOnTwitter(FirebasePost post) async {
     print(post);
     print(state.accessTokens);
     final twitterClient = TwitterApi(

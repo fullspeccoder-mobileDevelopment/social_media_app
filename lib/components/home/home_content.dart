@@ -14,13 +14,13 @@ class HomeContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final posts = ref.watch(postsProvider);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (posts.isEmpty) ...[
+    if (posts.isEmpty) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Container(
                 width: 375,
                 height: 400,
@@ -58,14 +58,18 @@ class HomeContent extends ConsumerWidget {
                   ],
                 ),
               ),
-            ] else ...[
-              ...posts.map((el) => PostCard(
-                    post: el,
-                  ))
-            ]
-          ],
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: ListView.builder(
+          itemCount: posts.length,
+          itemBuilder: (_, index) => PostCard(post: posts[index]),
         ),
-      ],
-    );
+      );
+    }
   }
 }
