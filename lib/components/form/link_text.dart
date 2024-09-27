@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 ///
 /// The navigation method will take you to a new page in the application by touching the link
 class LinkText extends StatelessWidget {
-  const LinkText({
+  LinkText({
     super.key,
     required this.primaryText,
     required this.secondaryText,
     required this.navigationMethod,
   });
+  ValueKey value = const ValueKey('link-text');
 
   final String primaryText;
   final String secondaryText;

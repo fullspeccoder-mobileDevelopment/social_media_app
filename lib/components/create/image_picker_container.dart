@@ -20,6 +20,7 @@ class _ImagePickerContainerState extends ConsumerState<ImagePickerContainer> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     final notifier = ref.read(imageProvider.notifier);
     if (pickedFile != null) {
+      print(pickedFile.path);
       notifier.getImageFile(pickedFile.path);
     }
   }

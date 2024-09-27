@@ -14,16 +14,8 @@ class SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    final currentUser = ref.read(userProvider);
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    if (currentUser.id == '') {
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.popAndPushNamed(context, '/sign-up');
-      });
-    } else {
-      Navigator.popAndPushNamed(context, '/home');
-    }
   }
 
   @override
@@ -33,8 +25,21 @@ class SplashScreenState extends ConsumerState<SplashScreen>
     super.dispose();
   }
 
+  void _navigateAfterLoading() {
+    Future.delayed(const Duration(seconds: 2), () {
+      final currentUser = ref.read(userProvider);
+      print(currentUser.id);
+      if (currentUser.id.isEmpty) {
+        Navigator.popAndPushNamed(context, '/sign-up');
+        return;
+      }
+      Navigator.popAndPushNamed(context, '/home');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _navigateAfterLoading();
     return Scaffold(
       appBar: AppBar(),
       body: Column(

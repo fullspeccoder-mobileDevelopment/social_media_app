@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/home_nav_provider.dart';
 
 /// Bottom navigation bar for the home screen
 ///
 /// Will allow the user to move between a few pages within the application.
-class BottomHomeNavbar extends StatefulWidget {
+class BottomHomeNavbar extends ConsumerStatefulWidget {
   const BottomHomeNavbar({super.key});
 
   @override
-  State<BottomHomeNavbar> createState() => _BottomHomeNavbarState();
+  ConsumerState<BottomHomeNavbar> createState() => _BottomHomeNavbarState();
 }
 
-class _BottomHomeNavbarState extends State<BottomHomeNavbar> {
-  int currentPage = 0;
-
+class _BottomHomeNavbarState extends ConsumerState<BottomHomeNavbar> {
   void changePage(int value) {
-    setState(() {
-      currentPage = value;
-    });
+    ref.read(homeNavProvider.notifier).state = value;
   }
 
   Widget determineIconState(IconData iconData, int index) {
-    if (currentPage == index) {
+    if (ref.read(homeNavProvider.notifier).state == index) {
       return Container(
         padding: const EdgeInsets.all(7),
         margin: const EdgeInsets.only(bottom: 5, top: 15),
@@ -36,8 +34,9 @@ class _BottomHomeNavbarState extends State<BottomHomeNavbar> {
 
   @override
   Widget build(BuildContext context) {
+    final currentNavButton = ref.watch(homeNavProvider);
     return BottomNavigationBar(
-      currentIndex: currentPage,
+      currentIndex: currentNavButton,
       onTap: changePage,
       items: [
         BottomNavigationBarItem(
