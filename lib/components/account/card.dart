@@ -6,10 +6,12 @@ class SocialMediaCard extends StatelessWidget {
       {super.key,
       required this.imagePath,
       required this.socialMedia,
-      required this.authCallback});
+      required this.authCallback,
+      required this.removable});
   final String imagePath;
   final String socialMedia;
   final Future<void> Function()? authCallback;
+  final bool removable;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +58,13 @@ class SocialMediaCard extends StatelessWidget {
                 }
                 Navigator.popAndPushNamed(context, '/home');
               },
-              icon: const Icon(
-                Icons.add_box_rounded,
-                color: Color.fromRGBO(48, 155, 215, 1),
-              ),
+              icon: removable
+                  ? const Icon(Icons.indeterminate_check_box_rounded,
+                      color: Colors.red)
+                  : const Icon(
+                      Icons.add_box_rounded,
+                      color: Color.fromRGBO(48, 155, 215, 1),
+                    ),
             ),
           ],
         ),

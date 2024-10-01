@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/home/draft_card.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/draft_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 
 class HomeDrafts extends ConsumerWidget {
   const HomeDrafts({super.key});
@@ -49,17 +49,11 @@ class HomeDrafts extends ConsumerWidget {
                       color: Color.fromRGBO(106, 106, 106, 1),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
+                  PrimaryButton(
+                    callback: () {
                       Navigator.of(context).pushNamed('/create-post');
                     },
-                    style: PrimaryButtonStyle(),
-                    child: const Text(
-                      "Create my first draft",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    text: 'Create my first draft',
                   ),
                 ],
               ),

@@ -83,7 +83,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
         children: [
           TextField(
             controller: _emailController,
-            decoration: const UsernameDecoration(),
+            decoration: const EmailDecoration(),
           ),
           TextField(
             controller: _passwordController,

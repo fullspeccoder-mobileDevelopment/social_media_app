@@ -298,4 +298,9 @@ class UserNotifier extends StateNotifier<LocalUser> {
       user: FirebaseUser.zero(),
     );
   }
+
+  Future<void> updateUserDetails(FirebaseUser user) async {
+    print(user);
+    state = state.copyWith(user: user);
+  }
 }

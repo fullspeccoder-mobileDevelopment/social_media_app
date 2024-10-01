@@ -14,5 +14,7 @@ class GreyRoundedBorder extends ButtonStyle {
 
 class PrimaryButtonStyle extends ButtonStyle {
   PrimaryButtonStyle()
-      : super(backgroundColor: WidgetStateProperty.all(Colors.blue.shade900));
+      : super(
+          backgroundColor: WidgetStateProperty.all(Colors.blue.shade900),
+        );
 }

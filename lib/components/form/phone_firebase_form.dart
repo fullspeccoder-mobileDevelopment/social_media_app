@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
+import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 
 class PhoneFirebaseForm extends ConsumerStatefulWidget {
   const PhoneFirebaseForm({super.key, required this.codeSentAction});
@@ -65,26 +66,17 @@ class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
             ),
           ],
         ),
-        const SizedBox(height: 15),
-        const Divider(color: Colors.grey),
-        const SizedBox(height: 15),
-        TextButton(
-          style: PrimaryButtonStyle(),
-          onPressed: () async {
+        const SpacedDivider(whitespace: 25, color: Colors.grey),
+        PrimaryButton(
+          callback: () async {
             await userNotifier.verifyWithPhoneNumber(
               areaCodeController.text,
               mobileController.text,
               codeSent: widget.codeSentAction,
             );
           },
-          child: const Text(
-            "Send Code",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        )
+          text: 'Send Code',
+        ),
       ],
     );
   }

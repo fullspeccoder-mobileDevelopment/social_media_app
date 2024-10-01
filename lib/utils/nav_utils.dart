@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled_app/pages/confirmation_page.dart';
 import 'package:untitled_app/pages/create_post.dart';
 import 'package:untitled_app/pages/home_page.dart';
-import 'package:untitled_app/pages/link_first_page.dart';
+import 'package:untitled_app/pages/link_page.dart';
 import 'package:untitled_app/pages/login_page.dart';
 import 'package:untitled_app/pages/phone_login.dart';
 import 'package:untitled_app/pages/phone_signup.dart';
@@ -59,6 +59,7 @@ enum Route {
         ),
       );
 
+  // TODO Document Strings and Route Functions
   static String get splashString => splash.route;
   static String get homeString => home.route;
   static String get signUpString => signUp.route;
@@ -73,3 +74,19 @@ enum Route {
   static String get supportString => support.route;
   static String get requestSocialString => requestSocial.route;
 }
+
+final routes = {
+  Route.splashString: Route.splashRoute,
+  Route.homeString: Route.homeRoute,
+  Route.signUpString: Route.signUpRoute,
+  Route.phoneSignUpString: Route.phoneSignUpRoute,
+  Route.phoneLogInString: Route.phoneLogInRoute,
+  Route.logInString: Route.logInRoute,
+  Route.linkString: Route.linkRoute,
+  Route.createPostString: Route.createPostRoute,
+  Route.calendarString: Route.calendarRoute,
+  Route.postHistoryString: Route.postHistoryRoute,
+  Route.profileString: Route.profileRoute,
+  Route.supportString: Route.supportRoute,
+  Route.requestSocialString: Route.requestSocialRoute,
+};

@@ -24,21 +24,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: lightTheme,
-      routes: {
-        r.Route.splashString: r.Route.splashRoute,
-        r.Route.homeString: r.Route.homeRoute,
-        r.Route.signUpString: r.Route.signUpRoute,
-        r.Route.phoneSignUpString: r.Route.phoneSignUpRoute,
-        r.Route.phoneLogInString: r.Route.phoneLogInRoute,
-        r.Route.logInString: r.Route.logInRoute,
-        r.Route.linkString: r.Route.linkRoute,
-        r.Route.createPostString: r.Route.createPostRoute,
-        r.Route.calendarString: r.Route.calendarRoute,
-        r.Route.postHistoryString: r.Route.postHistoryRoute,
-        r.Route.profileString: r.Route.profileRoute,
-        r.Route.supportString: r.Route.supportRoute,
-        r.Route.requestSocialString: r.Route.requestSocialRoute,
-      },
+      routes: r.routes,
     );
   }
 }

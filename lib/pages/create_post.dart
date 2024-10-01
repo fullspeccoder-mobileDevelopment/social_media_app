@@ -92,6 +92,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
             //$ TextButton
             // TODO Validation is needed otherwise error
             PrimaryButton(
+              text: 'Continue',
               callback: () {
                 postMaker.makePost({
                   'content': descriptionController.text,

@@ -46,7 +46,7 @@ class FirebaseUser {
     return FirebaseUser(
       email: email ?? 'defaultEmail',
       username: username ?? 'defaultUsername',
-      profilePicUrl: profilePicUrl ?? 'defaultProfilePic',
+      profilePicUrl: profilePicUrl ?? 'avatar.png',
       phoneNumber: phoneNumber ?? 'defaultPhoneNumber',
       accessTokens: {},
     );

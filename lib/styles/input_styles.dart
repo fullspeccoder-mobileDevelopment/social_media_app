@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class UsernameDecoration extends InputDecoration {
-  const UsernameDecoration()
+class EmailDecoration extends InputDecoration {
+  const EmailDecoration()
       : super(
-          hintText: "Username",
+          hintText: "Email",
         );
 }
 

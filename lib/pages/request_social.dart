@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
+import 'package:untitled_app/components/misc/spaced_divider.dart';
+import 'package:untitled_app/components/misc/titled_textfield.dart';
 import 'package:untitled_app/utils/send_social_request.dart';
 import 'package:untitled_app/utils/nav_utils.dart' as r;
 
@@ -48,48 +50,15 @@ class _RequestSocialState extends State<RequestSocial> {
               const SizedBox(height: 25),
               Column(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Name",
-                        textAlign: TextAlign.start,
-                      ),
-                      TextField(
-                        controller: nameController,
-                      ),
-                    ],
-                  ),
+                  TitledTextField(text: 'Name', controller: nameController),
                   const SizedBox(height: 25),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Link",
-                        textAlign: TextAlign.start,
-                      ),
-                      TextField(
-                        controller: linkController,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  const Divider(
-                    thickness: 1,
+                  TitledTextField(text: 'Link', controller: linkController),
+                  const SpacedDivider(
                     color: Colors.grey,
+                    thickness: 1,
+                    whitespace: 20,
                   ),
-                  const SizedBox(height: 20),
-                  TextButton(
-                    onPressed: handleRequest,
-                    style: PrimaryButtonStyle(),
-                    child: const Text(
-                      "Continue",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  )
+                  PrimaryButton(callback: handleRequest, text: 'Continue'),
                 ],
               )
             ],

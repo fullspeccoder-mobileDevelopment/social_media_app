@@ -44,6 +44,7 @@ class _LinkPageState extends ConsumerState<LinkPage> {
                           imagePath: social.filePath,
                           socialMedia: social.socialName,
                           authCallback: provideAuthFunction('twitter'),
+                          removable: false,
                         ))
                     .toList(),
               ),

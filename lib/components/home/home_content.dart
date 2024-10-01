@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/home/home_drafts.dart';
 import 'package:untitled_app/components/home/home_posts.dart';
+import 'package:untitled_app/components/home/home_settings.dart';
+// import 'package:untitled_app/pages/settings_page.dart';
 import 'package:untitled_app/providers/home_nav_provider.dart';
 
 /// Holds the main content of the home page
@@ -19,11 +21,12 @@ class HomeContent extends ConsumerWidget {
         return const HomePosts();
       case 1:
         return const HomeDrafts();
-      case 2:
-        throw UnimplementedError("Statistics Page not created");
+      // case 2:
+      //   throw UnimplementedError("Statistics Page not created");
       // return const HomeStatistics();
-      case 3:
-        throw UnimplementedError("Settings Page not created");
+      //$ Will be a case of 3 for settings, change after implementing Statistics page
+      case 2:
+        return const HomeSettings();
       // return const HomeSettings();
       default:
         return const Scaffold(

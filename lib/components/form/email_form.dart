@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
+import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart' as r;
 
 class EmailForm extends ConsumerWidget {
@@ -28,21 +29,18 @@ class EmailForm extends ConsumerWidget {
           decoration: const InputDecoration(
               labelText: "Password", hintText: "Enter your password"),
         ),
-        const SizedBox(height: 25),
-        const Divider(color: Colors.grey),
-        const SizedBox(height: 25),
-        TextButton(
-          style: PrimaryButtonStyle(),
-          onPressed: () {
+        const SpacedDivider(
+          whitespace: 25,
+          color: Colors.grey,
+        ),
+        PrimaryButton(
+          callback: () {
             userNotifier.signUpWithEmail(
                 emailController.text, passwordController.text);
             Navigator.pop(context);
             Navigator.push(context, r.Route.successfulSignUp);
           },
-          child: const Text(
-            "Next",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
+          text: 'Next',
         ),
       ],
     );

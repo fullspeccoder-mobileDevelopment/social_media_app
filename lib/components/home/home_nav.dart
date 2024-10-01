@@ -47,10 +47,11 @@ class _BottomHomeNavbarState extends ConsumerState<BottomHomeNavbar> {
           icon: determineIconState(Icons.drafts, 1),
           label: "Drafts",
         ),
-        BottomNavigationBarItem(
-          icon: determineIconState(Icons.query_stats, 2),
-          label: "Query Stats",
-        ),
+        //$ Will be coming soon
+        // BottomNavigationBarItem(
+        //   icon: determineIconState(Icons.query_stats, 2),
+        //   label: "Query Stats",
+        // ),
         BottomNavigationBarItem(
           icon: determineIconState(Icons.settings_outlined, 3),
           label: "Settings",
