@@ -112,6 +112,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
           ),
           const Divider(),
           TextButton(
+            key: const ValueKey("form-key"),
             onPressed: _formSignUpAction,
             style: PrimaryButtonStyle(),
             child: const Text(

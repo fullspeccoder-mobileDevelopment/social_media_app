@@ -6,14 +6,13 @@ import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/firebase_options.dart';
 import 'package:untitled_app/main.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:untitled_app/pages/splash_page.dart';
 
 void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  group('end-to-end test', () {
-    testWidgets('tap on the floating action button, verify counter',
+  group('Sign up testing', () {
+    testWidgets('Signs user up in Firebase and returns to home screen.',
         (tester) async {
       await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
@@ -33,17 +32,36 @@ void main() async {
 
       expect(formBottomContentWidget, findsOneWidget);
 
-      const linkTextKey = ValueKey('link-text');
+      Finder textFields = find.byType(TextField);
 
-      expect(find.byKey(linkTextKey), findsOneWidget);
+      expect(textFields, findsWidgets);
 
-      // await tester.tap(logInTextWidget);
+      Finder usernameField = textFields.first;
+      Finder passwordField = textFields.last;
+
+      expect(usernameField, findsOneWidget);
+      expect(passwordField, findsOneWidget);
+
+      await tester.enterText(usernameField, 'test_email@gmail.com');
+      await tester.enterText(passwordField, '1234password\$');
+
+      Finder continueButton = find.byKey(const ValueKey('form-key'));
+
+      expect(continueButton, findsOneWidget);
+
+      await tester.tap(continueButton);
+
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      Finder congratsButton = find.byKey(const ValueKey('confirm-key'));
+
+      expect(congratsButton, findsOneWidget);
+
+      await tester.tap(congratsButton);
 
       await tester.pumpAndSettle();
 
-      Finder logInFormTextWidget = find.text("Log in to");
-
-      expect(logInFormTextWidget, findsOneWidget);
+      await Future.delayed(const Duration(seconds: 10));
     });
   });
 }

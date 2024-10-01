@@ -15,7 +15,7 @@ class FormBottomContent extends StatelessWidget {
 
   final String bottomText;
   final String bottomLink;
-  final Function()? navigationMethod;
+  final Function() navigationMethod;
 
   @override
   Widget build(BuildContext context) {

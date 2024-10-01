@@ -7,26 +7,29 @@ import 'package:flutter/material.dart';
 /// as the beginning of the sentence and the secondary text as the actual link
 ///
 /// The navigation method will take you to a new page in the application by touching the link
-class LinkText extends StatelessWidget {
-  LinkText({
+class LinkText extends StatefulWidget {
+  const LinkText({
     super.key,
     required this.primaryText,
     required this.secondaryText,
     required this.navigationMethod,
   });
-  ValueKey value = const ValueKey('link-text');
-
   final String primaryText;
   final String secondaryText;
   final void Function()? navigationMethod;
 
+  @override
+  State<LinkText> createState() => _LinkTextState();
+}
+
+class _LinkTextState extends State<LinkText> {
   @override
   Widget build(BuildContext context) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(children: [
         TextSpan(
-          text: primaryText,
+          text: widget.primaryText,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
@@ -35,14 +38,14 @@ class LinkText extends StatelessWidget {
         ),
         const TextSpan(text: " "),
         TextSpan(
-          text: secondaryText,
+          text: widget.secondaryText,
           style: const TextStyle(
             decoration: TextDecoration.underline,
             fontSize: 16,
             fontWeight: FontWeight.w400,
             color: Color.fromRGBO(215, 48, 48, 1),
           ),
-          recognizer: TapGestureRecognizer()..onTap = navigationMethod,
+          recognizer: TapGestureRecognizer()..onTap = widget.navigationMethod,
         ),
       ]),
     );

@@ -42,6 +42,7 @@ class ConfirmationPage extends StatelessWidget {
               ),
             ),
             TextButton(
+              key: const ValueKey('confirm-key'),
               style: PrimaryButtonStyle(),
               onPressed: () {
                 Navigator.of(context).pop();
