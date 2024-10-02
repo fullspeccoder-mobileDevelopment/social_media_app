@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
+import 'package:untitled_app/utils/validation_checking.dart';
 
-class TitledTextField extends StatelessWidget {
+class TitledTextField extends ConsumerWidget {
   const TitledTextField(
       {super.key,
       required this.text,
@@ -14,7 +17,7 @@ class TitledTextField extends StatelessWidget {
   final String? labelText;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Row(
@@ -33,6 +36,11 @@ class TitledTextField extends StatelessWidget {
             floatingLabelBehavior: labelText != null || isPassword == true
                 ? FloatingLabelBehavior.never
                 : FloatingLabelBehavior.auto,
+            errorText: validate(
+              textToValidate: controller.text,
+              buttonPressed: ref.watch(actionButtonProvider),
+              message: '$labelText is empty or invalid',
+            ),
           ),
         )
       ],

@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/components/misc/titled_textfield.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/utils/send_social_request.dart';
 import 'package:untitled_app/utils/nav_utils.dart' as r;
+import 'package:untitled_app/utils/snack_utils.dart';
 
-class RequestSocial extends StatefulWidget {
+class RequestSocial extends ConsumerStatefulWidget {
   const RequestSocial({super.key});
 
   @override
-  State<RequestSocial> createState() => _RequestSocialState();
+  ConsumerState<RequestSocial> createState() => _RequestSocialState();
 }
 
-class _RequestSocialState extends State<RequestSocial> {
+class _RequestSocialState extends ConsumerState<RequestSocial> {
   TextEditingController nameController = TextEditingController();
   TextEditingController linkController = TextEditingController();
 
   void handleRequest() {
+    ref.read(actionButtonProvider.notifier).state = true;
+
+    if (nameController.text.isEmpty || linkController.text.isEmpty) {
+      showSnackBarErrorMessage(context, 'Name or Link is empty');
+      return;
+    }
     final socialRequest = SocialRequest();
     try {
       socialRequest.sendRequest(nameController.text, linkController.text);
       Navigator.push(context, r.Route.successfulSocialRequest);
+      ref.read(actionButtonProvider.notifier).state = false;
     } catch (e) {
-      Navigator.push(context, r.Route.failedRequest);
+      showSnackBarErrorMessage(context, e);
     }
   }
 

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/components/form/email_form.dart';
 import 'package:untitled_app/components/form/phone_firebase_form.dart';
 import 'package:untitled_app/pages/otp_page.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
-class PhoneLogInPage extends StatefulWidget {
+class PhoneLogInPage extends ConsumerStatefulWidget {
   const PhoneLogInPage({super.key});
 
   @override
-  State<PhoneLogInPage> createState() => _PhoneLogInPageState();
+  ConsumerState<PhoneLogInPage> createState() => _PhoneLogInPageState();
 }
 
-class _PhoneLogInPageState extends State<PhoneLogInPage>
+class _PhoneLogInPageState extends ConsumerState<PhoneLogInPage>
     with SingleTickerProviderStateMixin {
   static const List<Tab> myTabs = <Tab>[
     Tab(
@@ -97,6 +99,7 @@ class _PhoneLogInPageState extends State<PhoneLogInPage>
                 const SizedBox(height: 50),
                 TabBar(
                   onTap: (value) {
+                    ref.read(actionButtonProvider.notifier).state = false;
                     setState(() {
                       if (value == 1) {
                         currentForm = EmailForm();

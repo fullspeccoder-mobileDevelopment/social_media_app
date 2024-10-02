@@ -9,11 +9,14 @@ import 'package:untitled_app/components/create/text_input_container.dart';
 import 'package:untitled_app/components/create/text_input_container_extended.dart';
 import 'package:untitled_app/components/create/textfield_container.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/date_provider.dart';
 import 'package:untitled_app/providers/image_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/utils/path_manipulation.dart';
 import 'package:untitled_app/utils/post_maker.dart';
+import 'package:untitled_app/utils/snack_utils.dart';
+import 'package:untitled_app/utils/validation_checking.dart';
 
 class CreatePostPage extends ConsumerStatefulWidget {
   const CreatePostPage({super.key});
@@ -51,6 +54,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
               children: [
                 IconButton(
                   onPressed: () {
+                    ref.read(actionButtonProvider.notifier).state = false;
                     Navigator.pop(context);
                   },
                   icon: const Icon(
@@ -85,6 +89,13 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
               child: TextField(
                 maxLines: 4,
                 controller: descriptionController,
+                decoration: InputDecoration(
+                  errorText: validate(
+                    textToValidate: descriptionController.text,
+                    buttonPressed: ref.watch(actionButtonProvider),
+                    message: 'Description is empty or invalid',
+                  ),
+                ),
               ),
             ),
             //$ Image
@@ -94,6 +105,14 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
             PrimaryButton(
               text: 'Continue',
               callback: () {
+                ref.read(actionButtonProvider.notifier).state = true;
+                if (descriptionController.text.isEmpty ||
+                    user.id == 'defaultUser' ||
+                    platformController.text.isEmpty) {
+                  showSnackBarErrorMessage(context,
+                      "Needs description, user, or at least one platform...");
+                  return;
+                }
                 postMaker.makePost({
                   'content': descriptionController.text,
                   'imageUrl': getFileNameFromAbsolutePath(imagePath!),

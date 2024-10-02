@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/components/form/form_title.dart';
 import 'package:untitled_app/components/form/firebase_form.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 
 class SignUpPage extends ConsumerWidget {
@@ -29,6 +30,7 @@ class SignUpPage extends ConsumerWidget {
               bottomText: "Already have an account? ",
               bottomLink: "Log in",
               navigationMethod: () {
+                ref.read(actionButtonProvider.notifier).state = false;
                 Navigator.of(context).popAndPushNamed('/log-in');
               },
             ),

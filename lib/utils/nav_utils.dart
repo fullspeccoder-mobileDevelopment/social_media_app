@@ -59,7 +59,6 @@ enum Route {
         ),
       );
 
-  // TODO Document Strings and Route Functions
   static String get splashString => splash.route;
   static String get homeString => home.route;
   static String get signUpString => signUp.route;

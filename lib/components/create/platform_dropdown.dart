@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
+import 'package:untitled_app/utils/validation_checking.dart';
 
-class PlatformDropdown extends StatelessWidget {
+class PlatformDropdown extends ConsumerWidget {
   const PlatformDropdown(
       {super.key, required this.text, required this.platformController});
 
@@ -8,7 +11,7 @@ class PlatformDropdown extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
@@ -16,6 +19,11 @@ class PlatformDropdown extends StatelessWidget {
         children: [
           Text(text),
           DropdownMenu(
+            errorText: validate(
+              textToValidate: platformController.text,
+              buttonPressed: ref.watch(actionButtonProvider),
+              message: 'Platform is empty or invalid',
+            ),
             controller: platformController,
             menuStyle: const MenuStyle(
                 backgroundColor:

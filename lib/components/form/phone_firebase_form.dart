@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/components/misc/spaced_divider.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/snack_utils.dart';
+import 'package:untitled_app/utils/validation_checking.dart';
 
 class PhoneFirebaseForm extends ConsumerStatefulWidget {
   const PhoneFirebaseForm({super.key, required this.codeSentAction});
@@ -27,6 +30,11 @@ class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DropdownMenu(
+              errorText: validate(
+                textToValidate: areaCodeController.text,
+                buttonPressed: ref.watch(actionButtonProvider),
+                message: 'Invalid',
+              ),
               label: Text(currentFlag ?? ""),
               controller: areaCodeController,
               menuStyle: const MenuStyle(
@@ -60,6 +68,11 @@ class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
             TextField(
               controller: mobileController,
               decoration: InputDecoration(
+                  errorText: validate(
+                    textToValidate: mobileController.text,
+                    buttonPressed: ref.watch(actionButtonProvider),
+                    message: 'Phone number is empty or invalid',
+                  ),
                   labelText: 'Mobile',
                   hintText: "Enter your phone number",
                   constraints: BoxConstraints.loose(const Size(270, 75))),
@@ -69,11 +82,16 @@ class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
         const SpacedDivider(whitespace: 25, color: Colors.grey),
         PrimaryButton(
           callback: () async {
-            await userNotifier.verifyWithPhoneNumber(
-              areaCodeController.text,
-              mobileController.text,
-              codeSent: widget.codeSentAction,
-            );
+            ref.read(actionButtonProvider.notifier).state = true;
+            try {
+              await userNotifier.verifyWithPhoneNumber(
+                areaCodeController.text,
+                mobileController.text,
+                codeSent: widget.codeSentAction,
+              );
+            } catch (e) {
+              showSnackBarErrorMessage(context, e);
+            }
           },
           text: 'Send Code',
         ),

@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/sign_in_button.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
+import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/styles/input_styles.dart';
 import 'package:untitled_app/utils/nav_utils.dart' as r;
 import 'package:untitled_app/utils/snack_utils.dart';
+import 'package:untitled_app/utils/validation_checking.dart';
 
 /// The sign up form
 ///
@@ -56,6 +57,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   }
 
   void _formSignUpAction() async {
+    ref.read(actionButtonProvider.notifier).state = true;
     try {
       await widget.formAction(_emailController.text, _passwordController.text);
 
@@ -65,6 +67,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
       }
 
       if (context.mounted) {
+        ref.read(actionButtonProvider.notifier).state = false;
         Navigator.pop(context);
         Navigator.push(context, r.Route.successfulSignUp);
       }
@@ -83,18 +86,34 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
         children: [
           TextField(
             controller: _emailController,
-            decoration: const EmailDecoration(),
+            decoration: InputDecoration(
+              hintText: 'Email',
+              errorText: validate(
+                textToValidate: _emailController.text,
+                buttonPressed: ref.watch(actionButtonProvider),
+                message: 'Email is empty or invalid',
+              ),
+            ),
           ),
           TextField(
             controller: _passwordController,
             obscureText: eyeToggled,
-            decoration: PasswordDecoration(suffixIcon: determineEyeIcon()),
+            decoration: InputDecoration(
+              suffixIcon: determineEyeIcon(),
+              hintText: "Password",
+              errorText: validate(
+                textToValidate: _passwordController.text,
+                buttonPressed: ref.watch(actionButtonProvider),
+                message: 'Password is empty or invalid',
+              ),
+            ),
           ),
           const LineOr(),
           SignInButton(
             image: "assets/images/google.png",
             text: "Continue with Google",
             triggerOnPressed: () {
+              ref.read(actionButtonProvider.notifier).state = false;
               widget.googleAction();
               Navigator.popAndPushNamed(context, '/home');
             },
@@ -103,6 +122,7 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
             image: "assets/images/phone.png",
             text: "Continue with Phone ",
             triggerOnPressed: () {
+              ref.read(actionButtonProvider.notifier).state = false;
               if (widget.isSigningUp) {
                 Navigator.pushNamed(context, '/phone-sign-up');
                 return;

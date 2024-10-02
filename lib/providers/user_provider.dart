@@ -284,8 +284,26 @@ class UserNotifier extends StateNotifier<LocalUser> {
         user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>));
   }
 
-  // TODO Implement Google Log In
-  // Future<void> logInWithGoogle() async {}
+  Future<void> logInWithGoogle() async {
+    late UserCredential userCredential;
+
+    try {
+      userCredential = await _auth.signInWithProvider(GoogleAuthProvider());
+    } catch (e) {
+      print(e);
+    }
+
+    final QuerySnapshot querySnapshot = await _store
+        .collection("users")
+        .where('email', isEqualTo: userCredential.user!.email)
+        .get();
+
+    final DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+
+    state = LocalUser(
+        id: docSnapshot.id,
+        user: FirebaseUser.fromMap(docSnapshot.data() as Map<String, dynamic>));
+  }
 
   // Signs out of Firebase
   Future<void> signOut() async {
