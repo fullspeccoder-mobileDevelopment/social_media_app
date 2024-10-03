@@ -59,6 +59,9 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
   void _formSignUpAction() async {
     ref.read(actionButtonProvider.notifier).state = true;
     try {
+      if (widget.isSigningUp) showSnackBarSignUpProcessingMessage(context);
+      if (!widget.isSigningUp) showSnackBarLogInProcessingMessage(context);
+
       await widget.formAction(_emailController.text, _passwordController.text);
 
       if (!widget.isSigningUp) {
@@ -72,7 +75,10 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
         Navigator.push(context, r.Route.successfulSignUp);
       }
     } catch (e) {
-      if (context.mounted) showSnackBarErrorMessage(context, e);
+      if (context.mounted) {
+        showSnackBarErrorMessage(
+            context, '$e\n\nHave you signed in using Google before?');
+      }
     }
   }
 

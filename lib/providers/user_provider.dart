@@ -319,6 +319,30 @@ class UserNotifier extends StateNotifier<LocalUser> {
 
   Future<void> updateUserDetails(FirebaseUser user) async {
     print(user);
+    final QuerySnapshot querySnapshot = await _store
+        .collection("users")
+        .where('email', isEqualTo: state.user.email)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      throw FirebaseAuthException(
+          code: 'email-already-in-use',
+          message: "Email is currently in use by another user");
+    }
+
+    final DocumentReference docReference =
+        _store.collection("users").doc(state.id);
+
+    await _store.runTransaction((transaction) async {
+      transaction.update(docReference, user.toMap());
+    });
+
+    try {
+      await _auth.currentUser!.verifyBeforeUpdateEmail(user.email);
+    } catch (e) {
+      print(e);
+    }
+
     state = state.copyWith(user: user);
   }
 }

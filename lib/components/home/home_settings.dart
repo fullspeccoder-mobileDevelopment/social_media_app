@@ -6,6 +6,7 @@ import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/components/misc/titled_textfield.dart';
 import 'package:untitled_app/components/settings/editable_avatar.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/snack_utils.dart';
 
 class HomeSettings extends ConsumerStatefulWidget {
   const HomeSettings({super.key});
@@ -131,13 +132,23 @@ class _HomeSettingsState extends ConsumerState<HomeSettings> {
                 ),
                 const SizedBox(height: 35),
                 PrimaryButton(
-                    callback: () {
-                      ref
-                          .read(userProvider.notifier)
-                          .updateUserDetails(currentUser.copyWith(
-                            email: emailController.text,
-                            username: usernameController.text,
-                          ));
+                    callback: () async {
+                      try {
+                        await ref
+                            .read(userProvider.notifier)
+                            .updateUserDetails(currentUser.copyWith(
+                              email: emailController.text,
+                              username: usernameController.text,
+                            ));
+                        if (context.mounted) {
+                          showSnackBarSuccessMessage(context,
+                              'Successfully updated user credentials!');
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          showSnackBarErrorMessage(context, e);
+                        }
+                      }
                     },
                     text: 'Save'),
               ],

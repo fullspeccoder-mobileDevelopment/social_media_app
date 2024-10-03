@@ -17,3 +17,23 @@ void showSnackBarSuccessMessage(BuildContext context, String message) {
     ),
   );
 }
+
+/// Shows a snack bar sign up process message using context from the current widget
+void showSnackBarSignUpProcessingMessage(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      duration: Duration(milliseconds: 750),
+      content: Text('Signing you up...'),
+    ),
+  );
+}
+
+/// Shows a snack bar log in process message using context from the current widget
+void showSnackBarLogInProcessingMessage(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      duration: Duration(milliseconds: 750),
+      content: Text('Logging you in...'),
+    ),
+  );
+}
