@@ -1,11 +1,7 @@
-import 'dart:js_interop_unsafe';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:untitled_app/components/form/bottom_content.dart';
 import 'package:untitled_app/firebase_options.dart';
 import 'package:untitled_app/main.dart';
 import 'package:integration_test/integration_test.dart';
@@ -13,8 +9,6 @@ import 'package:integration_test/integration_test.dart';
 void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  FirebaseAuth auth = FirebaseAuth.instance;
 
   group('Sign up testing', () {
     testWidgets('Signs user up in Firebase and returns to home screen.',

@@ -26,34 +26,30 @@ class AppDrawer extends ConsumerWidget {
               alignment: const Alignment(-1, 0.5),
               child: const Text("My Menu", style: TextStyle(fontSize: 32)),
             ),
-            const SizedBox(height: 35),
-            const Column(
-              children: [
-                DrawerTab(
-                  title: "Calendar",
-                  subTitle: "Schedule your posts",
-                  icon: Icons.calendar_month_outlined,
-                  appPath: '/calendar',
-                ),
-                DrawerTab(
-                  icon: Icons.access_time_outlined,
-                  title: "Post history",
-                  subTitle: "Review post history",
-                  appPath: '/post-history',
-                ),
-              ],
-            ),
+            // const SizedBox(height: 35),
+            // const Column(
+            //   children: [
+            //     DrawerTab(
+            //       title: "Calendar",
+            //       subTitle: "Schedule your posts",
+            //       icon: Icons.calendar_month_outlined,
+            //       appPath: '/calendar',
+            //     ),
+            //     DrawerTab(
+            //       icon: Icons.access_time_outlined,
+            //       title: "Post history",
+            //       subTitle: "Review post history",
+            //       appPath: '/post-history',
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 35),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(
-                    right: 175.0,
-                  ),
-                  child: Text(
-                    "Accounts",
-                    style: TextStyle(fontSize: 24),
-                  ),
+                const Text(
+                  "Accounts",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
                 ),
                 DrawerTab(
                   title: user.username,
@@ -70,21 +66,17 @@ class AppDrawer extends ConsumerWidget {
             ),
             const SizedBox(height: 25),
             const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: 225.0,
-                  ),
-                  child: Text(
-                    "More",
-                    style: TextStyle(fontSize: 24),
-                  ),
+                Text(
+                  "More",
+                  style: TextStyle(fontSize: 26),
                 ),
-                DrawerTab(
-                  title: "Help & Support",
-                  icon: Icons.help,
-                  appPath: '/support',
-                ),
+                // DrawerTab(
+                //   title: "Help & Support",
+                //   icon: Icons.help,
+                //   appPath: '/support',
+                // ),
                 DrawerTab(
                   title: "Logout",
                   icon: Icons.logout,

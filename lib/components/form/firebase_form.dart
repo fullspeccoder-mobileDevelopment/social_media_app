@@ -1,14 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/form/sign_in_button.dart';
 import 'package:untitled_app/components/misc/line_or.dart';
+import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/styles/button_styles.dart';
-import 'package:untitled_app/utils/nav_utils.dart' as r;
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 import 'package:untitled_app/utils/validation_checking.dart';
 
@@ -69,13 +67,13 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
         await ref.read(postsProvider.notifier).retrievePosts(userId);
       }
 
-      if (context.mounted) {
+      if (mounted) {
         ref.read(actionButtonProvider.notifier).state = false;
         Navigator.pop(context);
-        Navigator.push(context, r.Route.successfulSignUp);
+        Navigator.push(context, Routes.successfulSignUp);
       }
     } catch (e) {
-      if (context.mounted) {
+      if (mounted) {
         showSnackBarErrorMessage(
             context, '$e\n\nHave you signed in using Google before?');
       }
@@ -137,17 +135,10 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
             },
           ),
           const Divider(),
-          TextButton(
+          PrimaryButton(
             key: const ValueKey("form-key"),
-            onPressed: _formSignUpAction,
-            style: PrimaryButtonStyle(),
-            child: const Text(
-              "Continue",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
+            callback: _formSignUpAction,
+            text: 'Continue',
           ),
         ],
       ),

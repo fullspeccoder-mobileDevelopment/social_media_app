@@ -90,7 +90,7 @@ class _PhoneFirebaseFormState extends ConsumerState<PhoneFirebaseForm> {
                 codeSent: widget.codeSentAction,
               );
             } catch (e) {
-              showSnackBarErrorMessage(context, e);
+              if (context.mounted) showSnackBarErrorMessage(context, e);
             }
           },
           text: 'Send Code',

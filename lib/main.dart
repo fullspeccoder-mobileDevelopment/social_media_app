@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:untitled_app/styles/theme.dart';
-import 'package:untitled_app/utils/nav_utils.dart' as r;
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: lightTheme,
-      routes: r.routes,
+      routes: routes,
     );
   }
 }

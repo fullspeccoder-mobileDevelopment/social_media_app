@@ -5,6 +5,7 @@ import 'package:untitled_app/components/form/firebase_form.dart';
 import 'package:untitled_app/components/form/form_title.dart';
 import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class LogInPage extends ConsumerWidget {
   const LogInPage({super.key});
@@ -31,7 +32,7 @@ class LogInPage extends ConsumerWidget {
               bottomLink: "Sign up",
               navigationMethod: () {
                 ref.read(actionButtonProvider.notifier).state = false;
-                Navigator.of(context).popAndPushNamed("/sign-up");
+                Navigator.popAndPushNamed(context, Routes.signUpString);
               },
             ),
           ],

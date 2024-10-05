@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
-//String Tags
 class TextFieldTagsContainer extends StatefulWidget {
   const TextFieldTagsContainer({super.key, required this.controller});
 
@@ -25,6 +24,9 @@ class _TextFieldTagsContainerState extends State<TextFieldTagsContainer> {
     return Column(
       children: [
         TextFieldTags<String>(
+          validator: (tag) => widget.controller.getTags!.length >= 5
+              ? "List is too long"
+              : null,
           textfieldTagsController: widget.controller,
           textSeparators: const [' ', ','],
           letterCase: LetterCase.normal,
@@ -33,6 +35,9 @@ class _TextFieldTagsContainerState extends State<TextFieldTagsContainer> {
               controller: inputFieldValues.textEditingController,
               focusNode: inputFieldValues.focusNode,
               decoration: InputDecoration(
+                errorText: widget.controller.getTags!.length >= 5
+                    ? "List is too long"
+                    : null,
                 hintText:
                     inputFieldValues.tags.isNotEmpty ? '' : "Enter tag...",
                 prefixIconConstraints:

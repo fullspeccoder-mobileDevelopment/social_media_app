@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TitleLinkAccount extends StatelessWidget {
-  const TitleLinkAccount({super.key, required this.searchController});
+  const TitleLinkAccount({
+    super.key,
+    required this.searchController,
+    required this.filter,
+  });
   final TextEditingController searchController;
+  final void Function() filter;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +30,13 @@ class TitleLinkAccount extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 25),
-          const SearchBar(
-            leading: Icon(Icons.search),
+          SearchBar(
+            controller: searchController,
+            leading: const Icon(Icons.search),
             hintText: "Search",
+            onChanged: (value) {
+              filter();
+            },
           ),
         ],
       ),

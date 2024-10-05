@@ -4,7 +4,7 @@ import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
-import 'package:untitled_app/utils/nav_utils.dart' as r;
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 import 'package:untitled_app/utils/validation_checking.dart';
 
@@ -57,12 +57,14 @@ class EmailForm extends ConsumerWidget {
               await userNotifier.signUpWithEmail(
                   emailController.text, passwordController.text);
             } catch (e) {
-              showSnackBarErrorMessage(context, e);
+              if (context.mounted) showSnackBarErrorMessage(context, e);
               return;
             }
             ref.read(actionButtonProvider.notifier).state = false;
-            Navigator.pop(context);
-            Navigator.push(context, r.Route.successfulSignUp);
+            if (context.mounted) {
+              Navigator.pop(context);
+              Navigator.push(context, Routes.successfulSignUp);
+            }
           },
           text: 'Next',
         ),

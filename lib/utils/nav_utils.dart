@@ -10,7 +10,7 @@ import 'package:untitled_app/pages/request_social.dart';
 import 'package:untitled_app/pages/sign_up.dart';
 import 'package:untitled_app/pages/splash_page.dart';
 
-enum Route {
+enum Routes {
   splash(route: "/"),
   home(route: "/home"),
   signUp(route: "/sign-up"),
@@ -25,7 +25,7 @@ enum Route {
   support(route: "/support"),
   requestSocial(route: "/request-social");
 
-  const Route({required this.route});
+  const Routes({required this.route});
   final String route;
 
   static WidgetBuilder get splashRoute => (_) => const SplashScreen();
@@ -75,17 +75,17 @@ enum Route {
 }
 
 final routes = {
-  Route.splashString: Route.splashRoute,
-  Route.homeString: Route.homeRoute,
-  Route.signUpString: Route.signUpRoute,
-  Route.phoneSignUpString: Route.phoneSignUpRoute,
-  Route.phoneLogInString: Route.phoneLogInRoute,
-  Route.logInString: Route.logInRoute,
-  Route.linkString: Route.linkRoute,
-  Route.createPostString: Route.createPostRoute,
-  Route.calendarString: Route.calendarRoute,
-  Route.postHistoryString: Route.postHistoryRoute,
-  Route.profileString: Route.profileRoute,
-  Route.supportString: Route.supportRoute,
-  Route.requestSocialString: Route.requestSocialRoute,
+  Routes.splashString: Routes.splashRoute,
+  Routes.homeString: Routes.homeRoute,
+  Routes.signUpString: Routes.signUpRoute,
+  Routes.phoneSignUpString: Routes.phoneSignUpRoute,
+  Routes.phoneLogInString: Routes.phoneLogInRoute,
+  Routes.logInString: Routes.logInRoute,
+  Routes.linkString: Routes.linkRoute,
+  Routes.createPostString: Routes.createPostRoute,
+  Routes.calendarString: Routes.calendarRoute,
+  Routes.postHistoryString: Routes.postHistoryRoute,
+  Routes.profileString: Routes.profileRoute,
+  Routes.supportString: Routes.supportRoute,
+  Routes.requestSocialString: Routes.requestSocialRoute,
 };

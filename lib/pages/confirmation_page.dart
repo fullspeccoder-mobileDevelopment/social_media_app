@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled_app/styles/button_styles.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class ConfirmationPage extends StatelessWidget {
   const ConfirmationPage({
@@ -46,7 +47,7 @@ class ConfirmationPage extends StatelessWidget {
               style: PrimaryButtonStyle(),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, Routes.homeString);
               },
               child: const Text(
                 "Continue",

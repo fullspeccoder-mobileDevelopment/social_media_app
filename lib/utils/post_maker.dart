@@ -48,6 +48,7 @@ class PostMaker {
         .createDraft(FirebasePost.fromMap(mappedDraft));
   }
 
+  // ignore: unused_element
   void _decidesWhereToPost() {
     final twitterNotifier = ref.read(twitterProvider.notifier);
 

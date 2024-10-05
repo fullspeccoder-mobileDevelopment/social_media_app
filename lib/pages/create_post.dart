@@ -101,7 +101,6 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
             //$ Image
             const ImagePickerContainer(),
             //$ TextButton
-            // TODO Validation is needed otherwise error
             PrimaryButton(
               text: 'Continue',
               callback: () {
@@ -120,7 +119,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage>
                   'tags': textfieldTagsController.getTags ?? [],
                   'postDate': Timestamp.fromDate(date),
                 }, platformController.text);
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
             ),
           ],

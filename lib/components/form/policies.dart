@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 // Contains links to the terms & conditions page along with the privacy policy page
 class PoliciesText extends StatelessWidget {
@@ -28,7 +29,7 @@ class PoliciesText extends StatelessWidget {
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              Navigator.popAndPushNamed(context, "/home");
+              Navigator.popAndPushNamed(context, Routes.homeString);
             },
         ),
         const TextSpan(
@@ -49,7 +50,7 @@ class PoliciesText extends StatelessWidget {
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              Navigator.popAndPushNamed(context, "/home");
+              Navigator.popAndPushNamed(context, Routes.homeString);
             },
         ),
         const TextSpan(text: "."),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/home/post_card.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/post_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class HomePosts extends ConsumerWidget {
   const HomePosts({super.key});
@@ -51,7 +52,7 @@ class HomePosts extends ConsumerWidget {
                   ),
                   PrimaryButton(
                     callback: () {
-                      Navigator.of(context).pushNamed('/create-post');
+                      Navigator.pushNamed(context, Routes.createPostString);
                     },
                     text: 'Upload your first shot',
                   ),

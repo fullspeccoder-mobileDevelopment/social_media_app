@@ -5,6 +5,7 @@ import 'package:untitled_app/components/form/email_form.dart';
 import 'package:untitled_app/components/form/phone_firebase_form.dart';
 import 'package:untitled_app/pages/otp_page.dart';
 import 'package:untitled_app/providers/create_post_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
 class PhoneSignUp extends ConsumerStatefulWidget {
@@ -45,12 +46,12 @@ class _PhoneSignUpState extends ConsumerState<PhoneSignUp>
                   isSigningUp: true,
                 )));
 
-    if (context.mounted) {
+    if (mounted) {
       showSnackBarSuccessMessage(
           context, 'Successfully Signed Up! Switching to Home Page...');
       await Future.delayed(const Duration(seconds: 1));
       // ignore: use_build_context_synchronously
-      Navigator.popAndPushNamed(context, '/home');
+      Navigator.popAndPushNamed(context, Routes.homeString);
     }
   }
 
@@ -126,7 +127,7 @@ class _PhoneSignUpState extends ConsumerState<PhoneSignUp>
                 bottomLink: 'Log in',
                 navigationMethod: () {
                   ref.read(actionButtonProvider.notifier).state = false;
-                  Navigator.popAndPushNamed(context, '/phone-login');
+                  Navigator.popAndPushNamed(context, Routes.phoneLogInString);
                 }),
           ],
         ),

@@ -5,6 +5,7 @@ import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/components/misc/titled_textfield.dart';
 import 'package:untitled_app/components/settings/editable_avatar.dart';
+import 'package:untitled_app/models/social_media.dart';
 import 'package:untitled_app/providers/user_provider.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
@@ -87,15 +88,11 @@ class _HomeSettingsState extends ConsumerState<HomeSettings> {
                 ),
                 const SizedBox(height: 10),
                 SocialMediaCard(
-                  imagePath: 'assets/images/instagram.png',
-                  socialMedia: 'Instagram',
-                  authCallback: () async {},
+                  social: socialMedias.first,
                   removable: true,
                 ),
                 SocialMediaCard(
-                  imagePath: 'assets/images/linkedin.png',
-                  socialMedia: 'LinkedIn',
-                  authCallback: () async {},
+                  social: socialMedias[1],
                   removable: true,
                 ),
                 const SizedBox(height: 35),
@@ -113,21 +110,15 @@ class _HomeSettingsState extends ConsumerState<HomeSettings> {
                 ),
                 const SizedBox(height: 10),
                 SocialMediaCard(
-                  imagePath: 'assets/images/snapchat.png',
-                  socialMedia: 'Snapchat',
-                  authCallback: () async {},
+                  social: socialMedias[2],
                   removable: false,
                 ),
                 SocialMediaCard(
-                  imagePath: 'assets/images/facebook.png',
-                  socialMedia: 'Facebook',
-                  authCallback: () async {},
+                  social: socialMedias[3],
                   removable: false,
                 ),
                 SocialMediaCard(
-                  imagePath: 'assets/images/x.png',
-                  socialMedia: 'Twitter(X)',
-                  authCallback: () async {},
+                  social: socialMedias.last,
                   removable: false,
                 ),
                 const SizedBox(height: 35),

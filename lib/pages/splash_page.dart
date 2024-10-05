@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -30,10 +31,10 @@ class SplashScreenState extends ConsumerState<SplashScreen>
       final currentUser = ref.read(userProvider);
       print(currentUser.id);
       if (currentUser.id.isEmpty) {
-        Navigator.popAndPushNamed(context, '/sign-up');
+        Navigator.popAndPushNamed(context, Routes.signUpString);
         return;
       }
-      Navigator.popAndPushNamed(context, '/home');
+      Navigator.popAndPushNamed(context, Routes.homeString);
     });
   }
 

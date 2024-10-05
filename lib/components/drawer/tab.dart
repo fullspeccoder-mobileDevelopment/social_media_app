@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:untitled_app/providers/home_nav_provider.dart';
 import 'package:untitled_app/providers/user_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
 class DrawerTab extends ConsumerWidget {
@@ -18,11 +20,17 @@ class DrawerTab extends ConsumerWidget {
   final String? subTitle;
 
   void navigateToCalendar(
-      BuildContext _, Future<void> Function() logout) async {
+      BuildContext _, Future<void> Function() logout, WidgetRef ref) async {
+    if (appPath == '/profile') {
+      ref.read(homeNavProvider.notifier).state = 2;
+      Navigator.pop(_);
+      return;
+    }
+
     if (appPath == '/log-out') {
-      Navigator.popAndPushNamed(_, '/home');
-      showSnackBarSuccessMessage(_, "Logged out successfully!");
+      Navigator.popAndPushNamed(_, Routes.signUpString);
       await logout();
+      if (_.mounted) showSnackBarSuccessMessage(_, "Logged out successfully!");
     } else {
       Navigator.popAndPushNamed(_, appPath);
     }
@@ -33,7 +41,7 @@ class DrawerTab extends ConsumerWidget {
     final logout = ref.watch(userProvider.notifier).signOut;
     return GestureDetector(
       onTap: () {
-        navigateToCalendar(context, logout);
+        navigateToCalendar(context, logout, ref);
       },
       child: Container(
         padding: subTitle == null
@@ -51,6 +59,7 @@ class DrawerTab extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,

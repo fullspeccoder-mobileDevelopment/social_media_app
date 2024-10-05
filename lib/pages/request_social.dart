@@ -5,7 +5,7 @@ import 'package:untitled_app/components/misc/spaced_divider.dart';
 import 'package:untitled_app/components/misc/titled_textfield.dart';
 import 'package:untitled_app/providers/create_post_provider.dart';
 import 'package:untitled_app/utils/send_social_request.dart';
-import 'package:untitled_app/utils/nav_utils.dart' as r;
+import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 
 class RequestSocial extends ConsumerStatefulWidget {
@@ -29,7 +29,7 @@ class _RequestSocialState extends ConsumerState<RequestSocial> {
     final socialRequest = SocialRequest();
     try {
       socialRequest.sendRequest(nameController.text, linkController.text);
-      Navigator.push(context, r.Route.successfulSocialRequest);
+      Navigator.push(context, Routes.successfulSocialRequest);
       ref.read(actionButtonProvider.notifier).state = false;
     } catch (e) {
       showSnackBarErrorMessage(context, e);

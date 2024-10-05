@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/home/draft_card.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/providers/draft_provider.dart';
+import 'package:untitled_app/utils/nav_utils.dart';
 
 class HomeDrafts extends ConsumerWidget {
   const HomeDrafts({super.key});
@@ -27,10 +28,11 @@ class HomeDrafts extends ConsumerWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // TODO: Implement Filter();
             Container(
               width: 375,
               height: 400,
-              margin: const EdgeInsets.only(top: 50),
+              margin: const EdgeInsets.only(top: 100),
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +53,7 @@ class HomeDrafts extends ConsumerWidget {
                   ),
                   PrimaryButton(
                     callback: () {
-                      Navigator.of(context).pushNamed('/create-post');
+                      Navigator.pushNamed(context, Routes.createPostString);
                     },
                     text: 'Create my first draft',
                   ),
