@@ -26,6 +26,7 @@ class _RequestSocialState extends ConsumerState<RequestSocial> {
       showSnackBarErrorMessage(context, 'Name or Link is empty');
       return;
     }
+
     final socialRequest = SocialRequest();
     try {
       socialRequest.sendRequest(nameController.text, linkController.text);

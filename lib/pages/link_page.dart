@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:untitled_app/components/account/card.dart';
+import 'package:untitled_app/components/account/social_media_card.dart';
 import 'package:untitled_app/components/account/title.dart';
 import 'package:untitled_app/components/misc/primary_button.dart';
 import 'package:untitled_app/models/social_media.dart';

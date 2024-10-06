@@ -318,7 +318,6 @@ class UserNotifier extends StateNotifier<LocalUser> {
   }
 
   Future<void> updateUserDetails(FirebaseUser user) async {
-    print(user);
     final QuerySnapshot querySnapshot = await _store
         .collection("users")
         .where('email', isEqualTo: state.user.email)

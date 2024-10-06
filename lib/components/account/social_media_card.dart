@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:untitled_app/components/sheets/congratulations_sheet.dart';
 import 'package:untitled_app/models/social_media.dart';
+import 'package:untitled_app/providers/settings_selected_accounts.dart';
 import 'package:untitled_app/utils/nav_utils.dart';
 import 'package:untitled_app/utils/snack_utils.dart';
 import 'package:untitled_app/utils/social_media_delegate.dart';
@@ -32,6 +33,9 @@ class _SocialMediaCardState extends ConsumerState<SocialMediaCard> {
           'Error! Authentication function not implemented into application');
       return;
     }
+
+    showSnackBarSuccessMessage(
+        context, 'Redirecting to authentication for social...');
 
     // Trys to authenticate the user & if successful, sends a congrats sheet
     try {
@@ -86,7 +90,13 @@ class _SocialMediaCardState extends ConsumerState<SocialMediaCard> {
             ),
             IconButton(
               iconSize: 25,
-              onPressed: authenticateSocial,
+              onPressed: !widget.removable
+                  ? authenticateSocial
+                  : () {
+                      ref
+                          .read(selectedAccountsProvider)
+                          .add(widget.social.codeName);
+                    },
               icon: widget.removable
                   ? const Icon(Icons.indeterminate_check_box_rounded,
                       color: Colors.red)

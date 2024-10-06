@@ -25,14 +25,5 @@ abstract class SocialMediaDelegate {
     }
   }
 
-  // Future<void> Function()? provideAuthFunction(String social) {
-  //   final notifier = ref.read(userProvider.notifier);
-  //   switch (social) {
-  //     case "twitter":
-  //       return notifier.logInWithTwitter;
-  //     default:
-  //       print("Social not applicable");
-  //       return null;
-  //   }
-  // }
+  // static Future<void>
 }

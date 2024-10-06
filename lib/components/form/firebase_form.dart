@@ -70,7 +70,8 @@ class _FirebaseFormState extends ConsumerState<FirebaseForm> {
       if (mounted) {
         ref.read(actionButtonProvider.notifier).state = false;
         Navigator.pop(context);
-        Navigator.push(context, Routes.successfulSignUp);
+        Navigator.push(
+            context, Routes.successfulSignUp); // Uses MaterialPageRoute
       }
     } catch (e) {
       if (mounted) {
