@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 momentos/
+/lib/firebase_options.dart
 
 # IntelliJ related
 *.iml
